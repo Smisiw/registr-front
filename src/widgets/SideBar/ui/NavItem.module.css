@@ -1,0 +1,19 @@
+.li{
+
+}
+.link{
+    color: black;
+}
+
+.linkIcon{
+
+}
+
+.linkText{
+    margin: 10px;
+}
+
+.activeLink{
+    font-weight: bold;
+    color: #7EB0C6;
+}

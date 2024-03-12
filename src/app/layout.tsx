@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Open_Sans } from "next/font/google";
+import {MainLayout} from "@/pages/MainLayout";
+import "./global.css"
 
-const inter = Inter({ subsets: ["latin"] });
+const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Регистр ХСН",
@@ -14,9 +15,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="ru">
+      <body className={openSans.className}>
+      <MainLayout>
+        {children}
+      </MainLayout>
+      </body>
     </html>
   );
 }

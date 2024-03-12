@@ -1,0 +1,20 @@
+.profileLink{
+    display: flex;
+}
+
+.avatar{
+    align-self: center;
+}
+
+.fullName{
+    margin: 5px;
+    text-align: center;
+}
+
+.jobTitle{
+    text-align: center;
+    margin: 5px;
+    padding: 2px;
+    background-color: #7EB0C6;
+    border-radius: 20px;
+}
