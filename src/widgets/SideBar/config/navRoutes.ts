@@ -9,12 +9,12 @@ import settingsIcon from "@/shared/icons/SettingsIcon.svg"
 export const navRoutes: {top: INavItem[], bottom: INavItem[]} = {
     top: [
         {href: `/patients`, icon: patientsIcon, name: `Пациенты`},
-        {href: `/appointment`, icon: appointmentsIcon, name: `Приемы`},
+        {href: `/appointments`, icon: appointmentsIcon, name: `Приемы`},
         {href: `/hospitalizations`, icon: hospitalizationsIcon, name: `Госпитализации`},
         {href: `/statistics`, icon: statisticsIcon, name: `Статистика`},
         {href: `/help`, icon: helpIcon, name: `Помощь`}
     ],
     bottom: [
-        {href: `/settings`, icon: settingsIcon, name: `Помощь`}
+        {href: `/settings`, icon: settingsIcon, name: `Настройки`}
     ]
 }

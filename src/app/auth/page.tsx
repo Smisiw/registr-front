@@ -1,16 +1,9 @@
-'use client'
 import React from 'react';
-import {setCookie} from "undici-types";
+import LoginForm from "@/entities/Session/ui/LoginForm";
 
 const AuthPage = () => {
-    const login = () => {
-        
-    }
     return (
-        <div>
-            AuthPage
-            <button onClick={login}>Login</button>
-        </div>
+        <LoginForm/>
     );
 };
 export default AuthPage;

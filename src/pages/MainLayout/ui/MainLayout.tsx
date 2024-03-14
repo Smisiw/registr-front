@@ -1,11 +1,14 @@
 import React, {ReactNode} from 'react';
 import SideBar from "@/widgets/SideBar/ui/SideBar";
+import styles from "./MainLayout.module.css"
 
 export const MainLayout = ({children}: {children: ReactNode}) => {
     return (
         <>
             <SideBar/>
-            {children}
+            <main className={styles.main}>
+                {children}
+            </main>
         </>
     );
 };

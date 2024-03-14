@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import {MainLayout} from "@/pages/MainLayout";
 import "./global.css"
+import {ConfigProvider} from "antd";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,11 +19,18 @@ export default function RootLayout({
 
   return (
     <html lang="ru">
-      <body className={openSans.className}>
-      <MainLayout>
-        {children}
-      </MainLayout>
-      </body>
+        <ConfigProvider theme={{
+            components: {
+                Table: {
+                    headerBg: '#E8E8E8',
+                    borderRadius: 20
+                }
+            }
+        }}>
+            <body className={openSans.className}>
+                {children}
+            </body>
+        </ConfigProvider>
     </html>
   );
 }

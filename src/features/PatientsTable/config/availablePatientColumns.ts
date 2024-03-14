@@ -1,17 +1,14 @@
-export const availablePatientColumns = [
+import {IAvailableColumns} from "@/shared/CustomTable";
+
+export const availablePatientColumns: IAvailableColumns[] = [
     {
-        title: 'Имя',
-        value: 'name',
+        title: 'ID',
+        value: 'id',
         disabled: true,
     },
     {
-        title: 'Фамилия',
-        value: 'lastName',
-        disabled: true,
-    },
-    {
-        title: 'Отчество',
-        value: 'patronymic',
+        title: 'ФИО',
+        value: 'fullName',
         disabled: true,
     },
     {
@@ -28,7 +25,7 @@ export const availablePatientColumns = [
     },
     {
         title: 'Дата рождения',
-        value: 'date_birth',
+        value: 'dateBirth',
     },
     {
         title: 'Снилс',

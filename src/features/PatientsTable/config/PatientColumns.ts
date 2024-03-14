@@ -2,25 +2,17 @@ import {IColumn} from "@/shared/CustomTable/model/IColumn";
 
 export const PatientColumns: IColumn[] = [
     {
-        title: 'Имя',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
         dataType: "string",
         sortAvailable: true,
         width: 200,
     },
     {
-        title: 'Фамилия',
-        dataIndex: 'lastName',
-        key: 'lastName',
-        dataType: "string",
-        sortAvailable: true,
-        width: 200,
-    },
-    {
-        title: 'Отчество',
-        dataIndex: 'patronymic',
-        key: 'patronymic',
+        title: 'ФИО',
+        dataIndex: 'fullName',
+        key: 'fullName',
         dataType: "string",
         sortAvailable: true,
         width: 200,
@@ -57,11 +49,11 @@ export const PatientColumns: IColumn[] = [
     },
     {
         title: 'Дата рождения',
-        dataIndex: 'date_birth',
-        key: 'date_birth',
+        dataIndex: 'dateBirth',
+        key: 'dateBirth',
         dataType: "date",
         sortAvailable: true,
-        width: 100,
+        width: 200,
     },
     {
         title: 'Снилс',

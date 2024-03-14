@@ -3,7 +3,10 @@
 }
 
 .avatar{
+    margin: 5px;
     align-self: center;
+    border-radius: 21px;
+    border: solid #F9F9F9 1px;
 }
 
 .fullName{

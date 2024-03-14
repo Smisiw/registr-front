@@ -1,42 +1,35 @@
 'use client';
-import {useEffect, useState} from "react";
-import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
-import axios from "axios";
+import {useState} from "react";
+import {FilterValue, TablePaginationConfig} from "antd/es/table/interface";
 import {Table, TreeSelect} from "antd";
-import {IAvailableColumns, IColumn} from "@/shared/CustomTable";
-
-interface TableParams {
-    pagination?: TablePaginationConfig;
-    sortField?: string;
-    sortOrder?: string;
-    filters?: Record<string, FilterValue>;
-}
+import {IAvailableColumns, IColumn, ITableData} from "@/shared/CustomTable";
 
 
 interface props {
     columns: IColumn[]
-    availableColumns: IAvailableColumns
+    availableColumns: IAvailableColumns[]
     selectedColumns: string[]
     setSelectedColumns(selectedColumns: string[]): void
-    paginationParams: TablePaginationConfig
-    setPaginationParams(paginationParams: TablePaginationConfig): void
-    data: any
-    setData(data: any): void
+    data: ITableData
+    setData(data: ITableData): void
 }
 
 
-export function CustomTable<T>({columns, availableColumns, selectedColumns, setSelectedColumns, paginationParams, setPaginationParams, data, setData} : props) {
-
-    const [loading, setLoading] = useState(false);
-    const [visibleColumns, setVisibleColumns] = useState<IColumn[]>([]);
+export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, data, setData} : props) {
+    const [visibleColumns, setVisibleColumns] = useState<IColumn[]>(columns.filter(item => selectedColumns.includes(item.key)));
     const handleTableChange = (
         pagination: TablePaginationConfig
+        //filters
+        //sortParams
     ) => {
-        setPaginationParams(pagination);
-        // `dataSource` is useless since `pageSize` changed
-        if (pagination.pageSize !== paginationParams?.pageSize) {
-            setData([]);
-        }
+        setData(
+            {
+                ...data,
+                paginationParams: pagination
+                //filters
+                //sortParams
+            }
+        );
     };
 
     const handleColumnsChange = (newValue: string[]) => {
@@ -58,12 +51,13 @@ export function CustomTable<T>({columns, availableColumns, selectedColumns, setS
             <Table className={'m-2'}
                    columns={visibleColumns}
                    rowKey={(record) => record.id}
-                   dataSource={data}
-                   pagination={paginationParams}
-                   loading={loading}
+                   dataSource={data.data}
+                   pagination={data.paginationParams}
                    onChange={handleTableChange}
                    scroll={{x: 900, y: 200}}
-                   virtual={false}
+                   virtual={true}
+                   size={"middle"}
+                   bordered={false}
             />
         </div>
 
