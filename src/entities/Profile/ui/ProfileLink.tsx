@@ -7,16 +7,20 @@ import styles from "./ProfileLink.module.css"
 
 const ProfileLink = () => {
     const [profileInfo, setProfileInfo] = useState<IProfileInfo>()
-    const [isLoading, setIsLoading] = useState<boolean>()
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     useEffect(() => {
-        getProfileInfo(setProfileInfo, setIsLoading)
+        setProfileInfo(getProfileInfo())
+        setIsLoading(false)
     }, []);
     return (
         <a className={styles.profileLink}>
-          <Image className={styles.avatar} src={profileInfo?.avatar || ""} alt="Avatar" width={42} height={42}/>
+            {isLoading
+                ? (<div style={{width: 42, height: 42}} className={styles.avatar}></div>)
+                    : (<Image className={styles.avatar} src={profileInfo?.avatar || ""} alt="Avatar" width={42} height={42}/>)
+            }
           <div>
-              <p className={styles.fullName}>{profileInfo?.fullName}</p>
-              <p className={styles.jobTitle}>{profileInfo?.jobTitle}</p>
+              <p className={styles.fullName}>{isLoading? "Loading..." : profileInfo?.fullName}</p>
+              <p className={styles.jobTitle}>{isLoading? "Loading..." : profileInfo?.jobTitle}</p>
           </div>
         </a>
     );

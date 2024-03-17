@@ -1,18 +1,19 @@
 'use client'
 import React, {useEffect, useState} from 'react';
-import {CustomTable} from "@/shared/CustomTable";
+import {CustomTable, ITableParams} from "@/shared/CustomTable";
 import {PatientColumns} from "@/features/PatientsTable/config/PatientColumns";
 import {availablePatientColumns} from "@/features/PatientsTable/config/availablePatientColumns";
 import {defaultPatientSelectedColumns} from "@/features/PatientsTable/config/defaultPatientSelectedColumns";
-import {IPatientsTableData} from "@/features/PatientsTable";
+import {IPatient} from "@/entities/Patient/model/IPatient";
 
 
 interface props {
-    data: IPatientsTableData
-    setData(data: IPatientsTableData): void
+    data: {data: IPatient[], total: number}
+    tableParams: ITableParams
+    setTableParams(data: ITableParams): void
 }
-const PatientTable = ({data, setData}: props) => {
-    const [selectedColumns, setSelectedColumns] = useState<string[]>(defaultPatientSelectedColumns())
+const PatientTable = ({data, tableParams, setTableParams}: props) => {
+    const [selectedColumns, setSelectedColumns] = useState<string[]>(defaultPatientSelectedColumns)
 
     useEffect(() => {
         localStorage.setItem("patientsSelectedColumns", selectedColumns.toString())
@@ -25,7 +26,8 @@ const PatientTable = ({data, setData}: props) => {
             selectedColumns={selectedColumns}
             setSelectedColumns={setSelectedColumns}
             data={data}
-            setData={setData}
+            tableParams={tableParams}
+            setTableParams={setTableParams}
         />
     );
 };

@@ -1,8 +1,15 @@
 import {IPatient} from "@/entities/Patient/model/IPatient";
-import {IPatientsTableData} from "@/features/PatientsTable";
+import {TablePaginationConfig} from "antd/es/table/interface";
+import {ITableParams} from "@/shared/CustomTable";
 
-export const getPatients = (): IPatientsTableData => {
+export const getPatients = (
+    props: ITableParams = {
+        currentPage: 1,
+        filters: null,
+        sortParams: null}
+): { data: IPatient[], total: number } => {
   //Запрос на сервер
+    console.log("getPatients")
     const patients : IPatient[] = [
         {
             id: 1,
@@ -24,15 +31,6 @@ export const getPatients = (): IPatientsTableData => {
             address: "Улица Пушкина д.1",
             snils: "123123123321"
         }
-        ]
-    return {
-        data: patients,
-        paginationParams: {
-            current: 1,
-            pageSize: 2,
-            total: patients.length
-        },
-        sortParams: null,
-        filters: null
-    }
+    ]
+    return {data: patients, total: patients.length}
 }

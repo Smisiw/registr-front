@@ -1,4 +1,6 @@
 import {IColumn} from "@/shared/CustomTable/model/IColumn";
+import React from "react";
+import {spans} from "next/dist/build/webpack/plugins/profiling-plugin";
 
 export const PatientColumns: IColumn[] = [
     {
@@ -53,6 +55,9 @@ export const PatientColumns: IColumn[] = [
         key: 'dateBirth',
         dataType: "date",
         sortAvailable: true,
+        render(data: Date): React.ReactNode {
+            return `${data.toLocaleDateString()}`
+        },
         width: 200,
     },
     {
