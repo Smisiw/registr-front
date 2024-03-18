@@ -1,16 +1,16 @@
-import {IPatient} from "@/entities/Patient/model/IPatient";
+import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import {TablePaginationConfig} from "antd/es/table/interface";
 import {ITableParams} from "@/shared/CustomTable";
 
 export const getPatients = (
     props: ITableParams = {
         currentPage: 1,
-        filters: null,
+        filters: {},
         sortParams: null}
-): { data: IPatient[], total: number } => {
+): { data: IPatientTable[], total: number } => {
   //Запрос на сервер
     console.log("getPatients")
-    const patients : IPatient[] = [
+    const patients : IPatientTable[] = [
         {
             id: 1,
             fullName: "Иванов Иван Иванович",
@@ -19,7 +19,12 @@ export const getPatients = (
             age: 24,
             phoneNumber: "88888888888",
             address: "Улица Пушкина д.1",
-            snils: "123123123123"
+            snils: 12312312312,
+            isCHFConfirmed: false,
+            dateDiagnosisCHF: new Date(),
+            wasHospitalised: false,
+            preferentialDrugs: "no",
+            MISCardNumber: 1
         },
         {
             id: 2,
@@ -29,7 +34,12 @@ export const getPatients = (
             age: 45,
             phoneNumber: "12341234124",
             address: "Улица Пушкина д.1",
-            snils: "123123123321"
+            snils: 12312312332,
+            isCHFConfirmed: false,
+            dateDiagnosisCHF: new Date(),
+            wasHospitalised: false,
+            preferentialDrugs: "no",
+            MISCardNumber: 2
         }
     ]
     return {data: patients, total: patients.length}

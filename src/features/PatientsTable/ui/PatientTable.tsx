@@ -4,11 +4,11 @@ import {CustomTable, ITableParams} from "@/shared/CustomTable";
 import {PatientColumns} from "@/features/PatientsTable/config/PatientColumns";
 import {availablePatientColumns} from "@/features/PatientsTable/config/availablePatientColumns";
 import {defaultPatientSelectedColumns} from "@/features/PatientsTable/config/defaultPatientSelectedColumns";
-import {IPatient} from "@/entities/Patient/model/IPatient";
+import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 
 
 interface props {
-    data: {data: IPatient[], total: number}
+    data: {data: IPatientTable[], total: number}
     tableParams: ITableParams
     setTableParams(data: ITableParams): void
 }

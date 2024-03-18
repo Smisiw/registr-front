@@ -26,14 +26,14 @@ export default function RootLayout({
                     headerBorderRadius: 20,
                 },
                 Select: {
-                    borderRadius: 100,
+                    borderRadius: 20,
                     colorBorder: "rgba(255,255,255,0)",
                     borderRadiusSM: 100,
                     colorPrimary: '#7EB0C6',
                     colorPrimaryHover: '#7EB0C6',
                     colorFillSecondary: '#7EB0C6',
                     colorText: '#FFF',
-                    colorIcon: '#FFF'
+                    colorIcon: '#FFF',
                 },
                 TreeSelect: {
                     colorPrimary: '#7EB0C6',

@@ -2,7 +2,7 @@
 import React, {KeyboardEventHandler, useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
 import {getPatients} from "@/entities/Patient/api/getPatients";
-import {IPatient} from "@/entities/Patient/model/IPatient";
+import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import {ITableParams} from "@/shared/CustomTable";
 import SearchBar from "@/shared/SearchBar/ui/SearchBar";
 import ButtonNew from "@/shared/ButtonNew/ui/ButtonNew";
@@ -14,11 +14,11 @@ const PatientsList = () => {
         setPatientsTableParams
     ] = useState<ITableParams>({
             currentPage: 1,
-            filters: null,
+            filters: {},
             sortParams: null
         }
     )
-    const [patients, setPatients] = useState<{ data: IPatient[], total: number }>()
+    const [patients, setPatients] = useState<{ data: IPatientTable[], total: number }>()
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
 
@@ -26,7 +26,7 @@ const PatientsList = () => {
         setLoading(true)
         setPatients(getPatients(patientsTableParams))
         setLoading(false)
-    }, [patientsTableParams]);
+    }, [JSON.stringify(patientsTableParams)]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -39,7 +39,9 @@ const PatientsList = () => {
         setPatientsTableParams(
             {
                 ...patientsTableParams,
-                filters: searchValue==""? null : `{fullName=${searchValue}`
+                filters: {
+                    ...patientsTableParams.filters,
+                    fullName: searchValue==""? null : [searchValue]}
             }
         )
     }

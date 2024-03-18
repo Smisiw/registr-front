@@ -1,6 +1,6 @@
 'use client';
 import {useState} from "react";
-import {TablePaginationConfig} from "antd/es/table/interface";
+import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
 import {Pagination, Table, TreeSelect} from "antd";
 import {IAvailableColumns, IColumn, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
@@ -33,6 +33,30 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
         );
     };
 
+    const handleTableChange = (pagination: TablePaginationConfig,
+        filters: Record<string, FilterValue | null>,
+        sortParams: SorterResult<any> | SorterResult<any>[]
+    ) => {
+        setTableParams(
+            {
+                ...tableParams,
+                filters: {
+                    ...tableParams.filters,
+                    ...filters
+                },
+                sortParams: sortParams instanceof Array
+                    ? null
+                    : (sortParams.order && sortParams.columnKey)
+                        ?
+                        {
+                            columnKey: sortParams.columnKey,
+                            order: sortParams.order
+                        }
+                        : null
+            }
+        )
+    }
+
     const handleColumnsChange = (newValue: string[]) => {
         setSelectedColumns(newValue);
         const newColumns: IColumn[] = columns.filter(item => newValue.includes(item.key));
@@ -56,7 +80,7 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                 rowKey={(record) => record.id}
                 dataSource={data.data}
                 pagination={false}
-                onChange={()=>{}}
+                onChange={handleTableChange}
                 scroll={{x: 900, y: 200}}
                 virtual={true}
                 size={"middle"}

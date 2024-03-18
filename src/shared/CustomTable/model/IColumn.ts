@@ -11,9 +11,9 @@ export interface IColumn extends ColumnType<any>{
     key: string
     title: string
     dataIndex: string
-    sortAvailable: boolean
-    width: number
-    dataType: "string" | "phone" | "address" | "date"
+    sorter: boolean
+    width?: number
+    dataType: "string" | "phone" | "address" | "date" | "boolean"
     render? (data: any): ReactNode
     filters?: filter[]
 }

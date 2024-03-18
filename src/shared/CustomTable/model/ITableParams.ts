@@ -1,7 +1,8 @@
-import {TablePaginationConfig} from "antd/es/table/interface";
+import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
+import {Key} from "react";
 
 export interface ITableParams {
     currentPage: number,
-    filters: string | null,
-    sortParams: {columnKey: string, sort: boolean} | null
+    filters: Record<string, FilterValue | null>,
+    sortParams: { columnKey: Key, order: "ascend" | "descend" } | null
 }
