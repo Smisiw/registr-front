@@ -2,6 +2,10 @@
 
 }
 
+.tableRow{
+    cursor: pointer;
+}
+
 .selector{
     display: block;
     margin-bottom: 10px;

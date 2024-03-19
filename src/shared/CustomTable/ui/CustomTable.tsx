@@ -4,6 +4,7 @@ import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/in
 import {Pagination, Table, TreeSelect} from "antd";
 import {IAvailableColumns, IColumn, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
+import {useRouter} from "next/navigation";
 
 
 interface props {
@@ -22,6 +23,7 @@ interface props {
 
 export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams} : props) {
     const [visibleColumns, setVisibleColumns] = useState<IColumn[]>(columns.filter(item => selectedColumns.includes(item.key)));
+    const router = useRouter()
     const handlePaginationChange = (
         current: number
 ) => {
@@ -78,6 +80,12 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                 className={styles.table}
                 columns={visibleColumns}
                 rowKey={(record) => record.id}
+                onRow={(record, index) => {
+                    return {
+                        onClick: () => {router.push(`/patients/${record.id}`)}
+                    }
+                }}
+                rowClassName={styles.tableRow}
                 dataSource={data.data}
                 pagination={false}
                 onChange={handleTableChange}
@@ -86,6 +94,7 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                 size={"middle"}
                 bordered={false}
             />
+            {/*TODO: можно вынести пагинацию в отдельный компонент*/}
             <Pagination
                 className={styles.pagination}
                 current={tableParams.currentPage}
