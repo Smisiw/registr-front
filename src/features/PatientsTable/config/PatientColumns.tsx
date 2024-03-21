@@ -1,5 +1,9 @@
 import {IColumn} from "@/shared/CustomTable/model/IColumn";
 import React from "react";
+import {Button, Input, Space} from "antd";
+import {SearchOutlined} from "@ant-design/icons";
+import searchTableFilter from "@/shared/CustomTable/ui/searchTableFilter";
+import dateTableFilter from "@/shared/CustomTable/ui/dateTableFilter";
 
 export const PatientColumns: IColumn[] = [
     {
@@ -15,6 +19,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'fullName',
         key: 'fullName',
         dataType: "string",
+        filterDropdown: searchTableFilter,
         sorter: true,
         width: 200,
     },
@@ -52,7 +57,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'dateBirth',
         key: 'dateBirth',
         dataType: "date",
-        filters: [],
+        filterDropdown: dateTableFilter,
         sorter: true,
         render(data: Date): React.ReactNode {
             return `${data.toLocaleDateString()}`
@@ -81,6 +86,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'referringDoctor',
         key: 'referringDoctor',
         dataType: "string",
+        filterDropdown: searchTableFilter,
         sorter: false,
         width: 200,
     },
@@ -89,7 +95,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'referringMedicalOrganization',
         key: 'referringMedicalOrganization',
         dataType: "string",
-        filters: [],
+        filterDropdown: searchTableFilter,
         sorter: false,
         width: 160,
     },
@@ -113,7 +119,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'dateDiagnosisCHF',
         key: 'dateDiagnosisCHF',
         dataType: "date",
-        filters: [],
+        filterDropdown: dateTableFilter,
         sorter: true,
         render(data: Date): React.ReactNode {
             return `${data.toLocaleDateString()}`
@@ -164,6 +170,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'MISCardNumber',
         key: 'MISCardNumber',
         dataType: "string",
+        filterDropdown: searchTableFilter,
         sorter: false,
         width: 150,
     },
@@ -172,7 +179,7 @@ export const PatientColumns: IColumn[] = [
         dataIndex: 'dateDeath',
         key: 'dateDeath',
         dataType: "date",
-        filters: [],
+        filterDropdown: dateTableFilter,
         sorter: false,
         render(data: any): React.ReactNode {
             return `${data?.toLocaleDateString() || ""}`
