@@ -22,6 +22,7 @@ export default function RootLayout({
         <ConfigProvider theme={{
             components: {
                 Table: {
+                    colorPrimary: '#7EB0C6',
                     headerBg: '#E8E8E8',
                     headerBorderRadius: 20,
                 },
@@ -49,6 +50,9 @@ export default function RootLayout({
                     borderRadius: 100
                 },
                 Input: {
+                    colorBorderBg: '#7EB0C6',
+                    hoverBorderColor: '#7EB0C6',
+                    activeBorderColor: '#7EB0C6',
                     paddingInline: 25,
                     paddingBlock: 6,
                     borderRadius: 100
@@ -73,7 +77,8 @@ export default function RootLayout({
                     defaultActiveBg: "rgba(49, 69, 78, 0.05)",
                     defaultShadow: "",
                     lineWidth: 2,
-                    borderRadius: 100
+                    borderRadius: 100,
+                    borderRadiusSM: 100
                 },
                 // Tag: {
                 //     defaultBg: '#7EB0C6',
