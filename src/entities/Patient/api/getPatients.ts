@@ -21,11 +21,12 @@ export const getPatients = (
             address: "Улица Пушкина д.1",
             count_hospitalization: 3,
             last_hospitalization_date: new Date(),
-            has_hospitalization: false,
+            has_hospitalization: true,
             lgota_drugs: "no",
             location: "NSO",
             district: "Ленинский",
-            disability: "no"
+            disability: "no",
+            clinic: "16"
         },
         {
             id: 2,
@@ -35,13 +36,12 @@ export const getPatients = (
             age: 45,
             phone: 12341234124,
             address: "Улица Пушкина д.1",
-            count_hospitalization: 0,
-            last_hospitalization_date: new Date(),
             has_hospitalization: false,
             lgota_drugs: "no",
             location: "NSO",
             district: "Центральный",
-            disability: "no"
+            disability: "no",
+            clinic: "16"
         }
     ]
     return {data: patients, total: patients.length}
