@@ -5,7 +5,7 @@ export const defaultPatientSelectedColumns = () => {
         return patientsSelectedColumns.split(",")
     }
     else {
-        return ["id", "fullName", "gender", "dateBirth", "address", "snils"]
+        return ["id", "full_name", "gender", "age", "location", "district", "address"]
     }
 }
 //TODO: Исправить ошибку в консоле с localStorage

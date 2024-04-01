@@ -5,7 +5,7 @@ import {getPatients} from "@/entities/Patient/api/getPatients";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import {ITableParams} from "@/shared/CustomTable";
 import SearchBar from "@/shared/SearchBar/ui/SearchBar";
-import ButtonNew from "@/shared/ButtonNew/ui/ButtonNew";
+import ButtonNew from "@/shared/Buttons/ui/ButtonNew";
 import styles from "./PatientsList.module.css"
 
 const PatientsList = () => {

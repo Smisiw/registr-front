@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Input, Space} from "antd";
 import {SearchOutlined} from "@ant-design/icons";
 import {FilterDropdownProps} from "antd/es/table/interface";
-import buttonStyles from "../../ButtonNew/ui/Button.module.css"
+import buttonStyles from "@/shared/Buttons/ui/Button.module.css"
 
 const SearchTableFilter = (props: FilterDropdownProps) => {
     return (

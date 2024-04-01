@@ -427,4 +427,6 @@ template {
 }
 body{
     background-color: #F9F9F9;
+    padding: 0;
+    margin: 0;
 }

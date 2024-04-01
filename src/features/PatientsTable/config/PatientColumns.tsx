@@ -14,8 +14,8 @@ export const PatientColumns: IColumn[] = [
     },
     {
         title: 'ФИО',
-        dataIndex: 'fullName',
-        key: 'fullName',
+        dataIndex: 'full_name',
+        key: 'full_name',
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: true,
@@ -35,34 +35,6 @@ export const PatientColumns: IColumn[] = [
         width: 70,
     },
     {
-        title: 'Телефон',
-        dataIndex: 'phoneNumber',
-        key: 'phoneNumber',
-        dataType: "phone",
-        sorter: false,
-        width: 120,
-    },
-    {
-        title: 'Адрес',
-        dataIndex: 'address',
-        key: 'address',
-        dataType: "address",
-        sorter: false,
-        width: 400,
-    },
-    {
-        title: 'Дата рождения',
-        dataIndex: 'dateBirth',
-        key: 'dateBirth',
-        dataType: "date",
-        filterDropdown: dateTableFilter,
-        sorter: true,
-        render(data: Date): React.ReactNode {
-            return `${data.toLocaleDateString()}`
-        },
-        width: 130,
-    },
-    {
         title: 'Возраст',
         dataIndex: 'age',
         key: 'age',
@@ -72,17 +44,89 @@ export const PatientColumns: IColumn[] = [
         width: 110,
     },
     {
-        title: 'Снилс',
-        dataIndex: 'snils',
-        key: 'snils',
+        title: 'Дата рождения',
+        dataIndex: 'birth_date',
+        key: 'birth_date',
+        dataType: "date",
+        filterDropdown: dateTableFilter,
+        sorter: true,
+        render(data: Date): React.ReactNode {
+            return `${data.toLocaleDateString()}`
+        },
+        width: 130,
+    },
+    {
+        title: 'Дата смерти',
+        dataIndex: 'dod',
+        key: 'dod',
+        dataType: "date",
+        filterDropdown: dateTableFilter,
+        sorter: false,
+        render(data: any): React.ReactNode {
+            return `${data?.toLocaleDateString() || ""}`
+        },
+        width: 150,
+    },
+    {
+        title: 'Место жительства',
+        dataIndex: 'location',
+        key: 'location',
+        dataType: "string",
+        filters: [
+            { text: 'НСО', value: 'NSO' },
+            { text: 'Новосиюирск', value: 'Novosibirsk' },
+            { text: 'другое', value: 'other' }
+        ],
+        sorter: false,
+        render(data: any): React.ReactNode {
+            return data=="NSO"? "НСО" : data=="Novosibirsk"? "Новосибирск" : "другое"
+        },
+        width: 130,
+    },
+    {
+        title: 'Район',
+        dataIndex: 'district',
+        key: 'district',
         dataType: "string",
         sorter: false,
         width: 130,
     },
     {
+        title: 'Адрес',
+        dataIndex: 'address',
+        key: 'address',
+        dataType: "address",
+        sorter: false,
+        width: 300,
+    },
+    {
+        title: 'Телефон',
+        dataIndex: 'phone',
+        key: 'phone',
+        dataType: "phone",
+        sorter: false,
+        width: 120,
+    },
+    {
+        title: 'Поликлиника',
+        dataIndex: 'clinic',
+        key: 'clinic',
+        dataType: "string",
+        sorter: false,
+        width: 150,
+    },
+    {
+        title: 'Примечание',
+        dataIndex: 'patient_note',
+        key: 'patient_note',
+        dataType: "string",
+        sorter: false,
+        width: 150,
+    },
+    {
         title: 'Направивший врач',
-        dataIndex: 'referringDoctor',
-        key: 'referringDoctor',
+        dataIndex: 'referring_doctor',
+        key: 'referring_doctor',
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: false,
@@ -90,59 +134,35 @@ export const PatientColumns: IColumn[] = [
     },
     {
         title: 'Направившая мед. организация',
-        dataIndex: 'referringMedicalOrganization',
-        key: 'referringMedicalOrganization',
+        dataIndex: 'referring_clinic_organization',
+        key: 'referring_clinic_organization',
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: false,
         width: 160,
     },
     {
-        title: 'Хроническая сердечная недостаточность (подтверждённый)',
-        dataIndex: 'isCHFConfirmed',
-        key: 'isCHFConfirmed',
-        dataType: "boolean",
+        title: 'Категория инвалидности',
+        dataIndex: 'disability',
+        key: 'disability',
+        dataType: "string",
         filters: [
-            { text: 'Да', value: 'true' },
-            { text: 'Нет', value: 'false' }
+            { text: 'Нет', value: 'no' },
+            { text: 'I', value: 'I' },
+            { text: 'II', value: 'II' },
+            { text: 'III', value: 'III' },
+            { text: 'Отказ', value: 'refusal' }
         ],
         sorter: false,
         render(data: any): React.ReactNode {
-            return data? "Да" : "Нет"
+            return data=="no"? "Нет" : data=="refusal"? "Отказ" : data
         },
         width: 160,
     },
     {
-        title: 'Дата постановки диагноза ХСН',
-        dataIndex: 'dateDiagnosisCHF',
-        key: 'dateDiagnosisCHF',
-        dataType: "date",
-        filterDropdown: dateTableFilter,
-        sorter: true,
-        render(data: Date): React.ReactNode {
-            return `${data.toLocaleDateString()}`
-        },
-        width: 180,
-    },
-    {
-        title: 'Госпитализации',
-        dataIndex: 'wasHospitalised',
-        key: 'wasHospitalised',
-        dataType: "boolean",
-        filters: [
-            { text: 'Да', value: 'true' },
-            { text: 'Нет', value: 'false' }
-        ],
-        sorter: false,
-        render(data: any): React.ReactNode {
-            return data? "Да" : "Нет"
-        },
-        width: 140,
-    },
-    {
         title: 'Льготное обеспечение препаратами',
-        dataIndex: 'preferentialDrugs',
-        key: 'preferentialDrugs',
+        dataIndex: 'lgota_drugs',
+        key: 'lgota_drugs',
         dataType: "string",
         filters: [
             { text: 'Нет', value: 'no' },
@@ -156,33 +176,40 @@ export const PatientColumns: IColumn[] = [
         width: 130,
     },
     {
-        title: 'Примечание',
-        dataIndex: 'note',
-        key: 'note',
-        dataType: "string",
+        title: 'Госпитализации',
+        dataIndex: 'has_hospitalization',
+        key: 'has_hospitalization',
+        dataType: "boolean",
+        filters: [
+            { text: 'Да', value: 'true' },
+            { text: 'Нет', value: 'false' }
+        ],
         sorter: false,
-        width: 150,
+        render(data: any): React.ReactNode {
+            return data? "Да" : "Нет"
+        },
+        width: 140,
     },
     {
-        title: 'Номер карты МИС',
-        dataIndex: 'MISCardNumber',
-        key: 'MISCardNumber',
+        title: 'Количество госпитализаций',
+        dataIndex: 'count_hospitalization',
+        key: 'count_hospitalization',
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: false,
         width: 150,
     },
     {
-        title: 'Дата смерти',
-        dataIndex: 'dateDeath',
-        key: 'dateDeath',
+        title: 'Дата последней госпитализации',
+        dataIndex: 'last_hospitalization_date',
+        key: 'last_hospitalization_date',
         dataType: "date",
         filterDropdown: dateTableFilter,
-        sorter: false,
-        render(data: any): React.ReactNode {
-            return `${data?.toLocaleDateString() || ""}`
+        sorter: true,
+        render(data: Date): React.ReactNode {
+            return `${data.toLocaleDateString()}`
         },
-        width: 150,
+        width: 180,
     },
 
 ]

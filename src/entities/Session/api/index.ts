@@ -4,7 +4,7 @@ import {ILoginForm} from "@/entities/Session/model/ILoginForm";
 
 export const login = (formData: FormData): void => {
     const loginForm: ILoginForm = {
-        mail: formData.get("mail"),
+        login: formData.get("login"),
         password: formData.get("password")
     }
     //Запрос на сервер

@@ -78,7 +78,20 @@ export default function RootLayout({
                     defaultShadow: "",
                     lineWidth: 2,
                     borderRadius: 100,
-                    borderRadiusSM: 100
+                    borderRadiusSM: 100,
+
+                    colorBgContainerDisabled: "#FFF"
+                },
+                Radio: {
+                    colorPrimary: '#7EB0C6',
+                },
+                DatePicker: {
+                    borderRadius: 20,
+                    colorPrimary: '#7EB0C6',
+                    hoverBorderColor: '#7EB0C6',
+                },
+                Card: {
+                    borderRadiusLG: 18
                 },
                 // Tag: {
                 //     defaultBg: '#7EB0C6',

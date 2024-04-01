@@ -1,9 +1,9 @@
 import React from 'react';
-import LoginForm from "@/entities/Session/ui/LoginForm";
+import AuthorizationPage from "@/pages/Authorization/ui/AuthorizationPage";
 
 const AuthPage = () => {
     return (
-        <LoginForm/>
+        <AuthorizationPage/>
     );
 };
 export default AuthPage;

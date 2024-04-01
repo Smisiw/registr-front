@@ -13,33 +13,35 @@ export const getPatients = (
     const patients : IPatientTable[] = [
         {
             id: 1,
-            fullName: "Иванов Иван Иванович",
+            full_name: "Иванов Иван Иванович",
             gender: "М",
-            dateBirth: new Date("2000-01-01"),
+            birth_date: new Date("2000-01-01"),
             age: 24,
-            phoneNumber: "88888888888",
+            phone: 88888888888,
             address: "Улица Пушкина д.1",
-            snils: 12312312312,
-            isCHFConfirmed: false,
-            dateDiagnosisCHF: new Date(),
-            wasHospitalised: false,
-            preferentialDrugs: "no",
-            MISCardNumber: 1
+            count_hospitalization: 3,
+            last_hospitalization_date: new Date(),
+            has_hospitalization: false,
+            lgota_drugs: "no",
+            location: "NSO",
+            district: "Ленинский",
+            disability: "no"
         },
         {
             id: 2,
-            fullName: "Тест Тест",
+            full_name: "Тест Тест",
             gender: "М",
-            dateBirth: new Date("1979-03-01"),
+            birth_date: new Date("1979-03-01"),
             age: 45,
-            phoneNumber: "12341234124",
+            phone: 12341234124,
             address: "Улица Пушкина д.1",
-            snils: 12312312332,
-            isCHFConfirmed: false,
-            dateDiagnosisCHF: new Date(),
-            wasHospitalised: false,
-            preferentialDrugs: "no",
-            MISCardNumber: 2
+            count_hospitalization: 0,
+            last_hospitalization_date: new Date(),
+            has_hospitalization: false,
+            lgota_drugs: "no",
+            location: "NSO",
+            district: "Центральный",
+            disability: "no"
         }
     ]
     return {data: patients, total: patients.length}

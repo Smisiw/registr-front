@@ -1,7 +1,7 @@
 'use client'
 import React, {useState} from 'react';
 import {Button, DatePicker, Space} from "antd";
-import buttonStyles from "@/shared/ButtonNew/ui/Button.module.css";
+import buttonStyles from "@/shared/Buttons/ui/Button.module.css";
 import {SearchOutlined} from "@ant-design/icons";
 import {FilterDropdownProps} from "antd/es/table/interface";
 import {Dayjs} from "dayjs";
@@ -12,7 +12,8 @@ const DateTableFilter = (props: FilterDropdownProps) => {
     return (
         <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
             <RangePicker
-                placeholder={["С", "По"]}
+                format={"DD.MM.YYYY"}
+                placeholder={["Дата с", "Дата по"]}
                 allowEmpty={[false, true]}
                 value={date}
                 onChange={(dates, dateString) => {
