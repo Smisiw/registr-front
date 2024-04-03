@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import {Button, Card, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Radio, Space} from "antd";
+import {Button, Card, Checkbox, DatePicker, Form, Input, InputNumber, Radio, Space} from "antd";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 
 export const PatientNewForm = () => {
@@ -13,6 +13,7 @@ export const PatientNewForm = () => {
             <Form
                 form={form}
                 layout={"vertical"}
+                onFinish={console.log}
             >
                 <Space size={"large"}>
                     <Form.Item
@@ -48,8 +49,8 @@ export const PatientNewForm = () => {
                     >
                         <Radio.Group>
                             <Space size={"large"}>
-                                <Radio value={"male"}>Мужской</Radio>
-                                <Radio value={"female"}>Женский</Radio>
+                                <Radio value={"М"}>Мужской</Radio>
+                                <Radio value={"Ж"}>Женский</Radio>
                             </Space>
 
                         </Radio.Group>
@@ -86,9 +87,9 @@ export const PatientNewForm = () => {
                         rules={[{required: true, message: 'Выберите место жительства'}]}
                     >
                         <Radio.Group>
-                            <Radio value={"NSO"}>НСО</Radio>
-                            <Radio value={"Novosibirsk"}>Новосибирск</Radio>
-                            <Radio value={"other"}>другое</Radio>
+                            <Radio value={"НСО"}>НСО</Radio>
+                            <Radio value={"Новосибирск"}>Новосибирск</Radio>
+                            <Radio value={"другое"}>другое</Radio>
                         </Radio.Group>
                     </Form.Item>
                     <Form.Item
@@ -137,11 +138,11 @@ export const PatientNewForm = () => {
                     rules={[{required: true, message: 'Выберите категорию инвалидности'}]}
                 >
                     <Radio.Group>
-                        <Radio value={"no"}>Нет</Radio>
+                        <Radio value={"нет"}>Нет</Radio>
                         <Radio value={"I"}>I</Radio>
                         <Radio value={"II"}>II</Radio>
                         <Radio value={"III"}>III</Radio>
-                        <Radio value={"refusal"}>Отказ</Radio>
+                        <Radio value={"отказ"}>Отказ</Radio>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
@@ -151,9 +152,9 @@ export const PatientNewForm = () => {
                     rules={[{required: true, message: 'Выберите вид льготы'}]}
                 >
                     <Radio.Group>
-                        <Radio value={"yes"}>Да</Radio>
-                        <Radio value={"no"}>Нет</Radio>
-                        <Radio value={"ssz"}>ССЗ</Radio>
+                        <Radio value={"да"}>Да</Radio>
+                        <Radio value={"нет"}>Нет</Radio>
+                        <Radio value={"ССЗ"}>ССЗ</Radio>
                     </Radio.Group>
                 </Form.Item>
                 <Space size={"large"}>
@@ -161,7 +162,7 @@ export const PatientNewForm = () => {
                         style={{width: 200}}
                         name={"has_hospitalization"}
                         valuePropName={"checked"}
-                        rules={[{required: true}]}
+                        required={false}
                     >
                         <Checkbox>Госпитализации</Checkbox>
                     </Form.Item>

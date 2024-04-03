@@ -1,8 +1,8 @@
 import React from 'react';
-import LoginForm from "@/entities/Session/ui/LoginForm";
+import dynamic from "next/dynamic";
 
 const AuthorizationPage = () => {
-    
+    const LoginForm = dynamic(() => import('@/entities/Session/ui/LoginForm'), {ssr: false})
     return (
         <>
             <LoginForm/>

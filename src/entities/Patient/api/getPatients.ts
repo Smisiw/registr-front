@@ -1,5 +1,4 @@
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
-import {TablePaginationConfig} from "antd/es/table/interface";
 import {ITableParams} from "@/shared/CustomTable";
 
 export const getPatients = (
@@ -8,8 +7,7 @@ export const getPatients = (
         filters: {},
         sortParams: null}
 ): { data: IPatientTable[], total: number } => {
-  //Запрос на сервер
-    console.log("getPatients")
+
     const patients : IPatientTable[] = [
         {
             id: 1,
@@ -22,10 +20,10 @@ export const getPatients = (
             count_hospitalization: 3,
             last_hospitalization_date: new Date(),
             has_hospitalization: true,
-            lgota_drugs: "no",
-            location: "NSO",
+            lgota_drugs: "нет",
+            location: "НСО",
             district: "Ленинский",
-            disability: "no",
+            disability: "нет",
             clinic: "16"
         },
         {
@@ -37,10 +35,10 @@ export const getPatients = (
             phone: 12341234124,
             address: "Улица Пушкина д.1",
             has_hospitalization: false,
-            lgota_drugs: "no",
-            location: "NSO",
+            lgota_drugs: "нет",
+            location: "НСО",
             district: "Центральный",
-            disability: "no",
+            disability: "нет",
             clinic: "16"
         }
     ]

@@ -27,10 +27,9 @@ export const PatientColumns: IColumn[] = [
         key: 'gender',
         dataType: "boolean",
         sorter: false,
-        render: (gender) => `${gender? "М" : "Ж"}`,
         filters: [
-            { text: 'М', value: 'male' },
-            { text: 'Ж', value: 'female' }
+            { text: 'М', value: 'М' },
+            { text: 'Ж', value: 'Ж' }
         ],
         width: 70,
     },
@@ -73,14 +72,11 @@ export const PatientColumns: IColumn[] = [
         key: 'location',
         dataType: "string",
         filters: [
-            { text: 'НСО', value: 'NSO' },
-            { text: 'Новосиюирск', value: 'Novosibirsk' },
-            { text: 'другое', value: 'other' }
+            { text: 'НСО', value: 'НСО' },
+            { text: 'Новосиюирск', value: 'Новосибирск' },
+            { text: 'другое', value: 'другое' }
         ],
         sorter: false,
-        render(data: any): React.ReactNode {
-            return data=="NSO"? "НСО" : data=="Novosibirsk"? "Новосибирск" : "другое"
-        },
         width: 130,
     },
     {
@@ -147,16 +143,13 @@ export const PatientColumns: IColumn[] = [
         key: 'disability',
         dataType: "string",
         filters: [
-            { text: 'Нет', value: 'no' },
+            { text: 'нет', value: 'нет' },
             { text: 'I', value: 'I' },
             { text: 'II', value: 'II' },
             { text: 'III', value: 'III' },
-            { text: 'Отказ', value: 'refusal' }
+            { text: 'отказ', value: 'отказ' }
         ],
         sorter: false,
-        render(data: any): React.ReactNode {
-            return data=="no"? "Нет" : data=="refusal"? "Отказ" : data
-        },
         width: 160,
     },
     {
@@ -165,14 +158,11 @@ export const PatientColumns: IColumn[] = [
         key: 'lgota_drugs',
         dataType: "string",
         filters: [
-            { text: 'Нет', value: 'no' },
-            { text: 'Да', value: 'yes' },
-            { text: 'ССЗ', value: 'ssz' }
+            { text: 'нет', value: 'нет' },
+            { text: 'да', value: 'да' },
+            { text: 'ССЗ', value: 'ССЗ' }
         ],
         sorter: false,
-        render(data: any): React.ReactNode {
-            return data=="no"? "Нет" : data=="yes"? "Да" : "ССЗ"
-        },
         width: 130,
     },
     {
@@ -207,7 +197,7 @@ export const PatientColumns: IColumn[] = [
         filterDropdown: dateTableFilter,
         sorter: true,
         render(data: Date): React.ReactNode {
-            return `${data.toLocaleDateString()}`
+            return `${data?.toLocaleDateString() || ""}`
         },
         width: 180,
     },
