@@ -2,7 +2,7 @@
 import {useState} from "react";
 import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
 import {Pagination, Table, TreeSelect} from "antd";
-import {IAvailableColumns, IColumn, ITableParams} from "@/shared/CustomTable";
+import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
 import {useRouter} from "next/navigation";
 
@@ -98,7 +98,7 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
             <Pagination
                 className={styles.pagination}
                 current={tableParams.currentPage}
-                pageSize={1}
+                pageSize={DEFAULT_TABLE_PAGE_SIZE}
                 total={data.total}
                 onChange={handlePaginationChange}
                 itemRender={(

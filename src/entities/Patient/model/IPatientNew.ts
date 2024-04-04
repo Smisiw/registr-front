@@ -3,8 +3,8 @@ export interface IPatientNew {
     last_name: string,
     patronymic: string,
     gender: "М" | "Ж",
-    birth_date: Date,
-    dod?: Date,
+    birth_date: Date | string,
+    dod?: Date | string,
     location: "НСО" | "Новосибирск" | "другое",
     district: string,
     address: string,
@@ -17,5 +17,5 @@ export interface IPatientNew {
     lgota_drugs: "нет" | "да" | "ССЗ",
     has_hospitalization: boolean,
     count_hospitalization?: number,
-    last_hospitalization_date?: Date,
+    last_hospitalization_date?: Date | string,
 }

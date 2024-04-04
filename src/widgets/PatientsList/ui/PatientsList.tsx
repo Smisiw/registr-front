@@ -1,5 +1,5 @@
 'use client'
-import React, {KeyboardEventHandler, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
 import {getPatients} from "@/entities/Patient/api/getPatients";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
@@ -23,9 +23,17 @@ const PatientsList = () => {
     const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
-        setLoading(true)
-        setPatients(getPatients(patientsTableParams))
-        setLoading(false)
+        const dataHandler = async () =>  {
+            try {
+                setLoading(true)
+                setPatients(await getPatients(patientsTableParams))
+                setLoading(false)
+            } catch (e) {
+
+            }
+        }
+        dataHandler()
+
     }, [JSON.stringify(patientsTableParams)]);
 
     useEffect(() => {

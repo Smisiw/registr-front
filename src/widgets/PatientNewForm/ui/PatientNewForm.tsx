@@ -1,11 +1,21 @@
 'use client'
-import React from 'react';
-import {Button, Card, Checkbox, DatePicker, Form, Input, InputNumber, Radio, Space} from "antd";
+import React, {useState} from 'react';
+import {Button, Card, Checkbox, DatePicker, Form, Input, InputNumber, Radio, Space, Typography} from "antd";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
+import {createPatient} from "@/entities/Patient/api/createPatient";
 
 export const PatientNewForm = () => {
     const [form] = Form.useForm()
     const hasHospitalization : boolean = Form.useWatch("has_hospitalization", form)
+    const [errorMessage, setErrorMessage] = useState("")
+    const formSubmitHandler = async (values: IPatientNew)=> {
+        try {
+            await createPatient(values)
+        } catch (e: any) {
+            setErrorMessage(e.message)
+        }
+    }
     return (
         <Card
             title={"Карточка пациента"}
@@ -13,8 +23,11 @@ export const PatientNewForm = () => {
             <Form
                 form={form}
                 layout={"vertical"}
-                onFinish={console.log}
+                onFinish={formSubmitHandler}
             >
+                <Typography.Text type={"danger"}>
+                    {errorMessage}
+                </Typography.Text>
                 <Space size={"large"}>
                     <Form.Item
                         style={{width: 300}}
@@ -163,6 +176,7 @@ export const PatientNewForm = () => {
                         name={"has_hospitalization"}
                         valuePropName={"checked"}
                         required={false}
+                        initialValue={false}
                     >
                         <Checkbox>Госпитализации</Checkbox>
                     </Form.Item>

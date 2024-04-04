@@ -1,12 +1,12 @@
 import {deleteCookie, setCookie} from "cookies-next";
 import {redirect} from "next/navigation";
 import {ILoginForm} from "@/entities/Session/model/ILoginForm";
-import instance from "../../../shared/axiosConfig/axiosConfig"
+import axiosInstance from "../../../shared/axiosConfig/axiosConfig"
 import {AxiosError, AxiosResponse} from "axios";
 
 export const login = async (loginForm: ILoginForm): Promise<void> => {
     try {
-        const {data}: AxiosResponse<{token: string}, AxiosError> = await instance.post("auth/login/", loginForm)
+        const {data}: AxiosResponse<{token: string}, AxiosError> = await axiosInstance.post("auth/login/", loginForm)
         setCookie('authToken', data.token)
         localStorage.setItem("authToken", data.token)
     } catch (e: AxiosError | any) {

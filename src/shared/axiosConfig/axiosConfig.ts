@@ -1,12 +1,12 @@
 import axios, {AxiosError} from "axios";
 import {logout} from "@/entities/Session/api";
 
-const instance = axios.create({
+const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
 })
 
-instance.defaults.headers.common["Content-Type"] = "application/json"
-instance.interceptors.request.use(
+axiosInstance.defaults.headers.common["Content-Type"] = "application/json"
+axiosInstance.interceptors.request.use(
     config => {
         if (!config.headers.Authorization) {
             const token = localStorage.getItem("authToken");
@@ -22,7 +22,7 @@ instance.interceptors.request.use(
     }
 );
 
-instance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
     null,
     (error: AxiosError) => {
         if (error.response?.status==401) {
@@ -33,4 +33,4 @@ instance.interceptors.response.use(
 )
 
 
-export default instance
+export default axiosInstance

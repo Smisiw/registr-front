@@ -50,7 +50,7 @@ export const PatientColumns: IColumn[] = [
         filterDropdown: dateTableFilter,
         sorter: true,
         render(data: Date): React.ReactNode {
-            return `${data.toLocaleDateString()}`
+            return `${data}`
         },
         width: 130,
     },
@@ -62,7 +62,7 @@ export const PatientColumns: IColumn[] = [
         filterDropdown: dateTableFilter,
         sorter: false,
         render(data: any): React.ReactNode {
-            return `${data?.toLocaleDateString() || ""}`
+            return `${data || ""}`
         },
         width: 150,
     },
@@ -197,7 +197,7 @@ export const PatientColumns: IColumn[] = [
         filterDropdown: dateTableFilter,
         sorter: true,
         render(data: Date): React.ReactNode {
-            return `${data?.toLocaleDateString() || ""}`
+            return `${data || ""}`
         },
         width: 180,
     },

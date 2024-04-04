@@ -1,46 +1,19 @@
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
-import {ITableParams} from "@/shared/CustomTable";
+import {DEFAULT_TABLE_PAGE_SIZE, ITableParams} from "@/shared/CustomTable";
+import axiosInstance from "@/shared/axiosConfig/axiosConfig";
+import {AxiosError, AxiosResponse} from "axios";
 
-export const getPatients = (
+export const getPatients = async (
     props: ITableParams = {
         currentPage: 1,
         filters: {},
         sortParams: null}
-): { data: IPatientTable[], total: number } => {
+): Promise<{ data: IPatientTable[], total: number }> => {
+    try {
+        const {data}: AxiosResponse<{data: IPatientTable[], total: number}> = await axiosInstance.get("patients", {params: {filters: props.filters, sortParams: props.sortParams, limit: DEFAULT_TABLE_PAGE_SIZE, offset: (props.currentPage-1) * DEFAULT_TABLE_PAGE_SIZE}})
+        return data
+    } catch (e: AxiosError | any) {
+        return {data: [], total: 0}
+    }
 
-    const patients : IPatientTable[] = [
-        {
-            id: 1,
-            full_name: "Иванов Иван Иванович",
-            gender: "М",
-            birth_date: new Date("2000-01-01"),
-            age: 24,
-            phone: 88888888888,
-            address: "Улица Пушкина д.1",
-            count_hospitalization: 3,
-            last_hospitalization_date: new Date(),
-            has_hospitalization: true,
-            lgota_drugs: "нет",
-            location: "НСО",
-            district: "Ленинский",
-            disability: "нет",
-            clinic: "16"
-        },
-        {
-            id: 2,
-            full_name: "Тест Тест",
-            gender: "М",
-            birth_date: new Date("1979-03-01"),
-            age: 45,
-            phone: 12341234124,
-            address: "Улица Пушкина д.1",
-            has_hospitalization: false,
-            lgota_drugs: "нет",
-            location: "НСО",
-            district: "Центральный",
-            disability: "нет",
-            clinic: "16"
-        }
-    ]
-    return {data: patients, total: patients.length}
 }
