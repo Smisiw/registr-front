@@ -1,10 +1,11 @@
 'use client';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
 import {Pagination, Table, TreeSelect} from "antd";
 import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
 import {useRouter} from "next/navigation";
+import {PatientsDataContext} from "@/widgets/PatientsList";
 
 
 interface props {
@@ -12,18 +13,19 @@ interface props {
     availableColumns: IAvailableColumns[]
     selectedColumns: string[]
     setSelectedColumns(selectedColumns: string[]): void
-    data: {
-        data: any
-        total: number
-    }
+    // data: {
+    //     data: any
+    //     total: number
+    // }
     tableParams: ITableParams
     setTableParams(data: ITableParams): void
 }
 
 
-export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams} : props) {
+export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, tableParams, setTableParams} : props) {
     const [visibleColumns, setVisibleColumns] = useState<IColumn[]>(columns.filter(item => selectedColumns.includes(item.key)));
     const router = useRouter()
+    const data = useContext(PatientsDataContext)
     const handlePaginationChange = (
         current: number
 ) => {
@@ -80,6 +82,7 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                 className={styles.table}
                 columns={visibleColumns}
                 rowKey={(record) => record.id}
+                loading={data.loading}
                 onRow={(record, index) => {
                     return {
                         onClick: () => {router.push(`/patients/${record.id}`)}

@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
 import {getPatients} from "@/entities/Patient/api/getPatients";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
@@ -8,6 +8,7 @@ import SearchBar from "@/shared/SearchBar/ui/SearchBar";
 import ButtonNew from "@/shared/Buttons/ui/ButtonNew";
 import styles from "./PatientsList.module.css"
 
+export const PatientsDataContext = createContext<{data: IPatientTable[], loading: boolean, total: number}>({data: [], loading: true, total: 0})
 const PatientsList = () => {
     const [
         patientsTableParams,
@@ -18,7 +19,10 @@ const PatientsList = () => {
             sortParams: null
         }
     )
-    const [patients, setPatients] = useState<{ data: IPatientTable[], total: number }>()
+    const [patients, setPatients] = useState<{ data: IPatientTable[], total: number }>({
+        data: [],
+        total: 0
+    })
     const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
 
@@ -60,30 +64,27 @@ const PatientsList = () => {
 
     return (
         <>
-            {
-                (loading)
-                    ? (<div>Loading...</div>)
-                    : (!patients)
-                        ? (<div>Не удалось получить информацию о пациентах</div>)
-                        : (<>
-                            <h2>Список пациентов</h2>
-                            <div className={styles.container}>
-                                <SearchBar
-                                    value={searchValue}
-                                    onChange={onChangeSearchHandler}
-                                    onPressEnter={searchHandler}
+            <PatientsDataContext.Provider value={{...patients, loading}}>
+                {
+ (<>
+                                <h2>Список пациентов</h2>
+                                <div className={styles.container}>
+                                    <SearchBar
+                                        value={searchValue}
+                                        onChange={onChangeSearchHandler}
+                                        onPressEnter={searchHandler}
+                                    />
+                                    <ButtonNew href={"/patients/new"}>Новый пациент</ButtonNew>
+                                </div>
+                                <PatientTable
+                                    //data={patients}
+                                    tableParams={patientsTableParams}
+                                    setTableParams={setPatientsTableParams}
                                 />
-                                <ButtonNew href={"/patients/new"}>Новый пациент</ButtonNew>
-                            </div>
-                            <PatientTable
-                                data={patients}
-                                tableParams={patientsTableParams}
-                                setTableParams={setPatientsTableParams}
-                            />
-                            </>
-                        )
-            }
-
+                                </>
+                            )
+                }
+            </PatientsDataContext.Provider>
         </>
     );
 };
