@@ -8,7 +8,6 @@ import SearchBar from "@/shared/SearchBar/ui/SearchBar";
 import ButtonNew from "@/shared/Buttons/ui/ButtonNew";
 import styles from "./PatientsList.module.css"
 
-export const PatientsDataContext = createContext<{data: IPatientTable[], loading: boolean, total: number}>({data: [], loading: true, total: 0})
 const PatientsList = () => {
     const [
         patientsTableParams,
@@ -64,7 +63,6 @@ const PatientsList = () => {
 
     return (
         <>
-            <PatientsDataContext.Provider value={{...patients, loading}}>
                 {
  (<>
                                 <h2>Список пациентов</h2>
@@ -77,14 +75,13 @@ const PatientsList = () => {
                                     <ButtonNew href={"/patients/new"}>Новый пациент</ButtonNew>
                                 </div>
                                 <PatientTable
-                                    //data={patients}
+                                    data={{...patients, loading}}
                                     tableParams={patientsTableParams}
                                     setTableParams={setPatientsTableParams}
                                 />
                                 </>
                             )
                 }
-            </PatientsDataContext.Provider>
         </>
     );
 };

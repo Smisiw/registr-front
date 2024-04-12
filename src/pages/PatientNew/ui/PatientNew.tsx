@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import {Space} from "antd";
 
 const PatientNew = () => {
-    const PatientNewForm = dynamic(() => import('../../../widgets/PatientNewForm/ui/PatientNewForm'), {ssr: false})
+    const PatientNewForm = dynamic(() => import('@/entities/Patient/ui/PatientCreate'), {ssr: false})
     return (
         <>
             <Space size={"middle"}>

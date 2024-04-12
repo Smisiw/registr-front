@@ -5,7 +5,7 @@ import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {createPatient} from "@/entities/Patient/api/createPatient";
 
-export const PatientNewForm = () => {
+export const PatientCreate = () => {
     const [form] = Form.useForm()
     const hasHospitalization : boolean = Form.useWatch("has_hospitalization", form)
     const [errorMessage, setErrorMessage] = useState("")
@@ -13,7 +13,7 @@ export const PatientNewForm = () => {
         try {
             await createPatient(values)
         } catch (e: any) {
-            setErrorMessage(e.message)
+            setErrorMessage(e.response.data.message)
         }
     }
     return (
@@ -53,7 +53,7 @@ export const PatientNewForm = () => {
                         <Input/>
                     </Form.Item>
                 </Space>
-                <Space size={"large"}>
+                <Space size={50}>
                     <Form.Item
                         style={{width: 200}}
                         label={"Пол"}
@@ -92,7 +92,7 @@ export const PatientNewForm = () => {
                         <Input/>
                     </Form.Item>
                 </Space>
-                <Space size={"large"}>
+                <Space size={75}>
                     <Form.Item
                         style={{width: 300}}
                         label={"Место жительства"}
@@ -122,28 +122,31 @@ export const PatientNewForm = () => {
                         <Input/>
                     </Form.Item>
                 </Space>
-                <Form.Item
-                    style={{width: "30%"}}
-                    label={"Поликлиника"}
-                    name={"clinic"}
-                    rules={[{required: true, message: 'Введите поликлинику'}]}
-                >
-                    <Input/>
-                </Form.Item>
-                <Form.Item
-                    style={{width: "30%"}}
-                    label={"Направивший врач"}
-                    name={"referring_doctor"}
-                >
-                    <Input/>
-                </Form.Item>
-                <Form.Item
-                    style={{width: "30%"}}
-                    label={"Направившее учреждение"}
-                    name={"referring_clinic_organization"}
-                >
-                    <Input/>
-                </Form.Item>
+                <Space size={"large"}>
+                    <Form.Item
+                        style={{width: 350}}
+                        label={"Поликлиника"}
+                        name={"clinic"}
+                        rules={[{required: true, message: 'Введите поликлинику'}]}
+                    >
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        style={{width: 350}}
+                        label={"Направивший врач"}
+                        name={"referring_doctor"}
+                    >
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        style={{width: 350}}
+                        label={"Направившее учреждение"}
+                        name={"referring_clinic_organization"}
+                    >
+                        <Input/>
+                    </Form.Item>
+                </Space>
+
                 <Form.Item
                     style={{width: 300}}
                     label={"Категория инвалидности"}
@@ -226,4 +229,4 @@ export const PatientNewForm = () => {
     );
 };
 
-export default PatientNewForm;
+export default PatientCreate;

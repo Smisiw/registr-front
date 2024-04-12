@@ -1,7 +1,9 @@
-import {StaticImport} from "next/dist/shared/lib/get-img-props";
+import {SVGProps} from "react";
+
 
 export interface INavItem {
     href: string,
-    icon: string | StaticImport,
+    Icon: (props: SVGProps<SVGSVGElement>) => React.JSX.Element,
     name: string,
+    disabled?: boolean
 }

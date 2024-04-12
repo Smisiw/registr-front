@@ -10,7 +10,17 @@ export const getPatients = async (
         sortParams: null}
 ): Promise<{ data: IPatientTable[], total: number }> => {
     try {
-        const {data}: AxiosResponse<{data: IPatientTable[], total: number}> = await axiosInstance.get("patients", {params: {filters: props.filters, sortParams: props.sortParams, limit: DEFAULT_TABLE_PAGE_SIZE, offset: (props.currentPage-1) * DEFAULT_TABLE_PAGE_SIZE}})
+        const {data}: AxiosResponse<{
+            data: IPatientTable[], total: number
+        }> = await axiosInstance.get(
+            "patients", {
+                params: {
+                    filters: props.filters,
+                    sortParams: props.sortParams,
+                    limit: DEFAULT_TABLE_PAGE_SIZE,
+                    offset: (props.currentPage-1) * DEFAULT_TABLE_PAGE_SIZE
+                }
+            })
         return data
     } catch (e: AxiosError | any) {
         return {data: [], total: 0}

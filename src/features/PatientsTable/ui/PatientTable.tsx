@@ -5,13 +5,15 @@ import {PatientColumns} from "@/features/PatientsTable/config/PatientColumns";
 import {availablePatientColumns} from "@/features/PatientsTable/config/availablePatientColumns";
 import {defaultPatientSelectedColumns} from "@/features/PatientsTable/config/defaultPatientSelectedColumns";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
+import {IPatientTableData} from "@/features/PatientsTable/model/IPatientTableData";
 
 
 interface props {
     tableParams: ITableParams
     setTableParams(data: ITableParams): void
+    data: IPatientTableData
 }
-const PatientTable = ({tableParams, setTableParams}: props) => {
+const PatientTable = ({tableParams, setTableParams, data}: props) => {
     const [selectedColumns, setSelectedColumns] = useState<string[]>(defaultPatientSelectedColumns)
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const PatientTable = ({tableParams, setTableParams}: props) => {
             availableColumns={availablePatientColumns}
             selectedColumns={selectedColumns}
             setSelectedColumns={setSelectedColumns}
+            data={data}
             tableParams={tableParams}
             setTableParams={setTableParams}
         />
