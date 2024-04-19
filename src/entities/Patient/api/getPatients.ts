@@ -1,6 +1,6 @@
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import {DEFAULT_TABLE_PAGE_SIZE, ITableParams} from "@/shared/CustomTable";
-import axiosInstance from "@/shared/axiosConfig/axiosConfig";
+import axiosInstance from "@/app/axiosProvider/axiosProvider";
 import {AxiosError, AxiosResponse} from "axios";
 
 export const getPatients = async (

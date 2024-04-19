@@ -14,3 +14,27 @@ export interface ITextDateFields {
     displayName: string,
     dateName: string,
 }
+
+export interface IIntegerFields {
+    name: string,
+    displayName: string
+}
+
+export interface IDrugTherapyFields {
+    id: number
+    displayName: string,
+    medicine_prescriptions: {
+        id: number,
+        displayName: string,
+        description: string
+    }[]
+}
+
+export interface xx {
+    appointment_id: number
+    medicine_prescriptions: {
+        id: number,
+        dose: string,
+        note: string
+    }[]
+}

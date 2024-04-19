@@ -1,7 +1,7 @@
 'use client';
 import {useContext, useState} from "react";
 import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
-import {Pagination, Table, TreeSelect} from "antd";
+import {Pagination, Table, Tag, TreeSelect} from "antd";
 import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableData, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
 import {useRouter} from "next/navigation";
@@ -68,6 +68,13 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                 className={styles.selector}
                 treeData={availableColumns}
                 value={selectedColumns}
+                tagRender={(props) => (
+                    <Tag
+                        closable={props.closable}
+                        onClose={props.onClose}
+                    >
+                        {props.label}
+                    </Tag>)}
                 onChange={handleColumnsChange}
                 showSearch={false}
                 treeCheckable={true}

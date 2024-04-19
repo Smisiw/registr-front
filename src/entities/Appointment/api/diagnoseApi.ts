@@ -1,4 +1,4 @@
-import axiosInstance from "@/shared/axiosConfig/axiosConfig";
+import axiosInstance from "@/app/axiosProvider/axiosProvider";
 import useSWR from "swr";
 import {IBooleanTextFields} from "@/entities/Appointment/model/IFormDataFields";
 import {AxiosError} from "axios";

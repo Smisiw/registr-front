@@ -1,27 +1,20 @@
 'use client'
 import React, {useState} from 'react';
-import {login} from "@/entities/Session/api";
+import {useSession} from "@/entities/Session/api";
 import styles from "./LoginForm.module.css"
 import {Card, Form, Input, Space, Typography} from "antd";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {ILoginForm} from "@/entities/Session/model/ILoginForm";
-import {useRouter} from "next/navigation";
 
 const LoginForm = () => {
     const [form] = Form.useForm()
     const [errorMessage, setErrorMessage] = useState("")
-    const router = useRouter()
+    const session = useSession()
     const formSubmitHandler = async (values: ILoginForm) => {
         try {
-            await login(values)
-            let defaultPage = localStorage.getItem("defaultPage")
-            if (!defaultPage){
-                localStorage.setItem("defaultPage", '/patients')
-                defaultPage = '/patients'
-            }
-            router.push(defaultPage)
-        } catch (e: {error_code: number, message: string} | any) {
-            setErrorMessage(e.message)
+            await session.login(values)
+        } catch (e: any) {
+            setErrorMessage(e.response.data.message)
         }
     }
     return (

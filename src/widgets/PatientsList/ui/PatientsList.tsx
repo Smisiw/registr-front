@@ -72,7 +72,7 @@ const PatientsList = () => {
                                         onChange={onChangeSearchHandler}
                                         onPressEnter={searchHandler}
                                     />
-                                    <ButtonNew href={"/patients/new"}>Новый пациент</ButtonNew>
+                                    <ButtonNew href={"/appointments/new"}>Новый пациент</ButtonNew>
                                 </div>
                                 <PatientTable
                                     data={{...patients, loading}}

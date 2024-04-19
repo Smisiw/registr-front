@@ -1,7 +1,8 @@
 import React from 'react';
-import PatientsList from "@/widgets/PatientsList/ui/PatientsList";
+import dynamic from "next/dynamic";
 
 const PatientsPage = () => {
+    const PatientsList = dynamic(() => import('@/widgets/PatientsList/ui/PatientsList'), {ssr: false, loading: () => <div>Загрузка...</div>})
     return (
         <>
             <PatientsList/>

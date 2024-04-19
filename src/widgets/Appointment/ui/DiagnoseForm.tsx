@@ -7,11 +7,10 @@ import DiagnoseDisplay from "@/entities/Appointment/ui/DiagnoseDisplay";
 import DiagnoseEdit from "@/entities/Appointment/ui/DiagnoseEdit";
 import DiagnoseCreate from "@/entities/Appointment/ui/DiagnoseCreate";
 
-const DiagnoseForm = () => {
-    const params = useParams<{id?: string}>()
-    const {currentData, error: currentDataError, isLoading: currentDataIsLoading} = useGetCurrentDiagnoseData(params?.id)
-    const {previousData, error: previousDataError, isLoading: previousDataIsLoading} = useGetPreviousDiagnoseData(params?.id)
-    const {appointmentStatus, isLoading: statusIsLoading, error: statusError} = useGetAppointmentStatus(params?.id)
+const DiagnoseForm = ({appointmentId}: {appointmentId: string}) => {
+    const {currentData, error: currentDataError, isLoading: currentDataIsLoading} = useGetCurrentDiagnoseData(appointmentId)
+    const {previousData, error: previousDataError, isLoading: previousDataIsLoading} = useGetPreviousDiagnoseData(appointmentId)
+    const {appointmentStatus, isLoading: statusIsLoading, error: statusError} = useGetAppointmentStatus(appointmentId)
     const [status, setStatus] = useState<FormStatus>()
     if (currentData && appointmentStatus == "completed"){
         setStatus("display")
@@ -25,8 +24,8 @@ const DiagnoseForm = () => {
             {(status == "display")
                 ? (<DiagnoseDisplay data={currentData} setStatus={setStatus}/>)
                 : (status == "edit")
-                    ? (<DiagnoseEdit appointmentId={params?.id || ""} data={currentData}/>)
-                    : (<DiagnoseCreate appointmentId={params?.id || ""} data={previousData}/>)
+                    ? (<DiagnoseEdit appointmentId={appointmentId} data={currentData}/>)
+                    : (<DiagnoseCreate appointmentId={appointmentId} data={previousData}/>)
             }
         </>
     );

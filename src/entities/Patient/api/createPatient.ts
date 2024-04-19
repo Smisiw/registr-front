@@ -1,5 +1,5 @@
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
-import axiosInstance from "@/shared/axiosConfig/axiosConfig";
+import axiosInstance from "@/app/axiosProvider/axiosProvider";
 
 export const createPatient = async (values: IPatientNew): Promise<void> => {
     if (values.birth_date) {

@@ -1,32 +1,33 @@
 import {deleteCookie, setCookie} from "cookies-next";
-import {redirect} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {ILoginForm} from "@/entities/Session/model/ILoginForm";
-import axiosInstance from "../../../shared/axiosConfig/axiosConfig"
-import {AxiosError, AxiosResponse} from "axios";
+import axiosInstance from "@/app/axiosProvider/axiosProvider"
 
-export const login = async (loginForm: ILoginForm): Promise<void> => {
-    try {
-        const {data}: AxiosResponse<{token: string}, AxiosError> = await axiosInstance.post("auth/login/", loginForm)
-        setCookie('authToken', data.token)
-        localStorage.setItem("authToken", data.token)
-    } catch (e: AxiosError | any) {
-        return Promise.reject(e.response.data)
+
+
+export const useSession = () => {
+    const router = useRouter()
+    return {
+        login: async (loginForm: ILoginForm) => {
+            return axiosInstance.post("auth/login/", loginForm).then(({data}) => {
+                setCookie('authToken', data.token)
+                localStorage.setItem("authToken", data.token)
+                let lastPage = localStorage.getItem("lastPage")
+                if (!lastPage){
+                    localStorage.setItem("lastPage", '/patients')
+                    lastPage = '/patients'
+                }
+                router.push(lastPage)
+            })
+        },
+        logout: () => {
+            console.log(42)
+            deleteCookie('authToken')
+            localStorage.setItem("lastPage", window.location.pathname + window.location.search)
+            localStorage.removeItem("authToken")
+            router.push("/auth")
+        }
     }
-}
-
-export const logout = () => {
-    deleteCookie('authToken')
-    localStorage.removeItem("authToken")
-    if (window){
-        window.location.href = "/auth"
-    } else {
-        redirect('/auth')
-    }
-
-}
-
-export const isAuthenticated = ():boolean => {
-    return !!localStorage.getItem("authToken");
 }
 
 export const getRole = () => {

@@ -4,6 +4,7 @@ import {Button, Card, Checkbox, DatePicker, Form, Input, InputNumber, Radio, Spa
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {createPatient} from "@/entities/Patient/api/createPatient";
+import Link from "next/link";
 
 export const PatientCreate = () => {
     const [form] = Form.useForm()
@@ -214,9 +215,11 @@ export const PatientCreate = () => {
                 </Form.Item>
                 <Space size={"large"}>
                     <Form.Item>
-                        <Button htmlType={"reset"}>
-                            Отмена
-                        </Button>
+                        <Link href={"/appointments/new"}>
+                            <Button>
+                                Отмена
+                            </Button>
+                        </Link>
                     </Form.Item>
                     <Form.Item>
                         <SubmitButton form={form}>

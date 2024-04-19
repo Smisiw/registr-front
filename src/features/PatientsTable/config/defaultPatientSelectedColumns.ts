@@ -1,11 +1,12 @@
 'use client'
+import {isWindowDefined} from "swr/_internal";
+
 export const defaultPatientSelectedColumns = () => {
-    const patientsSelectedColumns = localStorage.getItem("patientsSelectedColumns")
-    if(patientsSelectedColumns){
-        return patientsSelectedColumns.split(",")
+    if (isWindowDefined){
+        const patientsSelectedColumns = localStorage.getItem("patientsSelectedColumns")
+        if(patientsSelectedColumns){
+            return patientsSelectedColumns.split(",")
+        }
     }
-    else {
-        return ["id", "full_name", "gender", "age", "location", "district", "address"]
-    }
+    return ["id", "full_name", "gender", "age", "location", "district", "address"]
 }
-//TODO: Исправить ошибку в консоле с localStorage

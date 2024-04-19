@@ -4,7 +4,6 @@ import {CustomTable, ITableParams} from "@/shared/CustomTable";
 import {PatientColumns} from "@/features/PatientsTable/config/PatientColumns";
 import {availablePatientColumns} from "@/features/PatientsTable/config/availablePatientColumns";
 import {defaultPatientSelectedColumns} from "@/features/PatientsTable/config/defaultPatientSelectedColumns";
-import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import {IPatientTableData} from "@/features/PatientsTable/model/IPatientTableData";
 
 

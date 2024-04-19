@@ -1,5 +1,5 @@
 import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Form, Input, Radio, Space, Typography} from "antd";
+import {Card, Checkbox, Form, Input, Radio, Space, Spin, Typography} from "antd";
 import {useGetDiagnoseFields} from "@/entities/Appointment/api/diagnoseApi";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
@@ -15,6 +15,8 @@ const DiagnoseDisplay = ({data, setStatus}: { data: any, setStatus: Dispatch<For
             setErrorMessage(e.message)
         }
     }
+    if (fieldsError) return <div>Ошибка загрузки</div>
+    if (fieldsIsLoading) return <Spin/>
 
     return (
         <Card>
