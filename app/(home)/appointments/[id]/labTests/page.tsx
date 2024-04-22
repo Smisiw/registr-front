@@ -1,9 +1,16 @@
 import React from 'react';
+import LabTestsPage from "@/pages/LabTests/ui/LabTestsPage";
 
-const Page = () => {
+const Page = ({
+                  params
+              }: {
+    params: {
+        id: string
+    }
+}) => {
     return (
         <>
-            
+            <LabTestsPage appointmentId={params.id}/>
         </>
     );
 };

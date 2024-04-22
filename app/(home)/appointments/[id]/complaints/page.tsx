@@ -1,9 +1,16 @@
 import React from 'react';
+import ComplaintsPage from "@/pages/Complaints/ui/ComplaintsPage";
 
-const Page = () => {
+const Page = ({
+                  params
+              }: {
+    params: {
+        id: string
+    }
+}) => {
     return (
         <>
-            
+            <ComplaintsPage appointmentId={params.id}/>
         </>
     );
 };

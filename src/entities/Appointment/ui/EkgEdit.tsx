@@ -1,17 +1,19 @@
-'use client'
-import React, {useState} from 'react';
-import {Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch, useState} from 'react';
+import {Button, Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
+import { ekgUpdate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
-import {ekgCreate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
+import {FormStatus} from "@/entities/Appointment/model/FormStatus";
+import dayjs from "dayjs";
 
-const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
+const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetEkgFields()
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
-            await ekgCreate(appointmentId, values)
+            await ekgUpdate(appointmentId, values)
+            setStatus("display")
         } catch (e: any) {
             setErrorMessage(e.message)
         }
@@ -29,11 +31,18 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                 style={{width: "100%"}}
                 title={"ЭКГ и Эхо-КГ"}
                 extra={
-                    <Form.Item>
-                        <SubmitButton form={form}>
-                            Сохранить
-                        </SubmitButton>
-                    </Form.Item>
+                    <Space>
+                        <Form.Item>
+                            <Button onClick={() => setStatus("display")}>
+                                Отмена
+                            </Button>
+                        </Form.Item>
+                        <Form.Item>
+                            <SubmitButton form={form}>
+                                Сохранить
+                            </SubmitButton>
+                        </Form.Item>
+                    </Space>
                 }
             >
                 <Typography.Text type={"danger"}>
@@ -46,6 +55,7 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                             <Form.Item
                                 label={"Дата"}
                                 name={"date_ekg"}
+                                initialValue={dayjs(data.date_ekg, "DD.MM.YYYY")}
                             >
                                 <DatePicker format={"DD.MM.YYYY"}/>
                             </Form.Item>
@@ -60,7 +70,7 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                                     key={field.name}
                                     name={field.name}
                                     valuePropName={"checked"}
-                                    initialValue={false}
+                                    initialValue={data[field.name]}
                                 >
                                     <Checkbox>{field.displayName}</Checkbox>
                                 </Form.Item>
@@ -69,7 +79,7 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                             <Form.Item
                                 style={{width: "100%"}}
                                 name={"another_changes"}
-
+                                initialValue={data.another_changes}
                             >
                                 <Input.TextArea/>
                             </Form.Item>
@@ -83,6 +93,7 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                             <Form.Item
                                 label={"Дата"}
                                 name={"date_echo_ekg"}
+                                initialValue={dayjs(data.date_echo_ekg, "DD.MM.YYYY")}
                             >
                                 <DatePicker format={"DD.MM.YYYY"}/>
                             </Form.Item>
@@ -99,6 +110,7 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                                             <Col span={14}>
                                                 <Form.Item
                                                     name={field.name}
+                                                    initialValue={data[field.name]}
                                                 >
                                                     <InputNumber/>
                                                 </Form.Item>
@@ -117,19 +129,19 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
                                             key={field.name}
                                             name={field.name}
                                             valuePropName={"checked"}
-                                            initialValue={false}
+                                            initialValue={data[field.name]}
                                         >
                                             <Checkbox>{field.displayName}</Checkbox>
                                         </Form.Item>
                                     ))}
                                 </Space>
-
                             </Col>
                         </Row>
                         Примечание:
                         <Form.Item
                             style={{width: "100%"}}
                             name={"note"}
+                            initialValue={data.note}
                         >
                             <Input.TextArea/>
                         </Form.Item>
@@ -140,4 +152,4 @@ const EkgsCreate = ({appointmentId}: { appointmentId: string}) => {
     );
 };
 
-export default EkgsCreate;
+export default EkgEdit;

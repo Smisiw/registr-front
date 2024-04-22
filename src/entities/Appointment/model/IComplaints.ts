@@ -1,12 +1,8 @@
 export interface IComplaints {
     note: string,
-    [other: string]: unknown
-}
-
-export interface IClinicalConditions {
     height: number,
     weight: number,
-    bmi: number,
+    bmi: string,
     systolic_bp: number,
     diastolic_bp: number,
     heart_rate: number,

@@ -1,12 +1,11 @@
-'use client'
 import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Col, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
-import {FormStatus} from "@/entities/Appointment/model/FormStatus";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
-import {complaintsCreate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
+import {Button, Card, Checkbox, Col, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
+import {complaintsUpdate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
 import {IComplaints} from "@/entities/Appointment/model/IComplaints";
+import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 
-const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
+const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: IComplaints }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetComplaintsFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -16,7 +15,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
     const formSubmitHandler = async (values: IComplaints)=> {
         try {
             values.bmi = (weight/Math.pow((height/100), 2)).toFixed(2)
-            await complaintsCreate(appointmentId, values)
+            await complaintsUpdate(appointmentId, values)
             setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)
@@ -34,11 +33,18 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
             <Card
                 title={"Жалобы"}
                 extra={
-                    <Form.Item>
-                        <SubmitButton form={form}>
-                            Сохранить
-                        </SubmitButton>
-                    </Form.Item>
+                    <Space>
+                        <Form.Item>
+                            <Button onClick={() => setStatus("display")}>
+                                Отмена
+                            </Button>
+                        </Form.Item>
+                        <Form.Item>
+                            <SubmitButton form={form}>
+                                Сохранить
+                            </SubmitButton>
+                        </Form.Item>
+                    </Space>
                 }
             >
                 <Typography.Text type={"danger"}>
@@ -52,6 +58,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"Рост"}
                                     name={"height"}
                                     rules={[{required: true, message: "Укажите рост"}]}
+                                    initialValue={data.height}
                                 >
                                     <InputNumber/>
                                 </Form.Item>
@@ -59,12 +66,14 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"Вес"}
                                     name={"weight"}
                                     rules={[{required: true, message: "Укажите вес"}]}
+                                    initialValue={data.weight}
                                 >
                                     <InputNumber/>
                                 </Form.Item>
                                 <Form.Item
                                     label={"ИМТ"}
                                     name={"bmi"}
+                                    initialValue={data.bmi}
                                 >
                                     {(weight/Math.pow((height/100), 2)).toFixed(2) || ""}
                                 </Form.Item>
@@ -72,6 +81,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"Систолическое АД"}
                                     name={"systolic_bp"}
                                     rules={[{required: true, message: "Укажите систолическое АД"}]}
+                                    initialValue={data.systolic_bp}
                                 >
                                     <InputNumber/>
                                 </Form.Item>
@@ -79,6 +89,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"Диастолическое АД"}
                                     name={"diastolic_bp"}
                                     rules={[{required: true, message: "Укажите диастолическое АД"}]}
+                                    initialValue={data.diastolic_bp}
                                 >
                                     <InputNumber/>
                                 </Form.Item>
@@ -86,6 +97,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"ЧСС"}
                                     name={"heart_rate"}
                                     rules={[{required: true, message: "Укажите ЧСС"}]}
+                                    initialValue={data.heart_rate}
                                 >
                                     <InputNumber/>
                                 </Form.Item>
@@ -93,6 +105,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"Дистанция 6-минутной ходьбы"}
                                     name={"six_min_walk_distance"}
                                     rules={[{required: true, message: "Укажите дистанцию 6-минутной ходьбы"}]}
+                                    initialValue={data.six_min_walk_distance}
                                 >
                                     <InputNumber/>
                                 </Form.Item>
@@ -103,7 +116,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                         key={field.name}
                                         name={field.name}
                                         valuePropName={"checked"}
-                                        initialValue={false}
+                                        initialValue={data[field.name]}
                                     >
                                         <Checkbox>{field.displayName}</Checkbox>
                                     </Form.Item>
@@ -111,6 +124,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                 Примечание:
                                 <Form.Item
                                     name={"note"}
+                                    initialValue={data.note}
                                 >
                                     <Input.TextArea/>
                                 </Form.Item>
@@ -119,24 +133,25 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                     </Col>
                     <Col span={14}>
                         <Card title={"Клиническое состояние"}>
-                        <Row>
-                            {fields.conditions.map(field => (
-                                <Col span={12} key={field.name}>
-                                    <Form.Item
-                                        name={field.name}
-                                        valuePropName={"checked"}
-                                        initialValue={false}
-                                    >
-                                        <Checkbox>{field.displayName}</Checkbox>
-                                    </Form.Item>
-                                </Col>
+                            <Row>
+                                {fields.conditions.map(field => (
+                                    <Col span={12} key={field.name}>
+                                        <Form.Item
+                                            name={field.name}
+                                            valuePropName={"checked"}
+                                            initialValue={data[field.name]}
+                                        >
+                                            <Checkbox>{field.displayName}</Checkbox>
+                                        </Form.Item>
+                                    </Col>
 
-                            ))}
-                        </Row>
+                                ))}
+                            </Row>
 
                             Примечание:
                             <Form.Item
                                 name={"other_symptoms"}
+                                initialValue={data.other_symptoms}
                             >
                                 <Input.TextArea/>
                             </Form.Item>
@@ -148,4 +163,4 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
     );
 };
 
-export default ComplaintsCreate;
+export default ComplaintsEdit;

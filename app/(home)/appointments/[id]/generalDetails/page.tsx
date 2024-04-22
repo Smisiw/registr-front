@@ -1,5 +1,5 @@
 import React from 'react';
-import GeneralDetailsPage from "@/pages/GeneralDetailsPage/ui/GeneralDetailsPage";
+import GeneralDetailsPage from "@/pages/GeneralDetails/ui/GeneralDetailsPage";
 
 const Page = ({
       params,
@@ -14,7 +14,7 @@ const Page = ({
 }) => {
     return (
         <>
-            <GeneralDetailsPage status={searchParams.status} patientId={params.id}/>
+            <GeneralDetailsPage status={searchParams.status} appointmentId={params.id}/>
         </>
     );
 };

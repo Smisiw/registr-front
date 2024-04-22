@@ -1,19 +1,21 @@
 'use client'
-import React, {useState} from 'react';
+import React, {Dispatch, useState} from 'react';
 import {Card, Checkbox, Col, Form, Input, Radio, Row, Space, Spin, Typography} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {diagnoseCreate, useGetDiagnoseFields} from "@/entities/Appointment/api/diagnoseApi";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {IDiagnose} from "@/entities/Appointment/model/IDiagnose";
+import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 
 
-const DiagnoseCreate = ({appointmentId, data}: { appointmentId: string, data?: IDiagnose }) => {
+const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data?: IDiagnose }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDiagnoseFields()
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
             await diagnoseCreate(appointmentId, values)
+            setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)
         }
@@ -131,11 +133,8 @@ const DiagnoseCreate = ({appointmentId, data}: { appointmentId: string, data?: I
                                 ))}
                             </Row>
                         </Card>
-
-
                     </Col>
                 </Row>
-
             </Card>
         </Form>
     );

@@ -1,7 +1,7 @@
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import axiosInstance from "@/app/axiosProvider/axiosProvider";
 
-export const createPatient = async (values: IPatientNew): Promise<void> => {
+export const createPatient = async (values: IPatientNew)=> {
     if (values.birth_date) {
         values.birth_date= new Date(values.birth_date).toLocaleDateString()
     }

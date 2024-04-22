@@ -1,9 +1,16 @@
 import React from 'react';
+import DrugTherapyPage from "@/pages/DrugTherapy/ui/DrugTherapyPage";
 
-const Page = () => {
+const Page = ({
+                  params
+              }: {
+    params: {
+        id: string
+    }
+}) => {
     return (
         <>
-            
+            <DrugTherapyPage appointmentId={params.id}/>
         </>
     );
 };

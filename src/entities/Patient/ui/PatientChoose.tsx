@@ -10,10 +10,10 @@ const PatientChoose = () => {
     const [name, setName] = useState("")
     const {patients, isLoading, error, mutate} = useGetPatientsByName(name)
     const router = useRouter()
-    const selectHandler = async (value: string) => {
+    const selectHandler = async (value: any) => {
         try {
-            await initAppointment(value)
-            router.push(`/appointments/${value}/generalDetails`)
+            const appointmentId = await initAppointment(value.value)
+            router.push(`/appointments/${appointmentId}/generalDetails`)
         } catch (e) {
             console.log(e)
         }

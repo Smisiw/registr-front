@@ -1,17 +1,18 @@
-import React, {useState} from 'react';
-import {Card, DatePicker, Form, Input, Space, Spin, Typography} from "antd";
-import {labTestsUpdate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
+import React, {Dispatch, useState} from 'react';
+import {Button, Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
+import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
-import {IDiagnose} from "@/entities/Appointment/model/IDiagnose";
+import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 
-const LabTestsEdit = ({appointmentId, data}: { appointmentId: string, data: IDiagnose }) => {
+const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetLabTestsFields()
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
-            await labTestsUpdate(appointmentId, values)
+            await labTestsCreate(appointmentId, values)
+            setStatus("display")
         } catch (e: any) {
             setErrorMessage(e.message)
         }
@@ -20,101 +21,178 @@ const LabTestsEdit = ({appointmentId, data}: { appointmentId: string, data: IDia
     if (fieldsIsLoading) return <Spin/>
 
     return (
-        <Card>
-            <Form
-                form={form}
-                layout={"vertical"}
-                onFinish={formSubmitHandler}
+        <Form
+            form={form}
+            layout={"inline"}
+            onFinish={formSubmitHandler}
+        >
+            <Card
+                title={"Лабораторные тесты"}
+                extra={
+                    <Space>
+                        <Form.Item>
+                            <Button onClick={() => setStatus("display")}>
+                                Отмена
+                            </Button>
+                        </Form.Item>
+                        <Form.Item>
+                            <SubmitButton form={form}>
+                                Сохранить
+                            </SubmitButton>
+                        </Form.Item>
+                    </Space>
+                }
             >
                 <Typography.Text type={"danger"}>
                     {errorMessage}
                 </Typography.Text>
-                <h2>Гормональный анализ крови</h2>
-                {fields.hormonal_blood_analysis.map(field => (
-                    <Space key={field.textName}>
-                        <Form.Item
-                            name={field.textName}
-                            label={field.displayName}
-                            initialValue={data[field.textName]}
+                <Row gutter={[32, 16]} align={"middle"}>
+                    <Col span={12}>
+                        <Space
+                            direction={"vertical"}
+                            size={"middle"}
                         >
-                            <Input/>
-                        </Form.Item>
-                        <Form.Item
-                            name={field.dateName}
-                            initialValue={data[field.dateName]}
+                            <Card
+                                title={"Гормональный анализ крови"}
+                            >
+                                <Row gutter={[32, 16]}>
+                                    {fields.hormonal_blood_analysis.map(field => (
+                                        <>
+                                            <Col span={5}>
+                                                {field.displayName}:
+                                            </Col>
+                                            <Col span={7}>
+                                                <Form.Item
+                                                    name={field.textName}
+                                                    initialValue={data[field.textName]}
+                                                >
+                                                    <Input/>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={12}>
+                                                <Form.Item
+                                                    label={"Дата"}
+                                                    name={field.dateName}
+                                                    initialValue={data[field.dateName]}
+                                                >
+                                                    <DatePicker format={"DD.MM.YYYY"}/>
+                                                </Form.Item>
+                                            </Col>
+                                        </>
+                                    ))}
+                                </Row>
+                            </Card>
+                            <Card
+                                title={"Общий анализ крови"}
+                            >
+                                <Row gutter={[32, 16]}>
+                                    {fields.general_blood_analysis.map(field => (
+                                        <>
+                                            <Col span={5}>
+                                                {field.displayName}:
+                                            </Col>
+                                            <Col span={7}>
+                                                <Form.Item
+                                                    name={field.textName}
+                                                    initialValue={data[field.textName]}
+                                                >
+                                                    <Input/>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={12}>
+                                                <Form.Item
+                                                    label={"Дата"}
+                                                    name={field.dateName}
+                                                    initialValue={data[field.dateName]}
+                                                >
+                                                    <DatePicker format={"DD.MM.YYYY"}/>
+                                                </Form.Item>
+                                            </Col>
+                                        </>
+                                    ))}
+                                </Row>
+                            </Card>
+                        </Space>
+                    </Col>
+                    <Col span={12}>
+                        <Card
+                            title={"Общий анализ мочи"}
                         >
-                            <DatePicker format={"DD.MM.YYYY"}/>
-                        </Form.Item>
-                    </Space>
-                ))}
-                <h2>Общий анализ крови</h2>
-                {fields.general_blood_analysis.map(field => (
-                    <Space key={field.textName}>
-                        <Form.Item
-                            name={field.textName}
-                            label={field.displayName}
-                            initialValue={data[field.textName]}
+                            <Row gutter={[32, 16]}>
+                                {fields.general_urine_analysis.map(field => (
+                                    <>
+                                        <Col span={6}>
+                                            {field.displayName}:
+                                        </Col>
+                                        <Col span={6}>
+                                            <Form.Item
+                                                name={field.textName}
+                                                initialValue={data[field.textName]}
+                                            >
+                                                <Input/>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col span={12}>
+                                            <Form.Item
+                                                label={"Дата"}
+                                                name={field.dateName}
+                                                initialValue={data[field.dateName]}
+                                            >
+                                                <DatePicker format={"DD.MM.YYYY"}/>
+                                            </Form.Item>
+                                        </Col>
+                                    </>
+                                ))}
+                            </Row>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card
+                            title={"Биохимический анализ крови"}
                         >
-                            <Input/>
-                        </Form.Item>
+                            <Row gutter={[32, 16]}>
+                                {fields.blood_chemistry.map(field => (
+                                    <Col span={12} key={field.textName}>
+                                        <Row gutter={32}>
+                                            <Col span={4}>
+                                                {field.displayName}:
+                                            </Col>
+                                            <Col span={8}>
+                                                <Form.Item
+                                                    name={field.textName}
+                                                    initialValue={data[field.textName]}
+                                                >
+                                                    <Input/>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={12}>
+                                                <Form.Item
+                                                    label={"Дата"}
+                                                    name={field.dateName}
+                                                    initialValue={data[field.dateName]}
+                                                >
+                                                    <DatePicker format={"DD.MM.YYYY"}/>
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Card>
+                    </Col>
+                    <Col span={24}>
                         <Form.Item
-                            name={field.dateName}
-                            initialValue={data[field.dateName]}
+                            style={{width: "100%"}}
+                            name={"note"}
+                            initialValue={data.note}
                         >
-                            <DatePicker format={"DD.MM.YYYY"}/>
+                            Примечание:
+                            <Input.TextArea style={{height: 100}}/>
                         </Form.Item>
-                    </Space>
-                ))}
-                <h2>Биохимический анализ крови</h2>
-                {fields.blood_chemistry.map(field => (
-                    <Space key={field.textName}>
-                        <Form.Item
-                            name={field.textName}
-                            label={field.displayName}
-                            initialValue={data[field.textName]}
-                        >
-                            <Input/>
-                        </Form.Item>
-                        <Form.Item
-                            name={field.dateName}
-                            initialValue={data[field.dateName]}
-                        >
-                            <DatePicker format={"DD.MM.YYYY"}/>
-                        </Form.Item>
-                    </Space>
-                ))}
-                <h2>Общий анализ мочи</h2>
-                {fields.general_urine_analysis.map(field => (
-                    <Space key={field.textName}>
-                        <Form.Item
-                            name={field.textName}
-                            label={field.displayName}
-                            initialValue={data[field.textName]}
-                        >
-                            <Input/>
-                        </Form.Item>
-                        <Form.Item
-                            name={field.dateName}
-                            initialValue={data[field.dateName]}
-                        >
-                            <DatePicker format={"DD.MM.YYYY"}/>
-                        </Form.Item>
-                    </Space>
-                ))}
-                <Form.Item
-                    style={{width: "100%"}}
-                    label={"Примечание"}
-                    name={"note"}
-                >
-                    <Input.TextArea/>
-                </Form.Item>
-                <Form.Item>
-                    <SubmitButton form={form}>
-                        Сохранить
-                    </SubmitButton>
-                </Form.Item>
-            </Form>
-        </Card>
+                    </Col>
+                </Row>
+            </Card>
+        </Form>
     );
 };
 

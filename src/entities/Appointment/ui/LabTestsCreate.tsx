@@ -1,18 +1,19 @@
 'use client'
-import React, {useState} from 'react';
-import {Card, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
-import {diagnoseCreate, } from "@/entities/Appointment/api/diagnoseApi";
+import React, {Dispatch, useState} from 'react';
+import {Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
+import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 
-const LabTestsCreate = ({appointmentId}: { appointmentId: string}) => {
+const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetLabTestsFields()
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
             await labTestsCreate(appointmentId, values)
+            setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)
         }

@@ -21,7 +21,6 @@ export interface IIntegerFields {
 }
 
 export interface IDrugTherapyFields {
-    id: number
     displayName: string,
     medicine_prescriptions: {
         id: number,

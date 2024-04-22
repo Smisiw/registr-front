@@ -1,14 +1,12 @@
-'use client'
 import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Col, Form, Input, Row, Select, Space, Spin, Typography} from "antd";
-
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
-import {drugTherapyCreate, useGetDrugTherapyFields} from "@/entities/Appointment/api/drugTherapyApi";
-import {IDrugTherapyFields} from "@/entities/Appointment/model/IFormDataFields";
+import {Button, Card, Checkbox, Col, Form, Input, Row, Select, Space, Spin, Typography} from "antd";
+import {drugTherapyUpdate, useGetDrugTherapyFields} from "@/entities/Appointment/api/drugTherapyApi";
 import {IDrugTherapy} from "@/entities/Appointment/model/IDrugTherapy";
+import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import {IDrugTherapyFields} from "@/entities/Appointment/model/IFormDataFields";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 
-const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
+const DrugTherapyEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDrugTherapyFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -29,8 +27,8 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
                     })
                 }
             }
-            await drugTherapyCreate(appointmentId, data)
-            setStatus("edit")
+            await drugTherapyUpdate(appointmentId, data)
+            setStatus("display")
         } catch (e: any) {
             setErrorMessage(e.message)
         }
@@ -47,11 +45,18 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
             <Card
                 title={"Лекарственная терапия"}
                 extra={
-                    <Form.Item>
-                        <SubmitButton form={form}>
-                            Сохранить
-                        </SubmitButton>
-                    </Form.Item>
+                    <Space>
+                        <Form.Item>
+                            <Button onClick={() => setStatus("display")}>
+                                Отмена
+                            </Button>
+                        </Form.Item>
+                        <Form.Item>
+                            <SubmitButton form={form}>
+                                Сохранить
+                            </SubmitButton>
+                        </Form.Item>
+                    </Space>
                 }
             >
                 <Typography.Text type={"danger"}>
@@ -60,25 +65,24 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
                 <Card title={"Лекарственная терапия"}>
                     <Row gutter={[32, 16]}>
                         {fields.map(field => (
-                            <DrugTherapyField field={field} key={field.displayName}/>
+                            <DrugTherapyField field={field} data={data} key={field.displayName}/>
                         ))}
                     </Row>
-
                     <Form.Item
                         style={{width: "100%"}}
                         name={"note"}
+                        initialValue={data.note}
                     >
                         Примечание: <Input.TextArea/>
                     </Form.Item>
                 </Card>
-
             </Card>
         </Form>
     );
 };
 
 
-const DrugTherapyField = ({field}: {field: IDrugTherapyFields}) => {
+const DrugTherapyField = ({field, data}: {field: IDrugTherapyFields, data: any}) => {
     const [isActive, setIsActive] = useState(false)
     return (
         <Form.List name={field.displayName} key={field.displayName}>
@@ -89,7 +93,7 @@ const DrugTherapyField = ({field}: {field: IDrugTherapyFields}) => {
                             <Form.Item
                                 name={"isActive"}
                                 valuePropName={"checked"}
-                                initialValue={false}
+                                initialValue={!!data[field.displayName]}
                             >
                                 <Checkbox
                                     checked={isActive}
@@ -103,6 +107,7 @@ const DrugTherapyField = ({field}: {field: IDrugTherapyFields}) => {
                                     style={{width: 200}}
                                     name={"medicine_prescription_id"}
                                     rules={[{required: isActive}]}
+                                    initialValue={data[field.displayName].id}
                                 >
                                     <Select
                                         options={field.medicine_prescriptions.map(data => ({
@@ -116,12 +121,14 @@ const DrugTherapyField = ({field}: {field: IDrugTherapyFields}) => {
                                     name={"dosa"}
                                     label={"Доза"}
                                     rules={[{required: isActive}]}
+                                    initialValue={data[field.displayName].dosa}
                                 >
                                     <Input style={{width: 150}}/>
                                 </Form.Item>
                                 <Form.Item
                                     name={"note"}
                                     label={"Примечание"}
+                                    initialValue={data[field.displayName].note || ""}
                                 >
                                     <Input/>
                                 </Form.Item>
@@ -134,5 +141,4 @@ const DrugTherapyField = ({field}: {field: IDrugTherapyFields}) => {
     );
 };
 
-
-export default DrugTherapyCreate;
+export default DrugTherapyEdit;

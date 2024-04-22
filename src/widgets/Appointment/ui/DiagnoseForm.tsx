@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useParams} from "next/navigation";
 import {useGetCurrentDiagnoseData, useGetPreviousDiagnoseData} from "@/entities/Appointment/api/diagnoseApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import {useGetAppointmentStatus} from "@/entities/Appointment/api/appointmentApi";
@@ -24,8 +23,8 @@ const DiagnoseForm = ({appointmentId}: {appointmentId: string}) => {
             {(status == "display")
                 ? (<DiagnoseDisplay data={currentData} setStatus={setStatus}/>)
                 : (status == "edit")
-                    ? (<DiagnoseEdit appointmentId={appointmentId} data={currentData}/>)
-                    : (<DiagnoseCreate appointmentId={appointmentId} data={previousData}/>)
+                    ? (<DiagnoseEdit setStatus={setStatus} appointmentId={appointmentId} data={currentData}/>)
+                    : (<DiagnoseCreate setStatus={setStatus} appointmentId={appointmentId} data={previousData}/>)
             }
         </>
     );

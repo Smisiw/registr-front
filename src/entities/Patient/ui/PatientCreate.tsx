@@ -5,14 +5,20 @@ import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {createPatient} from "@/entities/Patient/api/createPatient";
 import Link from "next/link";
+import {initAppointment} from "@/entities/Patient/api/initAppointment";
+import {useRouter} from "next/navigation";
+import {IPatient} from "@/entities/Patient/model/IPatient";
 
 export const PatientCreate = () => {
     const [form] = Form.useForm()
     const hasHospitalization : boolean = Form.useWatch("has_hospitalization", form)
     const [errorMessage, setErrorMessage] = useState("")
+    const router = useRouter()
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
-            await createPatient(values)
+            const patient: IPatient = await createPatient(values)
+            const appointmentId = await initAppointment(patient.id)
+            router.push(`/appointments/${appointmentId}/generalDetails`)
         } catch (e: any) {
             setErrorMessage(e.response.data.message)
         }

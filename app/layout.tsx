@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import {MainLayout} from "@/pages/MainLayout";
 import "./global.css"
 import {ConfigProvider} from "antd";
 import {AxiosProvider} from "@/app/axiosProvider/axiosProvider";
@@ -29,7 +28,7 @@ export default function RootLayout({
                 },
                 Select: {
                     borderRadius: 20,
-                    colorBorder: "rgba(255,255,255,0)",
+                    colorBorder: "#E8E8E8",
                     borderRadiusSM: 100,
                     colorPrimary: '#7EB0C6',
                     colorPrimaryHover: '#7EB0C6',
