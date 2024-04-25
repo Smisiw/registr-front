@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import {
     Button,
@@ -13,7 +14,7 @@ const PatientDisplay = ({data}: {data: IPatient}) => {
         <Card
             title={"Карточка пациента"}
             extra={
-            <Link href={`${data.id}/?status=edit`}>
+            <Link href={`?status=edit`}>
                 <Button >
                     Изменить
                 </Button>

@@ -1,21 +1,28 @@
-import React, {useState} from 'react';
+'use client'
+import React, {useEffect, useState} from 'react';
 import {useGetCurrentLabTestsData} from "@/entities/Appointment/api/labTestsApi";
 import {useGetAppointmentStatus} from "@/entities/Appointment/api/appointmentApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import EkgEdit from "@/entities/Appointment/ui/EkgEdit";
 import EkgCreate from "@/entities/Appointment/ui/EkgCreate";
+import {Spin} from "antd";
 
 const EkgForm = ({appointmentId}: {appointmentId: string}) => {
     const {currentData, error: currentDataError, isLoading: currentDataIsLoading} = useGetCurrentLabTestsData(appointmentId)
     const {appointmentStatus, isLoading: statusIsLoading, error: statusError} = useGetAppointmentStatus(appointmentId)
     const [status, setStatus] = useState<FormStatus>()
-    if (currentData && appointmentStatus == "completed"){
-        setStatus("display")
-    } else if (currentData) {
-        setStatus("edit")
-    } else {
-        setStatus("create")
-    }
+    useEffect(()=>{
+        if (currentData && appointmentStatus == "completed"){
+            setStatus("display")
+        } else if (currentData) {
+            setStatus("edit")
+        } else if (currentDataError?.response.data.error_code===404) {
+            setStatus("create")
+        }
+    }, [])
+
+    if (statusError) return <div>Ошибка загрузки</div>
+    if (currentDataIsLoading || statusIsLoading) return <Spin/>
     return (
         <>
             {(status == "display")

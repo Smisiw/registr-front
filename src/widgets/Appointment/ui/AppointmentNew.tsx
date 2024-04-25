@@ -1,8 +1,9 @@
 import React from 'react';
-import PatientCreate from "@/entities/Patient/ui/PatientCreate";
-import PatientChoose from "@/entities/Patient/ui/PatientChoose";
+import dynamic from "next/dynamic";
 
 const AppointmentNew = ({status}: {status: string}) => {
+    const PatientCreate = dynamic(() => import("@/entities/Patient/ui/PatientCreate"), {ssr: false})
+    const PatientChoose = dynamic(() => import("@/entities/Patient/ui/PatientChoose"), {ssr: false})
     return (
         <>
             {(status == "create")

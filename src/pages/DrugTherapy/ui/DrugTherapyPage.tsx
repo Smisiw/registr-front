@@ -1,7 +1,9 @@
 import React from 'react';
-import DrugTherapyForm from "@/widgets/Appointment/ui/DrugTherapyForm";
+import dynamic from "next/dynamic";
 
 const DrugTherapyPage = ({appointmentId}: {appointmentId: string}) => {
+    const DrugTherapyForm = dynamic(() => import("@/widgets/Appointment/ui/DrugTherapyForm"), {ssr: false})
+
     return (
         <>
             <DrugTherapyForm appointmentId={appointmentId}/>

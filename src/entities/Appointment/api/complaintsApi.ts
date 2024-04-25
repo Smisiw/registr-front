@@ -1,7 +1,6 @@
 import axiosInstance from "@/app/axiosProvider/axiosProvider";
 import {AxiosError} from "axios";
 import useSWR from "swr";
-import {ILabTestsFields} from "@/entities/Appointment/model/ILabTestsFields";
 import {IBooleanFields} from "@/entities/Appointment/model/IFormDataFields";
 
 const getFields = async (key: string) => {
@@ -34,12 +33,22 @@ export const useGetComplaintsFields = (): {
 export const useGetCurrentComplaintsData = (appointmentId: string) => {
 
     const {data: complaints, error: complaintsError, isLoading: complaintsIsLoading} = useSWR(
-        {key: 'appointments/block/complaint/fields', appointmentId},
-        getData
+        {key: 'appointments/block/complaint/', appointmentId},
+        getData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            shouldRetryOnError: (err => !(err.response.data.error_code === 404))
+        }
     )
     const {data: conditions, error: conditionsError, isLoading: conditionsIsLoading} = useSWR(
-        {key: 'appointments/block/clinical_condition/fields', appointmentId},
-        getData
+        {key: 'appointments/block/clinical_condition/', appointmentId},
+        getData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            shouldRetryOnError: (err => !(err.response.data.error_code === 404))
+        }
     )
     return {data: {...complaints, ...conditions}, error: complaintsError || conditionsError, isLoading: complaintsIsLoading || conditionsIsLoading}
 
@@ -47,7 +56,7 @@ export const useGetCurrentComplaintsData = (appointmentId: string) => {
 
 
 export const complaintsCreate = async (appointment_id: string, values: any) => {
-    return axiosInstance.post('appointments/block/complaint/create_with_condition', {appointment_id, ...values}).then(res => res.data)
+    return axiosInstance.post('appointments/block/complaint/create_with_condition/', {appointment_id, ...values}).then(res => res.data)
 }
 export const complaintsUpdate = async (appointment_id: string, values: any) => {
     return axiosInstance.patch('appointments/block/complaint/update/' + appointment_id, values).then(res => res.data)

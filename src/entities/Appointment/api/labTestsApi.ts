@@ -25,9 +25,16 @@ export const useGetLabTestsFields = (): {
 
 export const useGetCurrentLabTestsData = (appointmentId: string) => {
     const {data, error, isLoading} = useSWR({
-        key: 'appointments/block/laboratory_test/',
-        appointmentId
-    }, getData)
+            key: 'appointments/block/laboratory_test/',
+            appointmentId
+        },
+        getData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            shouldRetryOnError: (err => !(err.response.data.error_code === 404))
+        }
+    )
     return {currentData: data, error, isLoading}
 }
 

@@ -1,13 +1,14 @@
-import NavItem from "./NavItem";
-import {INavItem} from "@/widgets/SideBar/model/INavItem";
-import {navRoutes} from "@/widgets/SideBar/config/navRoutes";
 import ProfileLink from "@/entities/Profile/ui/ProfileLink";
 import LogoutButton from "@/entities/Session/ui/LogoutButton";
 import styles from "./SideBar.module.css"
-import NavBar from "@/widgets/SideBar/ui/NavBar";
 import SettingsButton from "@/features/Settings/ui/SettingsButton";
+import dynamic from "next/dynamic";
 
 const SideBar = () => {
+    const NavBar = dynamic(() => import("@/widgets/SideBar/ui/NavBar"), {ssr: false})
+    const ProfileLink = dynamic(() => import("@/entities/Profile/ui/ProfileLink"), {ssr: false})
+    const LogoutButton = dynamic(() => import("@/entities/Session/ui/LogoutButton"), {ssr: false})
+    const SettingsButton = dynamic(() => import("@/features/Settings/ui/SettingsButton"), {ssr: false})
     return (
         <aside className={styles.sideBar}>
             <NavBar/>

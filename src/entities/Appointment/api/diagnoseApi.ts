@@ -27,7 +27,14 @@ export const useGetCurrentDiagnoseData = (appointmentId?: string) => {
     const {data, error, isLoading} = useSWR({
         key: 'appointments/block/diagnose/',
         appointmentId
-    }, getDiagnoseData)
+        },
+        getDiagnoseData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            shouldRetryOnError: (err => !(err.response.data.error_code === 404))
+        }
+    )
     return {currentData: data, error, isLoading}
 }
 
@@ -35,7 +42,14 @@ export const useGetPreviousDiagnoseData = (appointmentId?: string) => {
     const {data, error, isLoading} = useSWR({
         key: 'appointments/block/diagnose/previous/',
         appointmentId
-    }, getDiagnoseData)
+        },
+        getDiagnoseData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            shouldRetryOnError: (err => !(err.response.data.error_code === 404))
+        }
+    )
     return {previousData: data, error, isLoading}
 }
 

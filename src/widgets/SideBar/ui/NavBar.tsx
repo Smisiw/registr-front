@@ -19,7 +19,7 @@ const NavBar = () => {
                     )
                     : (params && pathName?.startsWith(`/appointments/${params?.id}`))
                         ? navRoutes.appointment.map(({href, Icon, name}: INavItem) =>
-                            <li className={styles.li} key={href}><NavItem href={href} Icon={Icon} name={name} /></li>
+                            <li className={styles.li} key={href}><NavItem href={`/appointments/${params.id}/${href}`} Icon={Icon} name={name} /></li>
                         )
                         : navRoutes.general.map(({href, Icon, name}: INavItem) =>
                         <li className={styles.li} key={href}><NavItem href={href} Icon={Icon} name={name} /></li>

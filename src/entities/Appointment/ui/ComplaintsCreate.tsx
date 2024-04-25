@@ -66,7 +66,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                     label={"ИМТ"}
                                     name={"bmi"}
                                 >
-                                    {(weight/Math.pow((height/100), 2)).toFixed(2) || ""}
+                                    {isFinite((weight/Math.pow((height/100), 2)))? "" : parseFloat((weight/Math.pow((height/100), 2)).toFixed(2))}
                                 </Form.Item>
                                 <Form.Item
                                     label={"Систолическое АД"}

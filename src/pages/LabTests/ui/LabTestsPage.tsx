@@ -1,7 +1,9 @@
 import React from 'react';
-import LabTestsForm from "@/widgets/Appointment/ui/LabTestsForm";
+import dynamic from "next/dynamic";
 
 const LabTestsPage = ({appointmentId}: {appointmentId: string}) => {
+    const LabTestsForm = dynamic(() => import("@/widgets/Appointment/ui/LabTestsForm"), {ssr: false})
+
     return (
         <>
             <LabTestsForm appointmentId={appointmentId}/>

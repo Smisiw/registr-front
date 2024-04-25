@@ -27,7 +27,14 @@ export const useGetCurrentDrugTherapyData = (appointmentId: string) => {
     const {data, error, isLoading} = useSWR({
         key: 'appointments/block/purposes/',
         appointmentId
-    }, getData)
+        },
+        getData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            shouldRetryOnError: (err => !(err.response.data.error_code === 404))
+        }
+    )
     return {currentData: data, error, isLoading}
 }
 

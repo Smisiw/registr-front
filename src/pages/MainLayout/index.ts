@@ -1,1 +1,1 @@
-export {MainLayout} from "@/pages/MainLayout/ui/MainLayout"
+export {default} from "@/pages/MainLayout/ui/MainLayout"

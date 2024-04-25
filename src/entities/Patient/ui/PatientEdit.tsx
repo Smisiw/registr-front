@@ -7,11 +7,13 @@ import {updatePatient} from "@/entities/Patient/api/updatePatient";
 import {IPatient} from "@/entities/Patient/model/IPatient";
 import dayjs from "dayjs";
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 const PatientEdit = ({data}: {data: IPatient}) => {
     const [form] = Form.useForm()
     const hasHospitalization : boolean = Form.useWatch("has_hospitalization", form)
     const [errorMessage, setErrorMessage] = useState("")
+    const pathname = usePathname()
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
             await updatePatient(data.id, values)
@@ -236,7 +238,7 @@ const PatientEdit = ({data}: {data: IPatient}) => {
                 </Form.Item>
                 <Space size={"large"}>
                     <Form.Item>
-                        <Link href={`${data.id}/`}>
+                        <Link href={{pathname: pathname, query: null}}>
                             <Button>
                                 Отмена
                             </Button>

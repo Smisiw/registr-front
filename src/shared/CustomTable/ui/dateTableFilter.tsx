@@ -18,7 +18,7 @@ const DateTableFilter = (props: FilterDropdownProps) => {
                 value={date}
                 onChange={(dates, dateString) => {
                     props.setSelectedKeys(dateString)
-                    setDate(dates)
+                    setDate(dates || [null, null])
                 }}
                 style={{ marginBottom: 8, display: 'flex'}}
             />

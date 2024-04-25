@@ -1,7 +1,8 @@
 import React from 'react';
-import PatientInfo from "@/widgets/PatientInfo/ui/PatientInfo";
+import dynamic from "next/dynamic";
 
-const PatientPage = async ({patientId, status}: {patientId: string, status: string}) => {
+export const PatientPage = async ({patientId, status}: {patientId: string, status: string}) => {
+    const PatientInfo = dynamic(() => import("@/widgets/PatientInfo/ui/PatientInfo"), {ssr: false})
     return (
         <>
             <PatientInfo patientId={patientId} status={status}/>

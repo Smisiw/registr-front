@@ -1,5 +1,5 @@
 'use client'
-import React, {createContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
 import {getPatients} from "@/entities/Patient/api/getPatients";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
@@ -72,7 +72,7 @@ const PatientsList = () => {
                                         onChange={onChangeSearchHandler}
                                         onPressEnter={searchHandler}
                                     />
-                                    <ButtonNew href={"/appointments/new"}>Новый пациент</ButtonNew>
+                                    <ButtonNew href={"/appointments/new/?status=create"}>Новый пациент</ButtonNew>
                                 </div>
                                 <PatientTable
                                     data={{...patients, loading}}
