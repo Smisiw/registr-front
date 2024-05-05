@@ -17,7 +17,7 @@ export const useGetDrugTherapyFields = (): {
     isLoading: boolean
 } => {
     const {data, error, isLoading} = useSWR(
-        'appointments/block/purposes/fields',
+        'appointments/block/purpose/fields',
         getFields
     )
     return {fields: data, error, isLoading}
@@ -25,7 +25,7 @@ export const useGetDrugTherapyFields = (): {
 
 export const useGetCurrentDrugTherapyData = (appointmentId: string) => {
     const {data, error, isLoading} = useSWR({
-        key: 'appointments/block/purposes/',
+        key: 'appointments/block/purpose/',
         appointmentId
         },
         getData,
@@ -40,8 +40,8 @@ export const useGetCurrentDrugTherapyData = (appointmentId: string) => {
 
 
 export const drugTherapyCreate = async (appointment_id: string, values: any) => {
-    return axiosInstance.post('appointments/block/purposes/create', {appointment_id, ...values}).then(res => res.data)
+    return axiosInstance.post('appointments/block/purpose/create', {appointment_id, ...values}).then(res => res.data)
 }
 export const drugTherapyUpdate = async (appointment_id: string, values: any) => {
-    return axiosInstance.patch('appointments/block/purposes/update/' + appointment_id, values).then(res => res.data)
+    return axiosInstance.patch('appointments/block/purpose/update/' + appointment_id, values).then(res => res.data)
 }

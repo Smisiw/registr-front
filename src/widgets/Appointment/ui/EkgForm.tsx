@@ -16,10 +16,10 @@ const EkgForm = ({appointmentId}: {appointmentId: string}) => {
             setStatus("display")
         } else if (currentData) {
             setStatus("edit")
-        } else if (currentDataError?.response.data.error_code===404) {
+        } else if (currentDataError?.response?.data?.error_code===404) {
             setStatus("create")
         }
-    }, [])
+    }, [currentData, appointmentStatus, currentDataError])
 
     if (statusError) return <div>Ошибка загрузки</div>
     if (currentDataIsLoading || statusIsLoading) return <Spin/>

@@ -41,13 +41,14 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
                 <Typography.Text type={"danger"}>
                     {errorMessage}
                 </Typography.Text>
-                <Space size={"large"}>
+                <Space size={"large"} wrap={true}>
                     <Card
                         title={"ЭКГ"}
                         extra={
                             <Form.Item
                                 label={"Дата"}
                                 name={"date_ekg"}
+                                rules={[{required: true, message: "введите дату"}]}
                             >
                                 <DatePicker format={"DD.MM.YYYY"}/>
                             </Form.Item>
@@ -85,6 +86,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
                             <Form.Item
                                 label={"Дата"}
                                 name={"date_echo_ekg"}
+                                rules={[{required: true, message: "введите дату"}]}
                             >
                                 <DatePicker format={"DD.MM.YYYY"}/>
                             </Form.Item>
@@ -101,6 +103,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
                                             <Col span={14}>
                                                 <Form.Item
                                                     name={field.name}
+                                                    rules={[{required: true, message: "заполните поле"}]}
                                                 >
                                                     <InputNumber/>
                                                 </Form.Item>

@@ -18,17 +18,17 @@ const DiagnoseForm = ({appointmentId}: {appointmentId: string}) => {
             setStatus("display")
         } else if (currentData) {
             setStatus("edit")
-        } else if (currentDataError?.response.data.error_code===404) {
+        } else if (currentDataError?.response?.data?.error_code===404) {
             setStatus("create")
         }
-    }, [])
+    }, [currentData, appointmentStatus, currentDataError])
 
     if (statusError) return <div>Ошибка загрузки</div>
     if (currentDataIsLoading || statusIsLoading) return <Spin/>
     return (
         <>
             {(status == "display")
-                ? (<DiagnoseDisplay data={currentData} setStatus={setStatus}/>)
+                ? (<DiagnoseEdit appointmentId={appointmentId} data={currentData} setStatus={setStatus}/>)
                 : (status == "edit")
                     ? (<DiagnoseEdit setStatus={setStatus} appointmentId={appointmentId} data={currentData}/>)
                     : (<DiagnoseCreate setStatus={setStatus} appointmentId={appointmentId} data={previousData}/>)

@@ -24,18 +24,18 @@ export const PatientCreate = () => {
         }
     }
     return (
-        <Card
-            title={"Карточка пациента"}
+        <Form
+            form={form}
+            layout={"vertical"}
+            onFinish={formSubmitHandler}
         >
-            <Form
-                form={form}
-                layout={"vertical"}
-                onFinish={formSubmitHandler}
+            <Card
+                title={"Карточка пациента"}
             >
                 <Typography.Text type={"danger"}>
                     {errorMessage}
                 </Typography.Text>
-                <Space size={"large"}>
+                <Space size={"large"} wrap={true}>
                     <Form.Item
                         style={{width: 300}}
                         label={"Имя"}
@@ -60,7 +60,7 @@ export const PatientCreate = () => {
                         <Input/>
                     </Form.Item>
                 </Space>
-                <Space size={50}>
+                <Space size={50} wrap={true}>
                     <Form.Item
                         style={{width: 200}}
                         label={"Пол"}
@@ -99,7 +99,7 @@ export const PatientCreate = () => {
                         <Input/>
                     </Form.Item>
                 </Space>
-                <Space size={75}>
+                <Space size={75} wrap={true}>
                     <Form.Item
                         style={{width: 300}}
                         label={"Место жительства"}
@@ -129,7 +129,7 @@ export const PatientCreate = () => {
                         <Input/>
                     </Form.Item>
                 </Space>
-                <Space size={"large"}>
+                <Space size={"large"} wrap={true}>
                     <Form.Item
                         style={{width: 350}}
                         label={"Поликлиника"}
@@ -180,7 +180,7 @@ export const PatientCreate = () => {
                         <Radio value={"ССЗ"}>ССЗ</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Space size={"large"}>
+                <Space size={"large"} wrap={true}>
                     <Form.Item
                         style={{width: 200}}
                         name={"has_hospitalization"}
@@ -219,7 +219,7 @@ export const PatientCreate = () => {
                 >
                     <Input.TextArea/>
                 </Form.Item>
-                <Space size={"large"}>
+                <Space size={"large"} wrap={true}>
                     <Form.Item>
                         <Link href={"/appointments/new"}>
                             <Button>
@@ -233,8 +233,8 @@ export const PatientCreate = () => {
                         </SubmitButton>
                     </Form.Item>
                 </Space>
-            </Form>
-        </Card>
+            </Card>
+        </Form>
     );
 };
 

@@ -42,16 +42,17 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                 <Typography.Text type={"danger"}>
                     {errorMessage}
                 </Typography.Text>
-                <Row gutter={48}>
-                    <Col span={10}>
+                <Space size={"middle"} wrap={true} align={"start"}>
                         <Space
                             direction={"vertical"}
                             size={"middle"}
+                            wrap={true}
                         >
                             <Form.Item
                                 label={"Диагноз"}
                                 name={"diagnose"}
                                 initialValue={data?.diagnose}
+                                rules={[{required: true, message: "Введите диагноз"}]}
                             >
                                 <Input/>
                             </Form.Item>
@@ -64,6 +65,8 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                                         label={"по ФВ"}
                                         name={"classification_adjacent_release"}
                                         initialValue={data?.classification_adjacent_release}
+                                        rules={[{required: true, message: "Выберите фракцию выброса"}]}
+
                                     >
                                         <Radio.Group>
                                             <Space>
@@ -74,38 +77,38 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                                         </Radio.Group>
                                     </Form.Item>
                                     <Form.Item
-                                        label={"по стадии НК"}
-                                        name={"classification_nc_stage"}
-                                        initialValue={data?.classification_nc_stage}
+                                        label={"по функциональному классу"}
+                                        name={"classification_func_classes"}
+                                        initialValue={data?.classification_func_classes}
+                                        rules={[{required: true, message: "Выберите функциональный класс"}]}
                                     >
                                         <Radio.Group>
                                             <Space>
-                                                <Radio value={1}>1</Radio>
-                                                <Radio value={2}>2</Radio>
-                                                <Radio value={3}>3</Radio>
-                                                <Radio value={4}>4</Radio>
+                                                <Radio value={'1'}>1</Radio>
+                                                <Radio value={'2'}>2</Radio>
+                                                <Radio value={'3'}>3</Radio>
+                                                <Radio value={'4'}>4</Radio>
                                             </Space>
                                         </Radio.Group>
                                     </Form.Item>
                                     <Form.Item
-                                        label={"по функциональному классу"}
-                                        name={"classification_func_classes"}
-                                        initialValue={data?.classification_func_classes}
+                                        label={"по стадии НК"}
+                                        name={"classification_nc_stage"}
+                                        initialValue={data?.classification_nc_stage}
+                                        rules={[{required: true, message: "Выберите стадию НК"}]}
                                     >
                                         <Radio.Group>
                                             <Space>
-                                                <Radio value={"I"}>I</Radio>
-                                                <Radio value={"IIа"}>IIа</Radio>
-                                                <Radio value={"IIб"}>IIб</Radio>
-                                                <Radio value={"III"}>III</Radio>
+                                                <Radio value={"1"}>I</Radio>
+                                                <Radio value={"2а"}>IIа</Radio>
+                                                <Radio value={"2б"}>IIб</Radio>
+                                                <Radio value={"3"}>III</Radio>
                                             </Space>
                                         </Radio.Group>
                                     </Form.Item>
                                 </Space>
                             </Card>
                         </Space>
-                    </Col>
-                    <Col span={12}>
                         <Card
                             title={"Сопутствующие заболевания"}
                         >
@@ -131,10 +134,20 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                                         </Col>
                                     </>
                                 ))}
+                                <Col span={10}>
+                                    Другое:
+                                </Col>
+                                <Col span={14}>
+                                    <Form.Item
+                                        name={"another"}
+                                        initialValue={data?.another || ""}
+                                    >
+                                        <Input/>
+                                    </Form.Item>
+                                </Col>
                             </Row>
                         </Card>
-                    </Col>
-                </Row>
+                </Space>
             </Card>
         </Form>
     );

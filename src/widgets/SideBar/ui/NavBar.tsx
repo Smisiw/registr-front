@@ -5,13 +5,14 @@ import {navRoutes} from "@/widgets/SideBar/config/navRoutes";
 import {INavItem} from "@/widgets/SideBar/model/INavItem";
 import NavItem from "@/widgets/SideBar/ui/NavItem";
 import {useParams, usePathname} from "next/navigation";
+import Link from "next/link";
 
 const NavBar = () => {
     const pathName = usePathname()
     const params = useParams()
     return (
         <nav className={styles.topNav}>
-            <h1 className={styles.logo}>Logo</h1>
+            <h1 className={styles.logo}><Link href={"/"} style={{color: "black", textDecoration: "none"}}>Logo</Link></h1>
             <ul className={styles.ul}>
                 {(pathName == "/patients/new" || pathName == "/appointments/new")
                     ? navRoutes.appointment.map(({href, Icon, name}: INavItem) =>

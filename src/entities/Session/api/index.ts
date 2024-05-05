@@ -9,7 +9,7 @@ export const useSession = () => {
     const router = useRouter()
     return {
         login: async (loginForm: ILoginForm) => {
-            return axiosInstance.post("auth/login/", loginForm).then(({data}) => {
+            return axiosInstance.post("auth/login", loginForm).then(({data}) => {
                 setCookie('authToken', data.token)
                 localStorage.setItem("authToken", data.token)
                 let lastPage = localStorage.getItem("lastPage")

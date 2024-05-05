@@ -17,10 +17,10 @@ const ComplaintsForm = ({appointmentId}: {appointmentId: string}) => {
             setStatus("display")
         } else if (data) {
             setStatus("edit")
-        } else if (currentDataError.response.data.error_code===404){
+        } else if (currentDataError?.response?.data?.error_code===404){
             setStatus("create")
         }
-    }, [data, appointmentStatus])
+    }, [data, appointmentStatus, currentDataError])
 
     if (statusError) return <div>Ошибка загрузки</div>
     if (currentDataIsLoading || statusIsLoading) return <Spin/>

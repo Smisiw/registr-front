@@ -71,6 +71,7 @@ const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormSta
                                     name={field.name}
                                     valuePropName={"checked"}
                                     initialValue={data[field.name]}
+                                    rules={[{required: true, message: "введите дату"}]}
                                 >
                                     <Checkbox>{field.displayName}</Checkbox>
                                 </Form.Item>
@@ -94,6 +95,7 @@ const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormSta
                                 label={"Дата"}
                                 name={"date_echo_ekg"}
                                 initialValue={dayjs(data.date_echo_ekg, "DD.MM.YYYY")}
+                                rules={[{required: true, message: "введите дату"}]}
                             >
                                 <DatePicker format={"DD.MM.YYYY"}/>
                             </Form.Item>
@@ -111,6 +113,7 @@ const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormSta
                                                 <Form.Item
                                                     name={field.name}
                                                     initialValue={data[field.name]}
+                                                    rules={[{required: true, message: "заполните поле"}]}
                                                 >
                                                     <InputNumber/>
                                                 </Form.Item>

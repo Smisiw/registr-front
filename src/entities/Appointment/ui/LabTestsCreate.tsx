@@ -58,6 +58,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                             <Col span={7}>
                                                 <Form.Item
                                                     name={field.textName}
+                                                    rules={[{required: true, message: "заполните поле"}]}
                                                 >
                                                     <Input/>
                                                 </Form.Item>
@@ -66,6 +67,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                                 <Form.Item
                                                     label={"Дата"}
                                                     name={field.dateName}
+                                                    rules={[{required: true, message: "введите дату"}]}
                                                 >
                                                     <DatePicker format={"DD.MM.YYYY"}/>
                                                 </Form.Item>
@@ -86,6 +88,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                             <Col span={7}>
                                                 <Form.Item
                                                     name={field.textName}
+                                                    rules={[{required: true, message: "заполните поле"}]}
                                                 >
                                                     <Input/>
                                                 </Form.Item>
@@ -94,6 +97,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                                 <Form.Item
                                                     label={"Дата"}
                                                     name={field.dateName}
+                                                    rules={[{required: true, message: "введите дату"}]}
                                                 >
                                                     <DatePicker format={"DD.MM.YYYY"}/>
                                                 </Form.Item>
@@ -118,6 +122,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                         <Col span={6}>
                                             <Form.Item
                                                 name={field.textName}
+                                                rules={[{required: true, message: "заполните поле"}]}
                                             >
                                                 <Input/>
                                             </Form.Item>
@@ -126,6 +131,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                             <Form.Item
                                                 label={"Дата"}
                                                 name={field.dateName}
+                                                rules={[{required: true, message: "введите дату"}]}
                                             >
                                                 <DatePicker format={"DD.MM.YYYY"}/>
                                             </Form.Item>
@@ -149,6 +155,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                             <Col span={8}>
                                                 <Form.Item
                                                     name={field.textName}
+                                                    rules={[{required: true, message: "заполните поле"}]}
                                                 >
                                                     <Input/>
                                                 </Form.Item>
@@ -157,6 +164,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                                 <Form.Item
                                                     label={"Дата"}
                                                     name={field.dateName}
+                                                    rules={[{required: true, message: "введите дату"}]}
                                                 >
                                                     <DatePicker format={"DD.MM.YYYY"}/>
                                                 </Form.Item>
