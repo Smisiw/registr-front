@@ -4,6 +4,7 @@ import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/l
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
+import dayjs from "dayjs";
 
 const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
@@ -74,7 +75,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                                 <Form.Item
                                                     label={"Дата"}
                                                     name={field.dateName}
-                                                    initialValue={data[field.dateName]}
+                                                    initialValue={dayjs(data[field.dateName], "DD.MM.YYYY")}
                                                     rules={[{required: true, message: "введите дату"}]}
                                                 >
                                                     <DatePicker format={"DD.MM.YYYY"}/>
@@ -106,7 +107,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                                 <Form.Item
                                                     label={"Дата"}
                                                     name={field.dateName}
-                                                    initialValue={data[field.dateName]}
+                                                    initialValue={dayjs(data[field.dateName], "DD.MM.YYYY")}
                                                     rules={[{required: true, message: "введите дату"}]}
                                                 >
                                                     <DatePicker format={"DD.MM.YYYY"}/>
@@ -141,7 +142,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                             <Form.Item
                                                 label={"Дата"}
                                                 name={field.dateName}
-                                                initialValue={data[field.dateName]}
+                                                initialValue={dayjs(data[field.dateName], "DD.MM.YYYY")}
                                                 rules={[{required: true, message: "введите дату"}]}
                                             >
                                                 <DatePicker format={"DD.MM.YYYY"}/>
@@ -176,7 +177,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                                 <Form.Item
                                                     label={"Дата"}
                                                     name={field.dateName}
-                                                    initialValue={data[field.dateName]}
+                                                    initialValue={dayjs(data[field.dateName], "DD.MM.YYYY")}
                                                     rules={[{required: true, message: "введите дату"}]}
                                                 >
                                                     <DatePicker format={"DD.MM.YYYY"}/>

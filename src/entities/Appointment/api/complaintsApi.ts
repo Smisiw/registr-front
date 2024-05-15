@@ -50,7 +50,7 @@ export const useGetCurrentComplaintsData = (appointmentId: string) => {
             shouldRetryOnError: (err => !(err.response.data.error_code === 404))
         }
     )
-    return {data: {...complaints, ...conditions}, error: complaintsError || conditionsError, isLoading: complaintsIsLoading || conditionsIsLoading}
+    return {data: (complaints && conditions)? {...complaints, ...conditions} : null, error: complaintsError || conditionsError, isLoading: complaintsIsLoading || conditionsIsLoading}
 
 }
 

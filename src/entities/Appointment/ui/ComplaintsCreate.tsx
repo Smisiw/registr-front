@@ -6,16 +6,16 @@ import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {complaintsCreate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
 import {IComplaints} from "@/entities/Appointment/model/IComplaints";
 
-const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
+const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetComplaintsFields()
     const [errorMessage, setErrorMessage] = useState("")
     const weight = Form.useWatch("weight", form)
     const height = Form.useWatch("height", form)
 
-    const formSubmitHandler = async (values: IComplaints)=> {
+    const formSubmitHandler = async (values: IComplaints) => {
         try {
-            values.bmi = (weight/Math.pow((height/100), 2)).toFixed(2)
+            values.bmi = (weight / Math.pow((height / 100), 2)).toFixed(2)
             await complaintsCreate(appointmentId, values)
             setStatus("edit")
         } catch (e: any) {
@@ -48,54 +48,52 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                     <Col>
                         <Space direction={"vertical"} size={"middle"}>
                             <Card>
-                                <Form.Item
-                                    label={"Рост"}
-                                    name={"height"}
-                                    rules={[{required: true, message: "Укажите рост"}]}
-                                >
-                                    <InputNumber/>
-                                </Form.Item>
-                                <Form.Item
-                                    label={"Вес"}
-                                    name={"weight"}
-                                    rules={[{required: true, message: "Укажите вес"}]}
-                                >
-                                    <InputNumber/>
-                                </Form.Item>
-                                <Form.Item
-                                    label={"ИМТ"}
-                                    name={"bmi"}
-                                >
-                                    {isFinite((weight/Math.pow((height/100), 2)))? "" : parseFloat((weight/Math.pow((height/100), 2)).toFixed(2))}
-                                </Form.Item>
-                                <Form.Item
-                                    label={"Систолическое АД"}
-                                    name={"systolic_bp"}
-                                    rules={[{required: true, message: "Укажите систолическое АД"}]}
-                                >
-                                    <InputNumber/>
-                                </Form.Item>
-                                <Form.Item
-                                    label={"Диастолическое АД"}
-                                    name={"diastolic_bp"}
-                                    rules={[{required: true, message: "Укажите диастолическое АД"}]}
-                                >
-                                    <InputNumber/>
-                                </Form.Item>
-                                <Form.Item
-                                    label={"ЧСС"}
-                                    name={"heart_rate"}
-                                    rules={[{required: true, message: "Укажите ЧСС"}]}
-                                >
-                                    <InputNumber/>
-                                </Form.Item>
-                                <Form.Item
-                                    label={"Дистанция 6-минутной ходьбы"}
-                                    name={"six_min_walk_distance"}
-                                    rules={[{required: true, message: "Укажите дистанцию 6-минутной ходьбы"}]}
-                                >
-                                    <InputNumber/>
-                                </Form.Item>
+                                <Space direction={"vertical"} size={"middle"} style={{display: "flex"}}>
+                                    <Form.Item
+                                        label={"Рост"}
+                                        name={"height"}
+                                        rules={[{required: true, message: "Укажите рост"}]}
+                                    >
+                                        <InputNumber/>
+                                    </Form.Item>
+                                    <Form.Item
+                                        label={"Вес"}
+                                        name={"weight"}
+                                        rules={[{required: true, message: "Укажите вес"}]}
+                                    >
+                                        <InputNumber/>
+                                    </Form.Item>
+                                    ИМТ: {((parseFloat(weight) > 0) && (parseFloat(height) > 0)) ? parseFloat((weight / Math.pow((height / 100), 2)).toFixed(2)) : ""}
+                                    <Form.Item
+                                        label={"Систолическое АД"}
+                                        name={"systolic_bp"}
+                                        rules={[{required: true, message: "Укажите систолическое АД"}]}
+                                    >
+                                        <InputNumber/>
+                                    </Form.Item>
+                                    <Form.Item
+                                        label={"Диастолическое АД"}
+                                        name={"diastolic_bp"}
+                                        rules={[{required: true, message: "Укажите диастолическое АД"}]}
+                                    >
+                                        <InputNumber/>
+                                    </Form.Item>
+                                    <Form.Item
+                                        label={"ЧСС"}
+                                        name={"heart_rate"}
+                                        rules={[{required: true, message: "Укажите ЧСС"}]}
+                                    >
+                                        <InputNumber/>
+                                    </Form.Item>
+                                    <Form.Item
+                                        label={"Дистанция 6-минутной ходьбы"}
+                                        name={"six_min_walk_distance"}
+                                        rules={[{required: true, message: "Укажите дистанцию 6-минутной ходьбы"}]}
+                                    >
+                                        <InputNumber/>
+                                    </Form.Item>
+                                </Space>
+
                             </Card>
                             <Card title={"Жалобы"}>
                                 {fields.complaints.map(field => (
@@ -119,20 +117,20 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                     </Col>
                     <Col span={14}>
                         <Card title={"Клиническое состояние"}>
-                        <Row>
-                            {fields.conditions.map(field => (
-                                <Col span={12} key={field.name}>
-                                    <Form.Item
-                                        name={field.name}
-                                        valuePropName={"checked"}
-                                        initialValue={false}
-                                    >
-                                        <Checkbox>{field.displayName}</Checkbox>
-                                    </Form.Item>
-                                </Col>
+                            <Row>
+                                {fields.conditions.map(field => (
+                                    <Col span={12} key={field.name}>
+                                        <Form.Item
+                                            name={field.name}
+                                            valuePropName={"checked"}
+                                            initialValue={false}
+                                        >
+                                            <Checkbox>{field.displayName}</Checkbox>
+                                        </Form.Item>
+                                    </Col>
 
-                            ))}
-                        </Row>
+                                ))}
+                            </Row>
 
                             Примечание:
                             <Form.Item

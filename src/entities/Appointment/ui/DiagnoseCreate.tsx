@@ -6,9 +6,11 @@ import {diagnoseCreate, useGetDiagnoseFields} from "@/entities/Appointment/api/d
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {IDiagnose} from "@/entities/Appointment/model/IDiagnose";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
+import {useSWRConfig} from "swr";
 
 
 const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data?: IDiagnose }) => {
+    const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDiagnoseFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -16,6 +18,10 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
         try {
             await diagnoseCreate(appointmentId, values)
             setStatus("edit")
+            await mutate({
+                key: 'appointments/block/diagnose/',
+                appointmentId
+            })
         } catch (e: any) {
             setErrorMessage(e.message)
         }

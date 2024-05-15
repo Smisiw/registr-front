@@ -6,9 +6,10 @@ import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import EkgEdit from "@/entities/Appointment/ui/EkgEdit";
 import EkgCreate from "@/entities/Appointment/ui/EkgCreate";
 import {Spin} from "antd";
+import {useGetCurrentEkgData} from "@/entities/Appointment/api/ekgsApi";
 
 const EkgForm = ({appointmentId}: {appointmentId: string}) => {
-    const {currentData, error: currentDataError, isLoading: currentDataIsLoading} = useGetCurrentLabTestsData(appointmentId)
+    const {currentData, error: currentDataError, isLoading: currentDataIsLoading} = useGetCurrentEkgData(appointmentId)
     const {appointmentStatus, isLoading: statusIsLoading, error: statusError} = useGetAppointmentStatus(appointmentId)
     const [status, setStatus] = useState<FormStatus>()
     useEffect(()=>{

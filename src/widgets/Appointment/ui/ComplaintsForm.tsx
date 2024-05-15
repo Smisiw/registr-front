@@ -11,7 +11,6 @@ const ComplaintsForm = ({appointmentId}: {appointmentId: string}) => {
     const {data, error: currentDataError, isLoading: currentDataIsLoading} = useGetCurrentComplaintsData(appointmentId)
     const {appointmentStatus, isLoading: statusIsLoading, error: statusError} = useGetAppointmentStatus(appointmentId)
     const [status, setStatus] = useState<FormStatus>()
-
     useEffect(()=> {
         if (data && appointmentStatus == "completed"){
             setStatus("display")

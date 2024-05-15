@@ -54,6 +54,7 @@ const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                     <Col>
                         <Space direction={"vertical"} size={"middle"}>
                             <Card>
+                                <Space direction={"vertical"} size={"middle"} style={{display: "flex"}}>
                                 <Form.Item
                                     label={"Рост"}
                                     name={"height"}
@@ -109,6 +110,7 @@ const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                                 >
                                     <InputNumber/>
                                 </Form.Item>
+                                </Space>
                             </Card>
                             <Card title={"Жалобы"}>
                                 {fields.complaints.map(field => (

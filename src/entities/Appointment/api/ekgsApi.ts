@@ -2,6 +2,8 @@ import axiosInstance from "@/app/axiosProvider/axiosProvider";
 import {AxiosError} from "axios";
 import useSWR from "swr";
 import {IBooleanFields, IIntegerFields} from "@/entities/Appointment/model/IFormDataFields";
+import {IEkg} from "@/entities/Appointment/model/IEkg";
+import {dateFormatConverter} from "@/shared/helpers/dateFormatConverter";
 
 const getFields = async (key: string) => {
     return axiosInstance.get(key).then(res => res.data)
@@ -45,7 +47,14 @@ export const useGetCurrentEkgData = (appointmentId: string) => {
 }
 
 
-export const ekgCreate = async (appointment_id: string, values: any) => {
+export const ekgCreate = async (appointment_id: string, values: IEkg) => {
+    if (values.date_ekg) {
+        values.date_ekg = dateFormatConverter(values.date_ekg)
+    }
+    console.log(values)
+    if (values.date_echo_ekg) {
+        values.date_echo_ekg = dateFormatConverter(values.date_echo_ekg)
+    }
     return axiosInstance.post('appointments/block/ekg/create', {appointment_id, ...values}).then(res => res.data)
 }
 export const ekgUpdate = async (appointment_id: string, values: any) => {

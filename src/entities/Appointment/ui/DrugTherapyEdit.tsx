@@ -84,6 +84,7 @@ const DrugTherapyEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch
 
 const DrugTherapyField = ({field, data}: {field: IDrugTherapyFields, data: any}) => {
     const [isActive, setIsActive] = useState(false)
+    console.log(data)
     return (
         <Form.List name={field.displayName} key={field.displayName}>
             { () =>
@@ -107,7 +108,7 @@ const DrugTherapyField = ({field, data}: {field: IDrugTherapyFields, data: any})
                                     style={{width: 200}}
                                     name={"medicine_prescription_id"}
                                     rules={[{required: isActive}]}
-                                    initialValue={data[field.displayName].id}
+                                    initialValue={data[field.displayName]?.id}
                                 >
                                     <Select
                                         options={field.medicine_prescriptions.map(data => ({
@@ -121,14 +122,14 @@ const DrugTherapyField = ({field, data}: {field: IDrugTherapyFields, data: any})
                                     name={"dosa"}
                                     label={"Доза"}
                                     rules={[{required: isActive}]}
-                                    initialValue={data[field.displayName].dosa}
+                                    initialValue={data[field.displayName]?.dosa}
                                 >
                                     <Input style={{width: 150}}/>
                                 </Form.Item>
                                 <Form.Item
                                     name={"note"}
                                     label={"Примечание"}
-                                    initialValue={data[field.displayName].note || ""}
+                                    initialValue={data[field.displayName]?.note || ""}
                                 >
                                     <Input/>
                                 </Form.Item>

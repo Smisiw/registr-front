@@ -5,13 +5,15 @@ import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
 import {ekgCreate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
+import {IEkg} from "@/entities/Appointment/model/IEkg";
 
 const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetEkgFields()
     const [errorMessage, setErrorMessage] = useState("")
-    const formSubmitHandler = async (values: IPatientNew)=> {
+    const formSubmitHandler = async (values: IEkg)=> {
         try {
+            console.log(values)
             await ekgCreate(appointmentId, values)
             setStatus("edit")
         } catch (e: any) {
