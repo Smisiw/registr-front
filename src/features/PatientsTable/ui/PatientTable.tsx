@@ -28,6 +28,7 @@ const PatientTable = ({tableParams, setTableParams, data}: props) => {
             data={data}
             tableParams={tableParams}
             setTableParams={setTableParams}
+            getRecordLink={(recordId)=> `/patients/${recordId}`}
         />
     );
 };

@@ -1,6 +1,6 @@
 import {ITableData} from "@/shared/CustomTable";
-import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
+import {IAppointmentTable} from "@/entities/Appointment/model/IAppointmentTable";
 
 export interface IAppointmentTableData extends ITableData{
-    data: IPatientTable[]
+    data?: IAppointmentTable[]
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthorizationPage from "@/pages/Authorization/ui/AuthorizationPage";
+import AuthorizationPage from "@/pages_/Authorization/AuthorizationPage";
 
 const AuthPage = () => {
     return (

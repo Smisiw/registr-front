@@ -4,7 +4,7 @@ import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/in
 import {Pagination, Table, Tag, TreeSelect} from "antd";
 import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableData, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 
 
 interface props {
@@ -15,15 +15,18 @@ interface props {
     data: ITableData
     tableParams: ITableParams
     setTableParams(data: ITableParams): void
+    getRecordLink(recordId: number): string
 }
 
 
-export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams} : props) {
+export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams, getRecordLink} : props) {
     const [visibleColumns, setVisibleColumns] = useState<IColumn[]>(columns.filter(item => selectedColumns.includes(item.key)));
     const router = useRouter()
+    const pathName = usePathname()
     const handlePaginationChange = (
         current: number
 ) => {
+        router.push(pathName + (current==1)? "" : ('?page=' + current))
         setTableParams(
             {
                 ...tableParams,
@@ -84,17 +87,17 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                 className={styles.table}
                 columns={visibleColumns}
                 rowKey={(record) => record.id}
-                loading={data.loading}
+                loading={data.isLoading}
                 onRow={(record, index) => {
                     return {
-                        onClick: () => {router.push(`/patients/${record.id}`)}
+                        onClick: () => {router.push(getRecordLink(record.id))}
                     }
                 }}
                 rowClassName={styles.tableRow}
                 dataSource={data.data}
                 pagination={false}
                 onChange={handleTableChange}
-                scroll={{x: 900, y: 200}}
+                scroll={{x: 900, y: 600}}
                 virtual={true}
                 size={"middle"}
                 bordered={false}

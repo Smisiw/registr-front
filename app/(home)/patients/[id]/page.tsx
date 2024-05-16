@@ -1,5 +1,5 @@
 import React from 'react';
-import PatientPage from "@/pages/Patient/ui/PatientPage";
+import PatientPage from "@/pages_/Patient/PatientPage";
 
 const Page = ({
     params,

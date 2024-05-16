@@ -1,43 +1,25 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
-import {getPatients} from "@/entities/Patient/api/getPatients";
-import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import {ITableParams} from "@/shared/CustomTable";
 import SearchBar from "@/shared/SearchBar/ui/SearchBar";
 import ButtonNew from "@/shared/Buttons/ui/ButtonNew";
 import styles from "./PatientsList.module.css"
+import {useGetPatients} from "@/shared/CustomTable/api/tableApi";
 
-const PatientsList = () => {
+const PatientsList = ({page}: {page: number}) => {
     const [
         patientsTableParams,
         setPatientsTableParams
     ] = useState<ITableParams>({
-            currentPage: 1,
+            currentPage: page || 1,
             filters: {},
             sortParams: null
         }
     )
-    const [patients, setPatients] = useState<{ data: IPatientTable[], total: number }>({
-        data: [],
-        total: 0
-    })
-    const [loading, setLoading] = useState(true)
     const [searchValue, setSearchValue] = useState("")
+    const {data, error, isLoading} = useGetPatients(patientsTableParams)
 
-    useEffect(() => {
-        const dataHandler = async () =>  {
-            try {
-                setLoading(true)
-                setPatients(await getPatients(patientsTableParams))
-                setLoading(false)
-            } catch (e) {
-
-            }
-        }
-        dataHandler()
-
-    }, [JSON.stringify(patientsTableParams)]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -52,7 +34,8 @@ const PatientsList = () => {
                 ...patientsTableParams,
                 filters: {
                     ...patientsTableParams.filters,
-                    fullName: searchValue==""? null : [searchValue]}
+                    fullName: searchValue == "" ? null : [searchValue]
+                }
             }
         )
     }
@@ -60,28 +43,28 @@ const PatientsList = () => {
     const onChangeSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.currentTarget.value)
     }
-
+    if (error) return <div>Ошибка загрузки</div>
     return (
         <>
-                {
- (<>
-                                <h2>Список пациентов</h2>
-                                <div className={styles.container}>
-                                    <SearchBar
-                                        value={searchValue}
-                                        onChange={onChangeSearchHandler}
-                                        onPressEnter={searchHandler}
-                                    />
-                                    <ButtonNew href={"/appointments/new/?status=create"}>Новый пациент</ButtonNew>
-                                </div>
-                                <PatientTable
-                                    data={{...patients, loading}}
-                                    tableParams={patientsTableParams}
-                                    setTableParams={setPatientsTableParams}
-                                />
-                                </>
-                            )
-                }
+            {
+                (<>
+                        <h2>Список пациентов</h2>
+                        <div className={styles.container}>
+                            <SearchBar
+                                value={searchValue}
+                                onChange={onChangeSearchHandler}
+                                onPressEnter={searchHandler}
+                            />
+                            <ButtonNew href={"/appointments/new/?status=create"}>Новый пациент</ButtonNew>
+                        </div>
+                        <PatientTable
+                            data={{...data, isLoading}}
+                            tableParams={patientsTableParams}
+                            setTableParams={setPatientsTableParams}
+                        />
+                    </>
+                )
+            }
         </>
     );
 };

@@ -1,10 +1,12 @@
 import React from 'react';
-import PatientsPage from "@/pages/Patients/ui/PatientsPage";
+import PatientsPage from "@/pages_/Patients/PatientsPage";
 
-const Page = () => {
+const Page = ({searchParams}: {searchParams: {
+        page: number
+    }}) => {
     return (
         <>
-            <PatientsPage/>
+            <PatientsPage page={searchParams.page}/>
         </>
     );
 };

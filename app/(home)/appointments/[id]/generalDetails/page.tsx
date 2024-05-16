@@ -1,5 +1,5 @@
 import React from 'react';
-import GeneralDetailsPage from "@/pages/GeneralDetails/ui/GeneralDetailsPage";
+import GeneralDetailsPage from "@/pages_/GeneralDetails/GeneralDetailsPage";
 
 const Page = ({
       params,

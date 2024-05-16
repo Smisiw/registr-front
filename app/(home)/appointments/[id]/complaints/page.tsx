@@ -1,5 +1,5 @@
 import React from 'react';
-import ComplaintsPage from "@/pages/Complaints/ui/ComplaintsPage";
+import ComplaintsPage from "@/pages_/Complaints/ComplaintsPage";
 
 const Page = ({
                   params

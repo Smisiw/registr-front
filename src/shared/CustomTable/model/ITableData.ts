@@ -1,5 +1,5 @@
 export interface ITableData {
-    data: any,
-    loading: boolean,
-    total: number
+    data?: any,
+    isLoading?: boolean,
+    total?: number
 }

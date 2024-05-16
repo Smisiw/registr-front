@@ -1,5 +1,5 @@
 import React from 'react';
-import DrugTherapyPage from "@/pages/DrugTherapy/ui/DrugTherapyPage";
+import DrugTherapyPage from "@/pages_/DrugTherapy/DrugTherapyPage";
 
 const Page = ({
                   params

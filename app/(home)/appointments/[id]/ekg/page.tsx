@@ -1,5 +1,5 @@
 import React from 'react';
-import EkgPage from "@/pages/Ekg/ui/EkgPage";
+import EkgPage from "@/pages_/Ekg/EkgPage";
 
 const Page = ({
                   params
