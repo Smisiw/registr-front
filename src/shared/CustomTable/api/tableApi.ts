@@ -4,6 +4,7 @@ import {AxiosResponse} from "axios";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
 import useSWR from "swr";
 import {IAppointmentTableData} from "@/features/AppointmentsTable/model/IAppointmentTableData";
+import {IPatientTableData} from "@/features/PatientsTable/model/IPatientTableData";
 
 const getTableData = async ({key, tableParams}: { key: string, tableParams: ITableParams }) => {
     return await axiosInstance.get(
@@ -28,7 +29,7 @@ export const useGetAppointments = (tableParams: ITableParams ): {data: IAppointm
     return {data, error, isLoading}
 }
 
-export const useGetPatients = (tableParams: ITableParams ): {data: IAppointmentTableData | undefined, error: any, isLoading: boolean} => {
+export const useGetPatients = (tableParams: ITableParams ): {data: IPatientTableData | undefined, error: any, isLoading: boolean} => {
     const {data, error, isLoading} = useSWR({
         key: 'patients',
         tableParams

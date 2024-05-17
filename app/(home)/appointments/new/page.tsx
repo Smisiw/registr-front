@@ -1,5 +1,5 @@
 import React from 'react';
-import AppointmentNewPage from "@/pages_/AppointmentNew/";
+import AppointmentNewPage from "@/pages_/AppointmentNew/AppointmentNewPage";
 
 const Page = ({
                   searchParams
