@@ -1,14 +1,26 @@
 'use client';
-import {useContext, useState} from "react";
+import {createContext, CSSProperties, FC, HTMLAttributes, useContext, useState} from "react";
 import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
 import {Pagination, Table, Tag, TreeSelect} from "antd";
 import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableData, ITableParams} from "@/shared/CustomTable";
 import styles from "./CustomTable.module.css"
 import {usePathname, useRouter} from "next/navigation";
+import {
+    closestCenter,
+    DndContext,
+    DragEndEvent,
+    DragOverEvent, DragOverlay,
+    PointerSensor,
+    UniqueIdentifier,
+    useSensor,
+    useSensors
+} from "@dnd-kit/core";
+import {arrayMove, horizontalListSortingStrategy, SortableContext, useSortable} from "@dnd-kit/sortable";
+import {restrictToHorizontalAxis} from "@dnd-kit/modifiers";
 
 
 interface props {
-    columns: IColumn[]
+    baseColumns: IColumn[]
     availableColumns: IAvailableColumns[]
     selectedColumns: string[]
     setSelectedColumns(selectedColumns: string[]): void
@@ -18,9 +30,96 @@ interface props {
     getRecordLink(recordId: number): string
 }
 
+interface HeaderCellProps extends HTMLAttributes<HTMLTableCellElement> {
+    id: string;
+}
 
-export function CustomTable({columns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams, getRecordLink} : props) {
-    const [visibleColumns, setVisibleColumns] = useState<IColumn[]>(columns.filter(item => selectedColumns.includes(item.key)));
+interface BodyCellProps extends HTMLAttributes<HTMLTableCellElement> {
+    id: string;
+}
+
+interface DragIndexState {
+    active: UniqueIdentifier;
+    over: UniqueIdentifier | undefined;
+    direction?: 'left' | 'right';
+}
+
+const DragIndexContext = createContext<DragIndexState>({ active: -1, over: -1 });
+
+const dragActiveStyle = (dragState: DragIndexState, id: string) => {
+    const { active, over, direction } = dragState;
+    // drag active style
+    let style: React.CSSProperties = {};
+    if (active && active === id) {
+        style = { backgroundColor: 'gray', opacity: 0.5 };
+    }
+    // dragover dashed style
+    else if (over && id === over && active !== over) {
+        style =
+            direction === 'right'
+                ? { borderRight: '1px dashed gray' }
+                : { borderLeft: '1px dashed gray' };
+    }
+    return style;
+};
+
+const TableBodyCell: FC<BodyCellProps> = (props) => {
+    const dragState = useContext<DragIndexState>(DragIndexContext);
+    return <td {...props} style={{ ...props.style, ...dragActiveStyle(dragState, props.id) }} />;
+};
+
+const TableHeaderCell: FC<HeaderCellProps> = (props) => {
+    const dragState = useContext(DragIndexContext);
+    const { attributes, listeners, setNodeRef, isDragging } = useSortable({ id: props.id });
+    const style: CSSProperties = {
+        ...props.style,
+        cursor: 'move',
+        ...(isDragging ? { position: 'relative', zIndex: 9999, userSelect: 'none' } : {}),
+        ...dragActiveStyle(dragState, props.id),
+    };
+    return <th {...props} ref={setNodeRef} style={style} {...attributes} {...listeners} />;
+};
+
+export function CustomTable({baseColumns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams, getRecordLink} : props) {
+    const [dragIndex, setDragIndex] = useState<DragIndexState>({ active: -1, over: -1 });
+
+    const [columns, setColumns] = useState(() =>
+        baseColumns.map((column, i) => ({
+            ...column,
+            onHeaderCell: () => ({ id: column.key }),
+            onCell: () => ({ id: column.key }),
+        })),
+    );
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                // https://docs.dndkit.com/api-documentation/sensors/pointer#activation-constraints
+                distance: 1,
+            },
+        }),
+    );
+
+    const onDragEnd = ({ active, over }: DragEndEvent) => {
+        if (active.id !== over?.id) {
+            setColumns((prevState) => {
+                const activeIndex = prevState.findIndex((i) => i.key === active?.id);
+                const overIndex = prevState.findIndex((i) => i.key === over?.id);
+                return arrayMove(prevState, activeIndex, overIndex);
+            });
+        }
+        setDragIndex({ active: -1, over: -1 });
+    };
+
+    const onDragOver = ({ active, over }: DragOverEvent) => {
+        const activeIndex = columns.findIndex((i) => i.key === active.id);
+        const overIndex = columns.findIndex((i) => i.key === over?.id);
+        setDragIndex({
+            active: active.id,
+            over: over?.id,
+            direction: overIndex > activeIndex ? 'right' : 'left',
+        });
+    };
     const router = useRouter()
     const pathName = usePathname()
     const handlePaginationChange = (
@@ -58,12 +157,11 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
             }
         )
     }
+    const visibleColumns: IColumn[] = columns.map(item => ({
+        ...item,
+        hidden: !selectedColumns.includes(item.dataIndex)
+    }));
 
-    const handleColumnsChange = (newValue: string[]) => {
-        setSelectedColumns(newValue);
-        const newColumns: IColumn[] = columns.filter(item => newValue.includes(item.key));
-        setVisibleColumns(newColumns);
-    };
 
     return (
         <div className={"flex flex-col"}>
@@ -78,30 +176,55 @@ export function CustomTable({columns, availableColumns, selectedColumns, setSele
                     >
                         {props.label}
                     </Tag>)}
-                onChange={handleColumnsChange}
+                onChange={setSelectedColumns}
                 showSearch={false}
                 treeCheckable={true}
                 variant={"outlined"}
             />
-            <Table
-                className={styles.table}
-                columns={visibleColumns}
-                rowKey={(record) => record.id}
-                loading={data.isLoading}
-                onRow={(record, index) => {
-                    return {
-                        onClick: () => {router.push(getRecordLink(record.id))}
-                    }
-                }}
-                rowClassName={styles.tableRow}
-                dataSource={data.data}
-                pagination={false}
-                onChange={handleTableChange}
-                scroll={{x: 900, y: 600}}
-                virtual={true}
-                size={"middle"}
-                bordered={false}
-            />
+            <DndContext
+                sensors={sensors}
+                modifiers={[restrictToHorizontalAxis]}
+                onDragEnd={onDragEnd}
+                onDragOver={onDragOver}
+                collisionDetection={closestCenter}
+            >
+                <SortableContext
+                    items={columns.map(i => i.key)}
+                    strategy={horizontalListSortingStrategy}
+                >
+                    <DragIndexContext.Provider value={dragIndex}>
+                        <Table
+                            className={styles.table}
+                            columns={visibleColumns}
+                            rowKey={(record) => record.id}
+                            loading={data.isLoading}
+                            onRow={(record, index) => {
+                                return {
+                                    onClick: () => {router.push(getRecordLink(record.id))}
+                                }
+                            }}
+                            components={{
+                                header: {cell: TableHeaderCell},
+                                body: {cell: TableBodyCell},
+                            }}
+                            rowClassName={styles.tableRow}
+                            dataSource={data.data}
+                            pagination={false}
+                            onChange={handleTableChange}
+                            scroll={{x: 900, y: 600}}
+                            virtual={true}
+                            size={"middle"}
+                            bordered={false}
+                        />
+                    </DragIndexContext.Provider>
+                </SortableContext>
+                <DragOverlay>
+                    <th style={{ backgroundColor: 'gray', padding: 16 }}>
+                        {visibleColumns[visibleColumns.findIndex((i) => i.key === dragIndex.active)]?.title as React.ReactNode}
+                    </th>
+                </DragOverlay>
+            </DndContext>
+
             {/*TODO: можно вынести пагинацию в отдельный компонент*/}
             <Pagination
                 className={styles.pagination}

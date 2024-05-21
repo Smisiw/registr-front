@@ -21,7 +21,7 @@ const AppointmentTable = ({tableParams, setTableParams, data}: props) => {
 
     return (
         <CustomTable
-            columns={AppointmentColumns}
+            baseColumns={AppointmentColumns}
             availableColumns={availableAppointmentColumns}
             selectedColumns={selectedColumns}
             setSelectedColumns={setSelectedColumns}

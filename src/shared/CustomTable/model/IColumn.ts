@@ -8,7 +8,7 @@ interface filter {
     children?: filter[]
 }
 export interface IColumn extends ColumnType<any>{
-    key: string
+    key: string | number
     title: string
     dataIndex: string
     sorter: boolean
@@ -16,6 +16,8 @@ export interface IColumn extends ColumnType<any>{
     dataType: "string" | "phone" | "address" | "date" | "boolean"
     render? (data: any): ReactNode
     filters?: filter[]
+    onCell?: ()=>{}
+    onHeaderCell?: ()=>{}
 }
 
 export interface IAvailableColumns extends DefaultOptionType{

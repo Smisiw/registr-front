@@ -21,7 +21,7 @@ const PatientTable = ({tableParams, setTableParams, data}: props) => {
 
     return (
         <CustomTable
-            columns={PatientColumns}
+            baseColumns={PatientColumns}
             availableColumns={availablePatientColumns}
             selectedColumns={selectedColumns}
             setSelectedColumns={setSelectedColumns}

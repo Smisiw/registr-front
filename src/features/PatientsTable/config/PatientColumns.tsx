@@ -2,12 +2,13 @@ import {IColumn} from "@/shared/CustomTable/model/IColumn";
 import React from "react";
 import searchTableFilter from "@/shared/CustomTable/ui/searchTableFilter";
 import dateTableFilter from "@/shared/CustomTable/ui/dateTableFilter";
+import numberBetweenTableFilter from "@/shared/CustomTable/ui/numberBetweenTableFilter";
 
 export const PatientColumns: IColumn[] = [
     {
         title: 'ID',
         dataIndex: 'id',
-        key: 'id',
+        key: 1,
         dataType: "string",
         sorter: true,
         width: 200,
@@ -15,16 +16,15 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'ФИО',
         dataIndex: 'full_name',
-        key: 'full_name',
+        key: 2,
         dataType: "string",
-        filterDropdown: searchTableFilter,
         sorter: true,
         width: 200,
     },
     {
         title: 'Пол',
         dataIndex: 'gender',
-        key: 'gender',
+        key: 3,
         dataType: "boolean",
         sorter: false,
         filters: [
@@ -36,16 +36,16 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Возраст',
         dataIndex: 'age',
-        key: 'age',
+        key: 4,
         dataType: "string",
-        filters: [],
+        filterDropdown: numberBetweenTableFilter,
         sorter: true,
         width: 110,
     },
     {
         title: 'Дата рождения',
         dataIndex: 'birth_date',
-        key: 'birth_date',
+        key: 5,
         dataType: "date",
         filterDropdown: dateTableFilter,
         sorter: true,
@@ -57,7 +57,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Дата смерти',
         dataIndex: 'dod',
-        key: 'dod',
+        key: 6,
         dataType: "date",
         filterDropdown: dateTableFilter,
         sorter: false,
@@ -69,7 +69,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Место жительства',
         dataIndex: 'location',
-        key: 'location',
+        key: 7,
         dataType: "string",
         filters: [
             { text: 'НСО', value: 'НСО' },
@@ -82,7 +82,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Район',
         dataIndex: 'district',
-        key: 'district',
+        key: 8,
         dataType: "string",
         sorter: false,
         width: 130,
@@ -90,7 +90,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Адрес',
         dataIndex: 'address',
-        key: 'address',
+        key: 9,
         dataType: "address",
         sorter: false,
         width: 300,
@@ -98,7 +98,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Телефон',
         dataIndex: 'phone',
-        key: 'phone',
+        key: 10,
         dataType: "phone",
         sorter: false,
         width: 120,
@@ -106,7 +106,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Поликлиника',
         dataIndex: 'clinic',
-        key: 'clinic',
+        key: 11,
         dataType: "string",
         sorter: false,
         width: 150,
@@ -114,7 +114,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Примечание',
         dataIndex: 'patient_note',
-        key: 'patient_note',
+        key: 12,
         dataType: "string",
         sorter: false,
         width: 150,
@@ -122,7 +122,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Направивший врач',
         dataIndex: 'referring_doctor',
-        key: 'referring_doctor',
+        key: 12,
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: false,
@@ -131,7 +131,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Направившая мед. организация',
         dataIndex: 'referring_clinic_organization',
-        key: 'referring_clinic_organization',
+        key: 13,
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: false,
@@ -140,7 +140,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Категория инвалидности',
         dataIndex: 'disability',
-        key: 'disability',
+        key: 14,
         dataType: "string",
         filters: [
             { text: 'нет', value: 'нет' },
@@ -155,7 +155,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Льготное обеспечение препаратами',
         dataIndex: 'lgota_drugs',
-        key: 'lgota_drugs',
+        key: 15,
         dataType: "string",
         filters: [
             { text: 'нет', value: 'нет' },
@@ -168,7 +168,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Госпитализации',
         dataIndex: 'has_hospitalization',
-        key: 'has_hospitalization',
+        key: 16,
         dataType: "boolean",
         filters: [
             { text: 'Да', value: 'true' },
@@ -183,7 +183,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Количество госпитализаций',
         dataIndex: 'count_hospitalization',
-        key: 'count_hospitalization',
+        key: 17,
         dataType: "string",
         filterDropdown: searchTableFilter,
         sorter: false,
@@ -192,7 +192,7 @@ export const PatientColumns: IColumn[] = [
     {
         title: 'Дата последней госпитализации',
         dataIndex: 'last_hospitalization_date',
-        key: 'last_hospitalization_date',
+        key: 18,
         dataType: "date",
         filterDropdown: dateTableFilter,
         sorter: true,
