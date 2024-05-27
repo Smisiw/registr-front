@@ -3,7 +3,7 @@ import React, {Dispatch, useState} from 'react';
 import {Card, Checkbox, Col, Form, Input, Radio, Row, Space, Spin, Typography} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {diagnoseCreate, useGetDiagnoseFields} from "@/entities/Appointment/api/diagnoseApi";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {IDiagnose} from "@/entities/Appointment/model/IDiagnose";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import {useSWRConfig} from "swr";

@@ -2,7 +2,7 @@ import React, {Dispatch, useState} from 'react';
 import {Card, DatePicker, Form, Input, Space, Spin, Typography} from "antd";
 import {labTestsUpdate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {IDiagnose} from "@/entities/Appointment/model/IDiagnose";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 

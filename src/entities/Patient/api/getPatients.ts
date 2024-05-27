@@ -1,5 +1,5 @@
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
-import {DEFAULT_TABLE_PAGE_SIZE, ITableParams} from "@/shared/CustomTable";
+import {DEFAULT_TABLE_PAGE_SIZE, ITableParams} from "../../../shared/ui/CustomTable";
 import axiosInstance from "@/app/axiosProvider/axiosProvider";
 import {AxiosError, AxiosResponse} from "axios";
 

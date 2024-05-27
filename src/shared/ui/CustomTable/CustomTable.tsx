@@ -2,7 +2,7 @@
 import {createContext, CSSProperties, FC, HTMLAttributes, useContext, useState} from "react";
 import {FilterValue, SorterResult, TablePaginationConfig} from "antd/es/table/interface";
 import {Pagination, Table, Tag, TreeSelect} from "antd";
-import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableData, ITableParams} from "@/shared/CustomTable";
+import {DEFAULT_TABLE_PAGE_SIZE, IAvailableColumns, IColumn, ITableData, ITableParams} from "@/shared/ui/CustomTable/index";
 import styles from "./CustomTable.module.css"
 import {usePathname, useRouter} from "next/navigation";
 import {
@@ -22,10 +22,9 @@ import {restrictToHorizontalAxis} from "@dnd-kit/modifiers";
 interface props {
     baseColumns: IColumn[]
     availableColumns: IAvailableColumns[]
-    selectedColumns: string[]
-    setSelectedColumns(selectedColumns: string[]): void
     data: ITableData
     tableParams: ITableParams
+    saveColumns(columns: { table_columns: { dataIndex: string, hidden: boolean }[] }): void
     setTableParams(data: ITableParams): void
     getRecordLink(recordId: number): string
 }
@@ -49,7 +48,7 @@ const DragIndexContext = createContext<DragIndexState>({ active: -1, over: -1 })
 const dragActiveStyle = (dragState: DragIndexState, id: string) => {
     const { active, over, direction } = dragState;
     // drag active style
-    let style: React.CSSProperties = {};
+    let style: CSSProperties = {};
     if (active && active === id) {
         style = { backgroundColor: 'gray', opacity: 0.5 };
     }
@@ -80,9 +79,8 @@ const TableHeaderCell: FC<HeaderCellProps> = (props) => {
     return <th {...props} ref={setNodeRef} style={style} {...attributes} {...listeners} />;
 };
 
-export function CustomTable({baseColumns, availableColumns, selectedColumns, setSelectedColumns, data, tableParams, setTableParams, getRecordLink} : props) {
+export function CustomTable({baseColumns, availableColumns, data, tableParams, saveColumns, setTableParams, getRecordLink} : props) {
     const [dragIndex, setDragIndex] = useState<DragIndexState>({ active: -1, over: -1 });
-
     const [columns, setColumns] = useState(() =>
         baseColumns.map((column, i) => ({
             ...column,
@@ -90,11 +88,15 @@ export function CustomTable({baseColumns, availableColumns, selectedColumns, set
             onCell: () => ({ id: column.key }),
         })),
     );
+    const [selectedColumns, setSelectedColumns] = useState(columns.map(column => {
+        if (!column.hidden){
+            return column.dataIndex
+        }
+    }))
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                // https://docs.dndkit.com/api-documentation/sensors/pointer#activation-constraints
                 distance: 1,
             },
         }),
@@ -105,7 +107,14 @@ export function CustomTable({baseColumns, availableColumns, selectedColumns, set
             setColumns((prevState) => {
                 const activeIndex = prevState.findIndex((i) => i.key === active?.id);
                 const overIndex = prevState.findIndex((i) => i.key === over?.id);
-                return arrayMove(prevState, activeIndex, overIndex);
+                const newColumns = arrayMove(prevState, activeIndex, overIndex);
+                saveColumns({
+                    table_columns: newColumns.map(column => ({
+                        dataIndex: column.dataIndex,
+                        hidden: !!column.hidden
+                    }))
+                })
+                return newColumns
             });
         }
         setDragIndex({ active: -1, over: -1 });
@@ -176,7 +185,15 @@ export function CustomTable({baseColumns, availableColumns, selectedColumns, set
                     >
                         {props.label}
                     </Tag>)}
-                onChange={setSelectedColumns}
+                onChange={(value) => {
+                    setSelectedColumns(value)
+                    saveColumns({
+                        table_columns: columns.map(column => ({
+                            dataIndex: column.dataIndex,
+                            hidden: !value.includes(column.dataIndex)
+                        }))
+                    })
+                }}
                 showSearch={false}
                 treeCheckable={true}
                 variant={"outlined"}
@@ -225,7 +242,6 @@ export function CustomTable({baseColumns, availableColumns, selectedColumns, set
                 </DragOverlay>
             </DndContext>
 
-            {/*TODO: можно вынести пагинацию в отдельный компонент*/}
             <Pagination
                 className={styles.pagination}
                 current={tableParams.currentPage}

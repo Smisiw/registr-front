@@ -2,7 +2,7 @@
 import React, {Dispatch, useState} from 'react';
 import {Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {ekgCreate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import {IEkg} from "@/entities/Appointment/model/IEkg";

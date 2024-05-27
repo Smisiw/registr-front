@@ -1,8 +1,8 @@
-import {IColumn} from "@/shared/CustomTable/model/IColumn";
+import {IColumn} from "@/shared/types/IColumn";
 import React from "react";
-import searchTableFilter from "@/shared/CustomTable/ui/searchTableFilter";
-import dateTableFilter from "@/shared/CustomTable/ui/dateTableFilter";
-import numberBetweenTableFilter from "@/shared/CustomTable/ui/numberBetweenTableFilter";
+import searchTableFilter from "@/shared/lib/TableFilters/searchTableFilter";
+import dateTableFilter from "@/shared/lib/TableFilters/dateTableFilter";
+import numberBetweenTableFilter from "@/shared/lib/TableFilters/intervalTableFilter";
 
 export const PatientColumns: IColumn[] = [
     {

@@ -2,7 +2,7 @@ import React, {Dispatch, useState} from 'react';
 import {Button, Card, Checkbox, Col, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
 import {complaintsUpdate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
 import {IComplaints} from "@/entities/Appointment/model/IComplaints";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 
 const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: IComplaints }) => {

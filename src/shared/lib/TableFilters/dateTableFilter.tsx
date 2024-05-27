@@ -1,7 +1,7 @@
 'use client'
 import React, {useState} from 'react';
 import {Button, DatePicker, Space} from "antd";
-import buttonStyles from "@/shared/Buttons/ui/Button.module.css";
+import buttonStyles from "@/shared/ui/Buttons/Button.module.css";
 import {SearchOutlined} from "@ant-design/icons";
 import {FilterDropdownProps} from "antd/es/table/interface";
 import {Dayjs} from "dayjs";

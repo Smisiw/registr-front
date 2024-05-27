@@ -2,7 +2,7 @@ import React, {Dispatch, useState} from 'react';
 import {Button, Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
 import { ekgUpdate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import dayjs from "dayjs";
 

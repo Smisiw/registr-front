@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {Button, Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Radio, Row, Space, Typography} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {updatePatient} from "@/entities/Patient/api/updatePatient";
 import {IPatient} from "@/entities/Patient/model/IPatient";
 import dayjs from "dayjs";

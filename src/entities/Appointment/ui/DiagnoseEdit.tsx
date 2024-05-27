@@ -3,7 +3,7 @@ import {Button, Card, Checkbox, Col, Form, Input, Radio, Row, Space, Spin, Typog
 import {diagnoseUpdate, useGetDiagnoseFields} from "@/entities/Appointment/api/diagnoseApi";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 
 const DiagnoseEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()

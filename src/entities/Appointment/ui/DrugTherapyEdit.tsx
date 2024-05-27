@@ -2,7 +2,7 @@ import React, {Dispatch, useState} from 'react';
 import {Button, Card, Checkbox, Col, Form, Input, Row, Select, Space, Spin, Typography} from "antd";
 import {drugTherapyUpdate, useGetDrugTherapyFields} from "@/entities/Appointment/api/drugTherapyApi";
 import {IDrugTherapy} from "@/entities/Appointment/model/IDrugTherapy";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {IDrugTherapyFields} from "@/entities/Appointment/model/IFormDataFields";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 

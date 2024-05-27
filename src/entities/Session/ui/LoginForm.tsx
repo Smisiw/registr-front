@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {useSession} from "@/entities/Session/api";
 import styles from "./LoginForm.module.css"
 import {Card, Form, Input, Space, Typography} from "antd";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {ILoginForm} from "@/entities/Session/model/ILoginForm";
 
 const LoginForm = () => {

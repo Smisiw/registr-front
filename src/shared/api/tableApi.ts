@@ -1,4 +1,4 @@
-import {DEFAULT_TABLE_PAGE_SIZE, ITableData, ITableParams} from "@/shared/CustomTable";
+import {DEFAULT_TABLE_PAGE_SIZE, ITableData, ITableParams} from "../ui/CustomTable";
 import axiosInstance from "@/app/axiosProvider/axiosProvider";
 import {AxiosResponse} from "axios";
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";

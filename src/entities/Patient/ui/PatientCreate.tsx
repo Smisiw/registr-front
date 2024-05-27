@@ -15,7 +15,7 @@ import {
     Space,
     Typography
 } from "antd";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {createPatient} from "@/entities/Patient/api/createPatient";
 import Link from "next/link";

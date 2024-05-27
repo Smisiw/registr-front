@@ -1,12 +1,12 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import {IPatientTable} from "@/entities/Patient/model/IPatientTable";
-import {ITableParams} from "@/shared/CustomTable";
-import SearchBar from "@/shared/SearchBar/ui/SearchBar";
-import ButtonNew from "@/shared/Buttons/ui/ButtonNew";
+import {ITableParams} from "../../../shared/ui/CustomTable";
+import SearchBar from "@/shared/ui/SearchBar/SearchBar";
+import ButtonNew from "@/shared/ui/Buttons/ButtonNew";
 import styles from "./AppointmentsList.module.css"
 import AppointmentTable from "@/features/AppointmentsTable/ui/AppointmentTable";
-import {useGetAppointments} from "@/shared/CustomTable/api/tableApi";
+import {useGetAppointments} from "@/shared/api/tableApi";
 
 const AppointmentsList = ({page}: {page: number}) => {
     const [

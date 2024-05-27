@@ -2,7 +2,7 @@
 import React, {Dispatch, useState} from 'react';
 import {Card, Checkbox, Col, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
-import SubmitButton from "@/shared/Buttons/ui/SubmitButton";
+import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {complaintsCreate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
 import {IComplaints} from "@/entities/Appointment/model/IComplaints";
 

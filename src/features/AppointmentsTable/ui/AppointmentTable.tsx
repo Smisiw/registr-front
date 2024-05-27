@@ -1,6 +1,6 @@
 'use client'
 import React, {useEffect, useState} from 'react';
-import {CustomTable, ITableParams} from "@/shared/CustomTable";
+import {CustomTable, ITableParams} from "../../../shared/ui/CustomTable";
 import {defaultAppointmentSelectedColumns} from "@/features/AppointmentsTable/config/defaultAppointmentSelectedColumns";
 import {AppointmentColumns} from "@/features/AppointmentsTable/config/AppointmentColumns";
 import {IAppointmentTableData} from "@/features/AppointmentsTable/model/IAppointmentTableData";

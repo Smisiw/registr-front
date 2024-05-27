@@ -1,11 +1,11 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
-import {ITableParams} from "@/shared/CustomTable";
-import SearchBar from "@/shared/SearchBar/ui/SearchBar";
-import ButtonNew from "@/shared/Buttons/ui/ButtonNew";
+import {ITableParams} from "../../../shared/ui/CustomTable";
+import SearchBar from "@/shared/ui/SearchBar/SearchBar";
+import ButtonNew from "@/shared/ui/Buttons/ButtonNew";
 import styles from "./PatientsList.module.css"
-import {useGetPatients} from "@/shared/CustomTable/api/tableApi";
+import {useGetPatients} from "@/shared/api/tableApi";
 
 const PatientsList = ({page}: {page: number}) => {
     const [

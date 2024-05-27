@@ -1,5 +1,4 @@
 import {IProfileInfo} from "@/entities/Profile/model/IProfileInfo";
-import {Dispatch} from "react";
 import defaultUserImage from "@/shared/images/defaultuser.jpg"
 
 export function getProfileInfo(): IProfileInfo {
