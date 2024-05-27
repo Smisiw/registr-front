@@ -6,8 +6,10 @@ import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import {dateFormatConverter} from "@/shared/helpers/dateFormatConverter";
+import {useSWRConfig} from "swr";
 
 const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string }) => {
+    const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetLabTestsFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -22,6 +24,10 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
             }
             console.log(values)
             await labTestsCreate(appointmentId, values)
+            await mutate({
+                key: 'appointments/block/laboratory_test/',
+                appointmentId
+            })
             setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)

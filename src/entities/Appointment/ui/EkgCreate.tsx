@@ -6,8 +6,10 @@ import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {ekgCreate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import {IEkg} from "@/entities/Appointment/model/IEkg";
+import {useSWRConfig} from "swr";
 
 const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
+    const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetEkgFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -15,6 +17,10 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
         try {
             console.log(values)
             await ekgCreate(appointmentId, values)
+            await mutate({
+                key: 'appointments/block/ekg/',
+                appointmentId
+            })
             setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)

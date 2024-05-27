@@ -5,8 +5,10 @@ import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {complaintsCreate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
 import {IComplaints} from "@/entities/Appointment/model/IComplaints";
+import {useSWRConfig} from "swr";
 
 const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string }) => {
+    const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetComplaintsFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -17,6 +19,10 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
         try {
             values.bmi = (weight / Math.pow((height / 100), 2)).toFixed(2)
             await complaintsCreate(appointmentId, values)
+            await mutate({
+                key: 'appointments/block/complaint/',
+                appointmentId
+            })
             setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)

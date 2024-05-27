@@ -7,8 +7,10 @@ import {drugTherapyCreate, useGetDrugTherapyFields} from "@/entities/Appointment
 import {IDrugTherapyFields} from "@/entities/Appointment/model/IFormDataFields";
 import {IDrugTherapy} from "@/entities/Appointment/model/IDrugTherapy";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
+import {useSWRConfig} from "swr";
 
 const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
+    const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDrugTherapyFields()
     const [errorMessage, setErrorMessage] = useState("")
@@ -30,6 +32,10 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
                 }
             }
             await drugTherapyCreate(appointmentId, data)
+            await mutate({
+                key: 'appointments/block/purpose/',
+                appointmentId
+            })
             setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)
