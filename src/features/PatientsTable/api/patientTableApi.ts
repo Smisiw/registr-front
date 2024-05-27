@@ -15,7 +15,7 @@ export const useGetPatientColumns = () => {
         dateTableFilter: dateTableFilter,
         intervalTableFilter: intervalTableFilter
     }
-    data?.forEach((item) => {
+    data?.forEach((item: any) => {
         if (['searchTableFilter', 'dateTableFilter', 'intervalTableFilter'].includes(item.filter)){
             // @ts-ignore
             item.filterDropdown = filters[item.filter]

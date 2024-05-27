@@ -23,10 +23,9 @@ const AppointmentTable = ({tableParams, setTableParams, data}: props) => {
         <CustomTable
             baseColumns={AppointmentColumns}
             availableColumns={availableAppointmentColumns}
-            selectedColumns={selectedColumns}
-            setSelectedColumns={setSelectedColumns}
             data={data}
             tableParams={tableParams}
+            saveColumns={()=>{}}
             setTableParams={setTableParams}
             getRecordLink={(recordId)=> `/appointments/${recordId}/generalDetails`}
         />
