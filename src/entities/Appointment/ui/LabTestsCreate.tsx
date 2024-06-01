@@ -15,14 +15,12 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: any) => {
         try {
-            console.log(values)
             for (let key in values) {
                 if (key.endsWith("date")) {
                     console.log("hood");
                     values[key] = dateFormatConverter(values[key])
                 }
             }
-            console.log(values)
             await labTestsCreate(appointmentId, values)
             await mutate({
                 key: 'appointments/block/laboratory_test/',

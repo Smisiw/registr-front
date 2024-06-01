@@ -1,9 +1,10 @@
 import React, {Dispatch, useState} from 'react';
 import {Button, Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
-import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
+import {labTestsCreate, labTestsUpdate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import dayjs from "dayjs";
+import {dateFormatConverter} from "@/shared/helpers/dateFormatConverter";
 
 const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
@@ -11,7 +12,13 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: any)=> {
         try {
-            await labTestsCreate(appointmentId, values)
+            for (let key in values) {
+                if (key.endsWith("date")) {
+                    console.log("hood");
+                    values[key] = dateFormatConverter(values[key])
+                }
+            }
+            await labTestsUpdate(appointmentId, values)
             setStatus("display")
         } catch (e: any) {
             setErrorMessage(e.message)
