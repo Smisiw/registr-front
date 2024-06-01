@@ -24,8 +24,8 @@ interface props {
     availableColumns: IAvailableColumns[]
     data: ITableData
     tableParams: ITableParams
-    saveColumns(columns: { table_columns: { dataIndex: string, hidden: boolean }[] }): void
     setTableParams(data: ITableParams): void
+    saveColumns(columns: { table_columns: { dataIndex: string, hidden: boolean }[] }): void
     getRecordLink(recordId: number): string
 }
 
@@ -61,15 +61,18 @@ const dragActiveStyle = (dragState: DragIndexState, id: string) => {
     }
     return style;
 };
-
 const TableBodyCell: FC<BodyCellProps> = (props) => {
     const dragState = useContext<DragIndexState>(DragIndexContext);
     return <td {...props} style={{ ...props.style, ...dragActiveStyle(dragState, props.id) }} />;
 };
-
 const TableHeaderCell: FC<HeaderCellProps> = (props) => {
     const dragState = useContext(DragIndexContext);
-    const { attributes, listeners, setNodeRef, isDragging } = useSortable({ id: props.id });
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        isDragging
+    } = useSortable({ id: props.id });
     const style: CSSProperties = {
         ...props.style,
         cursor: 'move',

@@ -5,7 +5,6 @@ import {useSession} from "@/entities/Session/api";
 import {getCookie} from "cookies-next";
 import {isWindowDefined} from "swr/_internal";
 
-
 const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
 })
@@ -13,7 +12,6 @@ const axiosInstance = axios.create({
 axiosInstance.defaults.headers.common["Content-Type"] = "application/json"
 export const AxiosProvider = ({children}: { children: ReactNode }) => {
     const session = useSession()
-
     const requestInterceptor = axiosInstance.interceptors.request.use(
         config => {
             if (!config.headers.Authorization) {
@@ -23,7 +21,6 @@ export const AxiosProvider = ({children}: { children: ReactNode }) => {
                 } else {
                     token = getCookie("authToken")
                 }
-
                 if (token) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
@@ -43,8 +40,6 @@ export const AxiosProvider = ({children}: { children: ReactNode }) => {
                 return Promise.reject(error)
         }
     )
-
     return children;
 };
-
 export default axiosInstance

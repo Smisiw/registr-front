@@ -7,6 +7,7 @@ import {ekgCreate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import {IEkg} from "@/entities/Appointment/model/IEkg";
 import {useSWRConfig} from "swr";
+import {dateFormatConverter} from "@/shared/helpers/dateFormatConverter";
 
 const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>, appointmentId: string}) => {
     const {mutate} = useSWRConfig()
@@ -15,7 +16,8 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
     const [errorMessage, setErrorMessage] = useState("")
     const formSubmitHandler = async (values: IEkg)=> {
         try {
-            console.log(values)
+            values.date_ekg = dateFormatConverter(values.date_ekg)
+            values.date_echo_ekg = dateFormatConverter(values.date_echo_ekg)
             await ekgCreate(appointmentId, values)
             await mutate({
                 key: 'appointments/block/ekg/',

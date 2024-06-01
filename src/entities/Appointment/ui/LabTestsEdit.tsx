@@ -1,7 +1,6 @@
 import React, {Dispatch, useState} from 'react';
 import {Button, Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
 import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
-import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import dayjs from "dayjs";
@@ -10,7 +9,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetLabTestsFields()
     const [errorMessage, setErrorMessage] = useState("")
-    const formSubmitHandler = async (values: IPatientNew)=> {
+    const formSubmitHandler = async (values: any)=> {
         try {
             await labTestsCreate(appointmentId, values)
             setStatus("display")

@@ -5,13 +5,17 @@ import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import dayjs from "dayjs";
+import {dateFormatConverter} from "@/shared/helpers/dateFormatConverter";
+import {IEkg} from "@/entities/Appointment/model/IEkg";
 
 const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetEkgFields()
     const [errorMessage, setErrorMessage] = useState("")
-    const formSubmitHandler = async (values: IPatientNew)=> {
+    const formSubmitHandler = async (values: IEkg)=> {
         try {
+            values.date_ekg = dateFormatConverter(values.date_ekg)
+            values.date_echo_ekg = dateFormatConverter(values.date_echo_ekg)
             await ekgUpdate(appointmentId, values)
             setStatus("display")
         } catch (e: any) {
