@@ -13,7 +13,7 @@ export const getPatients = async (
         const {data}: AxiosResponse<{
             data: IPatientTable[], total: number
         }> = await axiosInstance.get(
-            "patients", {
+            "patients/", {
                 params: {
                     filters: props.filters,
                     sortParams: props.sortParams,

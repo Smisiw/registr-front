@@ -13,6 +13,6 @@ export const useGetPatientsByName = (full_name: string) : {
     error: AxiosError,
     mutate: KeyedMutator<any>
 } => {
-    const {data, isLoading, error, mutate} = useSWR({key: "patients", full_name}, getPatientsByName)
+    const {data, isLoading, error, mutate} = useSWR({key: "patients/", full_name}, getPatientsByName)
     return {patients: data, isLoading, error, mutate}
 }

@@ -1,22 +1,44 @@
 'use client'
 import React, {useState} from 'react';
-import {Button, Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Radio, Row, Space, Typography} from "antd";
+import {
+    Button,
+    Card,
+    Checkbox,
+    Col,
+    DatePicker,
+    Form,
+    Input,
+    InputNumber,
+    message,
+    Radio,
+    Row,
+    Space,
+    Typography
+} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {updatePatient} from "@/entities/Patient/api/updatePatient";
 import {IPatient} from "@/entities/Patient/model/IPatient";
 import dayjs from "dayjs";
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
+import {useSWRConfig} from "swr";
 
 const PatientEdit = ({data}: {data: IPatient}) => {
+    const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const hasHospitalization : boolean = Form.useWatch("has_hospitalization", form)
     const [errorMessage, setErrorMessage] = useState("")
     const pathname = usePathname()
+    const router = useRouter()
+    const [messageApi, contextHolder] = message.useMessage()
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
             await updatePatient(data.id, values)
+            await mutate(key => key !== null && typeof key === "object" && (key.key == 'patients/'))
+            await mutate(key => key !== null && typeof key === "object" && (key.key == 'patients/appointment/'))
+            messageApi.success("Данные успешно обновлены")
+            router.push(pathname)
         } catch (e: any) {
             setErrorMessage(e.response.data.message)
         }
@@ -51,6 +73,7 @@ const PatientEdit = ({data}: {data: IPatient}) => {
                 <Typography.Text type={"danger"}>
                     {errorMessage}
                 </Typography.Text>
+                {contextHolder}
                 <Row gutter={32}>
                     <Col span={12}>
                         <Space size={"middle"} direction={"vertical"} wrap={true} style={{display: "flex"}}>

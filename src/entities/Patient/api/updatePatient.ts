@@ -10,5 +10,5 @@ export const updatePatient = async (patient_id: string, values: IPatientNew) => 
     }    if (values.last_hospitalization_date && typeof values.last_hospitalization_date !== "string") {
         values.last_hospitalization_date= new Date(values.last_hospitalization_date).toLocaleDateString()
     }
-    return axiosInstance.patch("patients", values, {params: patient_id}).then(res => res.data)
+    return axiosInstance.patch("patients/" + patient_id, values).then(res => res.data)
 }

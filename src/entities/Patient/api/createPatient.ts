@@ -12,5 +12,5 @@ export const createPatient = async (values: IPatientNew)=> {
     if (values.last_hospitalization_date) {
         values.last_hospitalization_date = dateFormatConverter(values.last_hospitalization_date)
     }
-    return axiosInstance.post("patients", values).then(res => res.data)
+    return axiosInstance.post("patients/", values).then(res => res.data)
 }

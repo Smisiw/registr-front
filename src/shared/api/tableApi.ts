@@ -31,7 +31,7 @@ export const useGetAppointments = (tableParams: ITableParams ): {data: IAppointm
 
 export const useGetPatients = (tableParams: ITableParams ): {data: IPatientTableData | undefined, error: any, isLoading: boolean} => {
     const {data, error, isLoading} = useSWR({
-        key: 'patients',
+        key: 'patients/',
         tableParams
     }, getTableData)
     return {data, error, isLoading}
