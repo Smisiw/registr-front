@@ -132,7 +132,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                         <Col span={6}>
                                             {field.displayName}:
                                         </Col>
-                                        <Col span={6}>
+                                        <Col span={7}>
                                             <Form.Item
                                                 name={field.textName}
                                                 rules={[{required: true, message: "заполните поле"}]}
@@ -140,7 +140,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                                                 <Input/>
                                             </Form.Item>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col span={11}>
                                             <Form.Item
                                                 label={"Дата"}
                                                 name={field.dateName}
