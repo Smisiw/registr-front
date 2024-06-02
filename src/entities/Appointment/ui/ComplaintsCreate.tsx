@@ -23,6 +23,10 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                 key: 'appointments/block/complaint/',
                 appointmentId
             })
+            await mutate({
+                key: 'appointments/block/clinical_condition/',
+                appointmentId
+            })
             setStatus("edit")
         } catch (e: any) {
             setErrorMessage(e.message)

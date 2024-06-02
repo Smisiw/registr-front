@@ -1,6 +1,6 @@
 import React, {Dispatch, useState} from 'react';
 import {Button, Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
-import {labTestsCreate, labTestsUpdate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
+import {labTestsUpdate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import dayjs from "dayjs";
@@ -135,7 +135,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                         <Col span={6}>
                                             {field.displayName}:
                                         </Col>
-                                        <Col span={6}>
+                                        <Col span={7}>
                                             <Form.Item
                                                 name={field.textName}
                                                 initialValue={data[field.textName]}
@@ -144,7 +144,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                                 <Input/>
                                             </Form.Item>
                                         </Col>
-                                        <Col span={12}>
+                                        <Col span={11}>
                                             <Form.Item
                                                 label={"Дата"}
                                                 name={field.dateName}
