@@ -28,15 +28,12 @@ interface props {
     saveColumns(columns: { table_columns: { dataIndex: string, hidden: boolean }[] }): void
     getRecordLink(recordId: number): string
 }
-
 interface HeaderCellProps extends HTMLAttributes<HTMLTableCellElement> {
     id: string;
 }
-
 interface BodyCellProps extends HTMLAttributes<HTMLTableCellElement> {
     id: string;
 }
-
 interface DragIndexState {
     active: UniqueIdentifier;
     over: UniqueIdentifier | undefined;
@@ -96,7 +93,6 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
             return column.dataIndex
         }
     }))
-
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
@@ -104,7 +100,6 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
             },
         }),
     );
-
     const onDragEnd = ({ active, over }: DragEndEvent) => {
         if (active.id !== over?.id) {
             setColumns((prevState) => {
@@ -122,7 +117,6 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
         }
         setDragIndex({ active: -1, over: -1 });
     };
-
     const onDragOver = ({ active, over }: DragOverEvent) => {
         const activeIndex = columns.findIndex((i) => i.key === active.id);
         const overIndex = columns.findIndex((i) => i.key === over?.id);
@@ -136,7 +130,7 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
     const pathName = usePathname()
     const handlePaginationChange = (
         current: number
-) => {
+    ) => {
         router.push(pathName + (current==1)? "" : ('?page=' + current))
         setTableParams(
             {
@@ -145,7 +139,6 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
             }
         );
     };
-
     const handleTableChange = (pagination: TablePaginationConfig,
         filters: Record<string, FilterValue | null>,
         sortParams: SorterResult<any> | SorterResult<any>[]
@@ -173,7 +166,6 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
         ...item,
         hidden: !selectedColumns.includes(item.dataIndex)
     }));
-
 
     return (
         <div className={"flex flex-col"}>
@@ -244,7 +236,6 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
                     </th>
                 </DragOverlay>
             </DndContext>
-
             <Pagination
                 className={styles.pagination}
                 current={tableParams.currentPage}
@@ -266,6 +257,5 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
                 }}
             />
         </div>
-
     )
 }

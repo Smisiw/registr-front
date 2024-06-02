@@ -108,7 +108,6 @@ export default function RootLayout({
                 {children}
                 </body>
             </AxiosProvider>
-
         </ConfigProvider>
     </html>
   );
