@@ -152,10 +152,10 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
                 },
                 sortParams: sortParams instanceof Array
                     ? null
-                    : (sortParams.order && sortParams.columnKey)
+                    : (sortParams.order && sortParams.column?.dataIndex)
                         ?
                         {
-                            columnKey: sortParams.columnKey,
+                            columnKey: sortParams.column.dataIndex,
                             order: sortParams.order
                         }
                         : null
