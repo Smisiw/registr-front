@@ -35,8 +35,8 @@ const PatientEdit = ({data}: {data: IPatient}) => {
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
             await updatePatient(data.id, values)
-            await mutate(key => key !== null && typeof key === "object" && (key.key == 'patients/'))
-            await mutate(key => key !== null && typeof key === "object" && (key.key == 'patients/appointment/'))
+            await mutate((key: {key: string}) => key !== null && typeof key === "object" && (key.key == 'patients/'))
+            await mutate((key: {key: string}) => key !== null && typeof key === "object" && (key.key == 'patients/appointment/'))
             messageApi.success("Данные успешно обновлены")
             router.push(pathname)
         } catch (e: any) {

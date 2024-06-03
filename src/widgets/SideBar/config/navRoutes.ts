@@ -24,7 +24,6 @@ export const navRoutes: {general: INavItem[], appointment: INavItem[]} = {
     appointment: [
         {href: `/generalDetails`, Icon: generalDetailsIcon, name: `Общие сведения`},
         {href: `/diagnose`, Icon: diagnose, name: `Диагноз`},
-        // {href: `/shoks`, Icon: shoks, name: `Шкала ШОКС`},
         {href: `/labTests`, Icon: labTests, name: `Лабораторные тесты`},
         {href: `/complaints`, Icon: complaints, name: `Жалобы`},
         {href: `/ekg`, Icon: ekg, name: `ЭКГ и ЭХО-КГ`},

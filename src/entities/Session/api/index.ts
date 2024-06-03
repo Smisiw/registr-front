@@ -21,7 +21,6 @@ export const useSession = () => {
             })
         },
         logout: () => {
-            console.log(42)
             deleteCookie('authToken')
             localStorage.setItem("lastPage", window.location.pathname + window.location.search)
             localStorage.removeItem("authToken")
