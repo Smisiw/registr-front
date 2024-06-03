@@ -1,5 +1,5 @@
 import React, {Dispatch, useState} from 'react';
-import {Button, Card, Checkbox, Col, Form, Input, Row, Select, Space, Spin, Typography} from "antd";
+import {Button, Card, Checkbox, Col, Form, Input, message, Row, Select, Space, Spin} from "antd";
 import {drugTherapyUpdate, useGetDrugTherapyFields} from "@/entities/Appointment/api/drugTherapyApi";
 import {IDrugTherapy} from "@/entities/Appointment/model/IDrugTherapy";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
@@ -9,7 +9,7 @@ import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 const DrugTherapyEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDrugTherapyFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
 
     const formSubmitHandler = async (values: IDrugTherapy)=> {
         try {
@@ -28,9 +28,10 @@ const DrugTherapyEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch
                 }
             }
             await drugTherapyUpdate(appointmentId, data)
+            messageApi.success("Данные успешно обновлены")
             setStatus("display")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -59,21 +60,20 @@ const DrugTherapyEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch
                     </Space>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Card title={"Лекарственная терапия"}>
                     <Row gutter={[32, 16]}>
                         {fields.map(field => (
                             <DrugTherapyField field={field} data={data} key={field.displayName}/>
                         ))}
                     </Row>
+                    <span>Примечание:</span>
                     <Form.Item
                         style={{width: "100%"}}
                         name={"note"}
                         initialValue={data.note}
                     >
-                        Примечание: <Input.TextArea/>
+                        <Input.TextArea/>
                     </Form.Item>
                 </Card>
             </Card>
@@ -84,7 +84,6 @@ const DrugTherapyEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch
 
 const DrugTherapyField = ({field, data}: {field: IDrugTherapyFields, data: any}) => {
     const [isActive, setIsActive] = useState(false)
-    console.log(data)
     return (
         <Form.List name={field.displayName} key={field.displayName}>
             { () =>

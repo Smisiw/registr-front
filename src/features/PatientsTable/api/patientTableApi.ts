@@ -21,6 +21,10 @@ export const useGetPatientColumns = () => {
             item.filterDropdown = filters[item.filter]
             delete item.filter
         }
+        else if (item.filter){
+            item.filters = item.filter
+            delete item.filter
+        }
         if (item.dataType == 'boolean'){
             item.render = (data: any): React.ReactNode => {
                 return data? "Да" : "Нет"

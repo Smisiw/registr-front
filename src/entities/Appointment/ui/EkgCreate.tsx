@@ -1,7 +1,6 @@
 'use client'
-import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
-import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
+import React, {Dispatch} from 'react';
+import {Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, message, Row, Space, Spin} from "antd";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {ekgCreate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
@@ -13,7 +12,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
     const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetEkgFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const formSubmitHandler = async (values: IEkg)=> {
         try {
             values.date_ekg = dateFormatConverter(values.date_ekg)
@@ -25,7 +24,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
             })
             setStatus("edit")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -48,9 +47,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
                     </Form.Item>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Space size={"large"} wrap={true}>
                     <Card
                         title={"ЭКГ"}
@@ -78,7 +75,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
                                     <Checkbox>{field.displayName}</Checkbox>
                                 </Form.Item>
                             ))}
-                            Другие изменения:
+                             <span>Другие изменения:</span>
                             <Form.Item
                                 style={{width: "100%"}}
                                 name={"another_changes"}
@@ -140,7 +137,7 @@ const EkgCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormStatus>
                                 </Space>
                             </Col>
                         </Row>
-                        Примечание:
+                        <span>Примечание:</span>
                         <Form.Item
                             style={{width: "100%"}}
                             name={"note"}

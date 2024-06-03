@@ -1,5 +1,5 @@
-import React, {Dispatch, useState} from 'react';
-import {Button, Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch} from 'react';
+import {Button, Card, Col, DatePicker, Form, Input, message, Row, Space, Spin} from "antd";
 import {labTestsUpdate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
@@ -9,7 +9,7 @@ import {dateFormatConverter} from "@/shared/helpers/dateFormatConverter";
 const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetLabTestsFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const formSubmitHandler = async (values: any)=> {
         try {
             for (let key in values) {
@@ -19,9 +19,10 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                 }
             }
             await labTestsUpdate(appointmentId, values)
+            messageApi.success("Данные успешно обновлены")
             setStatus("display")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(JSON.stringify(e.response.data.message))
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -50,9 +51,7 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                     </Space>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Row gutter={[32, 16]} align={"middle"}>
                     <Col span={12}>
                         <Space
@@ -196,12 +195,12 @@ const LabTestsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                         </Card>
                     </Col>
                     <Col span={24}>
+                        <span>Примечание:</span>
                         <Form.Item
                             style={{width: "100%"}}
                             name={"note"}
                             initialValue={data.note}
                         >
-                            Примечание:
                             <Input.TextArea style={{height: 100}}/>
                         </Form.Item>
                     </Col>

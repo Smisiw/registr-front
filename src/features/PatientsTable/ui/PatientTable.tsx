@@ -1,9 +1,7 @@
 'use client'
-import React, {useEffect, useState} from 'react';
-import {CustomTable, ITableParams} from "../../../shared/ui/CustomTable";
-import {PatientColumns} from "@/features/PatientsTable/config/PatientColumns";
+import React from 'react';
+import {CustomTable, ITableParams} from "@/shared/ui/CustomTable";
 import {availablePatientColumns} from "@/features/PatientsTable/config/availablePatientColumns";
-import {defaultPatientSelectedColumns} from "@/features/PatientsTable/config/defaultPatientSelectedColumns";
 import {IPatientTableData} from "@/features/PatientsTable/model/IPatientTableData";
 import {savePatientTableColumns, useGetPatientColumns} from "@/features/PatientsTable/api/patientTableApi";
 import {Table} from "antd";

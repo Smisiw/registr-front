@@ -1,6 +1,6 @@
 'use client'
 import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Col, Form, Input, Row, Select, Space, Spin, Typography} from "antd";
+import {Card, Checkbox, Col, Form, Input, message, Row, Select, Space, Spin} from "antd";
 
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {drugTherapyCreate, useGetDrugTherapyFields} from "@/entities/Appointment/api/drugTherapyApi";
@@ -13,7 +13,7 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
     const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDrugTherapyFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
 
     const formSubmitHandler = async (values: IDrugTherapy)=> {
         try {
@@ -38,7 +38,7 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
             })
             setStatus("edit")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -60,21 +60,19 @@ const DrugTherapyCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<For
                     </Form.Item>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Card title={"Лекарственная терапия"}>
                     <Row gutter={[32, 16]}>
                         {fields.map(field => (
                             <DrugTherapyField field={field} key={field.displayName}/>
                         ))}
                     </Row>
-
+                    <span>Примечание:</span>
                     <Form.Item
                         style={{width: "100%"}}
                         name={"note"}
                     >
-                        Примечание: <Input.TextArea/>
+                        <Input.TextArea/>
                     </Form.Item>
                 </Card>
 

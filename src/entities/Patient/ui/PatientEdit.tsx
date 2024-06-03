@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react';
+import React from 'react';
 import {
     Button,
     Card,
@@ -13,7 +13,6 @@ import {
     Radio,
     Row,
     Space,
-    Typography
 } from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
@@ -28,7 +27,6 @@ const PatientEdit = ({data}: {data: IPatient}) => {
     const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const hasHospitalization : boolean = Form.useWatch("has_hospitalization", form)
-    const [errorMessage, setErrorMessage] = useState("")
     const pathname = usePathname()
     const router = useRouter()
     const [messageApi, contextHolder] = message.useMessage()
@@ -40,7 +38,15 @@ const PatientEdit = ({data}: {data: IPatient}) => {
             messageApi.success("Данные успешно обновлены")
             router.push(pathname)
         } catch (e: any) {
-            setErrorMessage(e.response.data.message)
+            if (e.request.status >= 500){
+                messageApi.error("Что-то пошло не так")
+            }
+            else if (e.request.status ){
+
+            }
+            else {
+                messageApi.error(e.response.data.message)
+            }
         }
     }
 
@@ -70,9 +76,6 @@ const PatientEdit = ({data}: {data: IPatient}) => {
                     </Space>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
                 {contextHolder}
                 <Row gutter={32}>
                     <Col span={12}>
@@ -133,10 +136,12 @@ const PatientEdit = ({data}: {data: IPatient}) => {
                                     </Form.Item>
                                 </Space>
                             </Card>
+                            <span>Примечание:</span>
                             <Form.Item
                                 name={"patient_note"}
+                                initialValue={data.patient_note}
                             >
-                                Примечание:<Input.TextArea style={{height: 150}}/>
+                                <Input.TextArea rows={5}/>
                             </Form.Item>
                         </Space>
                     </Col>

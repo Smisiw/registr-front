@@ -84,8 +84,10 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
     const [columns, setColumns] = useState(() =>
         baseColumns.map((column, i) => ({
             ...column,
-            onHeaderCell: () => ({ id: column.key }),
-            onCell: () => ({ id: column.key }),
+            key: column.dataIndex,
+            id: i,
+            onHeaderCell: () => ({ id: i }),
+            onCell: () => ({ id: i }),
         })),
     );
     const [selectedColumns, setSelectedColumns] = useState(columns.map(column => {
@@ -103,8 +105,8 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
     const onDragEnd = ({ active, over }: DragEndEvent) => {
         if (active.id !== over?.id) {
             setColumns((prevState) => {
-                const activeIndex = prevState.findIndex((i) => i.key === active?.id);
-                const overIndex = prevState.findIndex((i) => i.key === over?.id);
+                const activeIndex = prevState.findIndex((i) => i.id === active?.id);
+                const overIndex = prevState.findIndex((i) => i.id === over?.id);
                 const newColumns = arrayMove(prevState, activeIndex, overIndex);
                 saveColumns({
                     table_columns: newColumns.map(column => ({
@@ -118,8 +120,8 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
         setDragIndex({ active: -1, over: -1 });
     };
     const onDragOver = ({ active, over }: DragOverEvent) => {
-        const activeIndex = columns.findIndex((i) => i.key === active.id);
-        const overIndex = columns.findIndex((i) => i.key === over?.id);
+        const activeIndex = columns.findIndex((i) => i.id === active.id);
+        const overIndex = columns.findIndex((i) => i.id === over?.id);
         setDragIndex({
             active: active.id,
             over: over?.id,
@@ -201,7 +203,7 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
                 collisionDetection={closestCenter}
             >
                 <SortableContext
-                    items={columns.map(i => i.key)}
+                    items={columns.map(i => i.id)}
                     strategy={horizontalListSortingStrategy}
                 >
                     <DragIndexContext.Provider value={dragIndex}>
@@ -232,7 +234,7 @@ export function CustomTable({baseColumns, availableColumns, data, tableParams, s
                 </SortableContext>
                 <DragOverlay>
                     <th style={{ backgroundColor: 'gray', padding: 16 }}>
-                        {visibleColumns[visibleColumns.findIndex((i) => i.key === dragIndex.active)]?.title as React.ReactNode}
+                        {visibleColumns[visibleColumns.findIndex((i) => i.id === dragIndex.active)]?.title as React.ReactNode}
                     </th>
                 </DragOverlay>
             </DndContext>

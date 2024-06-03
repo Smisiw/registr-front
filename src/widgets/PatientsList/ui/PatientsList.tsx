@@ -1,7 +1,7 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import PatientTable from "@/features/PatientsTable/ui/PatientTable";
-import {ITableParams} from "../../../shared/ui/CustomTable";
+import {ITableParams} from "@/shared/types/ITableParams";
 import SearchBar from "@/shared/ui/SearchBar/SearchBar";
 import ButtonNew from "@/shared/ui/Buttons/ButtonNew";
 import styles from "./PatientsList.module.css"
@@ -31,7 +31,7 @@ const PatientsList = ({page}: {page: number}) => {
                 ...patientsTableParams,
                 filters: {
                     ...patientsTableParams.filters,
-                    fullName: searchValue == "" ? null : [searchValue]
+                    full_name: searchValue == "" ? null : [searchValue]
                 }
             }
         )

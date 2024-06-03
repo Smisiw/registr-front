@@ -1,6 +1,6 @@
 'use client'
-import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Col, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch} from 'react';
+import {Card, Checkbox, Col, Form, Input, InputNumber, message, Row, Space, Spin} from "antd";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {complaintsCreate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
@@ -11,7 +11,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
     const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetComplaintsFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const weight = Form.useWatch("weight", form)
     const height = Form.useWatch("height", form)
 
@@ -29,7 +29,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
             })
             setStatus("edit")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -51,9 +51,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                     </Form.Item>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Row gutter={32}>
                     <Col>
                         <Space direction={"vertical"} size={"middle"}>
@@ -116,7 +114,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                         <Checkbox>{field.displayName}</Checkbox>
                                     </Form.Item>
                                 ))}
-                                Примечание:
+                                <span>Примечание:</span>
                                 <Form.Item
                                     name={"note"}
                                 >
@@ -142,7 +140,7 @@ const ComplaintsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<Form
                                 ))}
                             </Row>
 
-                            Примечание:
+                            <span>Примечание:</span>
                             <Form.Item
                                 name={"other_symptoms"}
                             >

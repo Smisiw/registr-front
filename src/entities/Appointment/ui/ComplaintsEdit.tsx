@@ -1,5 +1,5 @@
-import React, {Dispatch, useState} from 'react';
-import {Button, Card, Checkbox, Col, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch} from 'react';
+import {Button, Card, Checkbox, Col, Form, Input, InputNumber, message, Row, Space, Spin} from "antd";
 import {complaintsUpdate, useGetComplaintsFields} from "@/entities/Appointment/api/complaintsApi";
 import {IComplaints} from "@/entities/Appointment/model/IComplaints";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
@@ -8,7 +8,7 @@ import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: IComplaints }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetComplaintsFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const weight = Form.useWatch("weight", form)
     const height = Form.useWatch("height", form)
 
@@ -16,9 +16,10 @@ const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
         try {
             values.bmi = (weight/Math.pow((height/100), 2)).toFixed(2)
             await complaintsUpdate(appointmentId, values)
+            messageApi.success("Данные успешно обновлены")
             setStatus("edit")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -47,9 +48,7 @@ const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                     </Space>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Row gutter={32}>
                     <Col>
                         <Space direction={"vertical"} size={"middle"}>
@@ -123,7 +122,7 @@ const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                                         <Checkbox>{field.displayName}</Checkbox>
                                     </Form.Item>
                                 ))}
-                                Примечание:
+                                <span>Примечание:</span>
                                 <Form.Item
                                     name={"note"}
                                     initialValue={data.note}
@@ -150,7 +149,7 @@ const ComplaintsEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                                 ))}
                             </Row>
 
-                            Примечание:
+                            <span>Примечание:</span>
                             <Form.Item
                                 name={"other_symptoms"}
                                 initialValue={data.other_symptoms}

@@ -1,7 +1,19 @@
-import React, {Dispatch, useState} from 'react';
-import {Button, Card, Checkbox, Col, DatePicker, Form, Input, InputNumber, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch} from 'react';
+import {
+    Button,
+    Card,
+    Checkbox,
+    Col,
+    DatePicker,
+    Form,
+    Input,
+    InputNumber,
+    message,
+    Row,
+    Space,
+    Spin,
+} from "antd";
 import { ekgUpdate, useGetEkgFields} from "@/entities/Appointment/api/ekgsApi";
-import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import dayjs from "dayjs";
@@ -11,15 +23,16 @@ import {IEkg} from "@/entities/Appointment/model/IEkg";
 const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetEkgFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const formSubmitHandler = async (values: IEkg)=> {
         try {
             values.date_ekg = dateFormatConverter(values.date_ekg)
             values.date_echo_ekg = dateFormatConverter(values.date_echo_ekg)
             await ekgUpdate(appointmentId, values)
+            messageApi.success("Данные успешно обновлены")
             setStatus("display")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -49,9 +62,7 @@ const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormSta
                     </Space>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Space size={"large"}>
                     <Card
                         title={"ЭКГ"}
@@ -80,7 +91,7 @@ const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormSta
                                     <Checkbox>{field.displayName}</Checkbox>
                                 </Form.Item>
                             ))}
-                            Другие изменения:
+                             <span>Другие изменения:</span>
                             <Form.Item
                                 style={{width: "100%"}}
                                 name={"another_changes"}
@@ -144,7 +155,7 @@ const EkgEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormSta
                                 </Space>
                             </Col>
                         </Row>
-                        Примечание:
+                        <span>Примечание:</span>
                         <Form.Item
                             style={{width: "100%"}}
                             name={"note"}

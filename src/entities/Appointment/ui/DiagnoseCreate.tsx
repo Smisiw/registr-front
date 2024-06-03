@@ -1,6 +1,6 @@
 'use client'
-import React, {Dispatch, useState} from 'react';
-import {Card, Checkbox, Col, Form, Input, Radio, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch} from 'react';
+import {Card, Checkbox, Col, Form, Input, message, Radio, Row, Space, Spin} from "antd";
 import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {diagnoseCreate, useGetDiagnoseFields} from "@/entities/Appointment/api/diagnoseApi";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
@@ -13,7 +13,7 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
     const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDiagnoseFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const formSubmitHandler = async (values: IPatientNew)=> {
         try {
             await diagnoseCreate(appointmentId, values)
@@ -22,8 +22,9 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                 key: 'appointments/block/diagnose/',
                 appointmentId
             })
+
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -45,9 +46,7 @@ const DiagnoseCreate = ({setStatus, appointmentId, data}: { setStatus: Dispatch<
                     </Form.Item>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Space size={"middle"} wrap={true} align={"start"}>
                         <Space
                             direction={"vertical"}

@@ -1,7 +1,6 @@
 'use client'
-import React, {Dispatch, useState} from 'react';
-import {Card, Col, DatePicker, Form, Input, Row, Space, Spin, Typography} from "antd";
-import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
+import React, {Dispatch} from 'react';
+import {Card, Col, DatePicker, Form, Input, message, Row, Space, Spin} from "antd";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
 import {labTestsCreate, useGetLabTestsFields} from "@/entities/Appointment/api/labTestsApi";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
@@ -12,7 +11,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
     const {mutate} = useSWRConfig()
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetLabTestsFields()
-    const [errorMessage, setErrorMessage] = useState("")
+    const [messageApi, contextHolder] = message.useMessage()
     const formSubmitHandler = async (values: any) => {
         try {
             for (let key in values) {
@@ -28,7 +27,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
             })
             setStatus("edit")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -50,9 +49,7 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                     </Form.Item>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Row gutter={[32, 16]} align={"middle"}>
                     <Col span={12}>
                         <Space
@@ -189,11 +186,11 @@ const LabTestsCreate = ({setStatus, appointmentId}: { setStatus: Dispatch<FormSt
                         </Card>
                     </Col>
                     <Col span={24}>
+                        <span>Примечание:</span>
                         <Form.Item
                             style={{width: "100%"}}
                             name={"note"}
                         >
-                            Примечание:
                             <Input.TextArea style={{height: 100}}/>
                         </Form.Item>
                     </Col>

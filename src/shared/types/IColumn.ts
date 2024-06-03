@@ -8,6 +8,7 @@ interface filter {
     children?: filter[]
 }
 export interface IColumn extends ColumnType<any>{
+    id: number
     key: string | number
     title: string
     dataIndex: string

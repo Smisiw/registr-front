@@ -1,20 +1,21 @@
-import React, {Dispatch, useState} from 'react';
-import {Button, Card, Checkbox, Col, Form, Input, Radio, Row, Space, Spin, Typography} from "antd";
+import React, {Dispatch} from 'react';
+import {Button, Card, Checkbox, Col, Form, Input, message, Radio, Row, Space, Spin} from "antd";
 import {diagnoseUpdate, useGetDiagnoseFields} from "@/entities/Appointment/api/diagnoseApi";
-import {IPatientNew} from "@/entities/Patient/model/IPatientNew";
 import {FormStatus} from "@/entities/Appointment/model/FormStatus";
 import SubmitButton from "@/shared/ui/Buttons/SubmitButton";
+import {IDiagnose} from "@/entities/Appointment/model/IDiagnose";
 
 const DiagnoseEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<FormStatus>, appointmentId: string, data: any }) => {
     const [form] = Form.useForm()
     const {fields, error: fieldsError, isLoading: fieldsIsLoading} = useGetDiagnoseFields()
-    const [errorMessage, setErrorMessage] = useState("")
-    const formSubmitHandler = async (values: IPatientNew)=> {
+    const [messageApi, contextHolder] = message.useMessage()
+    const formSubmitHandler = async (values: IDiagnose)=> {
         try {
             await diagnoseUpdate(appointmentId, values)
+            messageApi.success("Данные успешно обновлены")
             setStatus("display")
         } catch (e: any) {
-            setErrorMessage(e.message)
+            messageApi.error(e.message)
         }
     }
     if (fieldsError) return <div>Ошибка загрузки</div>
@@ -43,9 +44,7 @@ const DiagnoseEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                 </Space>
                 }
             >
-                <Typography.Text type={"danger"}>
-                    {errorMessage}
-                </Typography.Text>
+                {contextHolder}
                 <Space size={"middle"} wrap={true} align={"start"}>
                         <Space
                             direction={"vertical"}
@@ -101,6 +100,7 @@ const DiagnoseEdit = ({setStatus, appointmentId, data}: { setStatus: Dispatch<Fo
                                         name={"classification_nc_stage"}
                                         initialValue={data?.classification_nc_stage}
                                         rules={[{required: true, message: "Выберите стадию НК"}]}
+                                        required={true}
                                     >
                                         <Radio.Group>
                                             <Space>
